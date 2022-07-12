@@ -1,9 +1,11 @@
 //Import Tools
+import 'dotenv/config';
 import express from "express";
 import cors from "cors";
 import morgan from "morgan";
 import blogRouter from "./routes/blogRouter";
-import registerRouter from "./routes/registerRouter"; 
+import registerRouter from "./routes/registerRouter";
+
 
 //Define app
 const app = express()

@@ -4,8 +4,8 @@ import { Schema, model } from "mongoose";
 //Create Regiter Schema
 const registerSchema = new Schema({
   date: {
-    types: Date,
-    required: true
+    type: Date,
+    default: Date.now()
   },
   description: {
     type: String,
