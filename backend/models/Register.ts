@@ -10,7 +10,12 @@ const registerSchema = new Schema({
   description: {
     type: String,
     required: true
-  }
+  },
+  uid: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      required: true
+  },
 })
 
 

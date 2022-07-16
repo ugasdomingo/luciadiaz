@@ -11,7 +11,8 @@ const postSchema = new Schema({
   },
   category: {
     type: String,
-    required: true
+    required: true,
+    trim: true
   },
   img: {
     type: String,
@@ -19,13 +20,7 @@ const postSchema = new Schema({
   body: {
     type: String,
     required: true
-  }/* ,
-  user: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'User',
-    },
-  ] */
+  }
 }, {
   versionKey: false
 });

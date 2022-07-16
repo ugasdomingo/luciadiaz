@@ -1,55 +1,95 @@
 //Import tools
 import { Router } from "express";
+import { userAuth } from "../middleware/userAuth";
 import Register from "../models/Register";
 
 //Define router
 const registerRouter = Router();
 
 //Routes
-registerRouter.get('/register', async (req, res) => {
-  const register = await Register.find();
-  res.send(register);
+registerRouter.get('/register',userAuth , async (req: any, res: any) => {
+  try {
+    const register = await Register.find({uid: req.uid}).lean();
+    return res.json({ register });
+    
+  } catch (error: any) {
+    return res.status(500).json({message: error.message})
+  }
 });
 
-registerRouter.post('/register', async (req, res) => {
-  const { date, description } = req.body
+registerRouter.post('/register',userAuth , async (req: any, res: any) => {
+  try {
+    const { date, description } = req.body
 
-  const register = new Register({date,description})
-  await register.save()
+    const register = new Register({date,description, uid: req.uid})
+    await register.save()
 
-  res.json(register)
+    res.json({register})
+    
+  } catch (error: any) {
+    return res.status(500).json({message: error.message})
+  }
 });
 
-registerRouter.get('/register/:id', async (req, res) => {
+registerRouter.get('/register/:id',userAuth , async (req: any, res: any) => {
+  try {
+    const register = await Register.findById(req.params.id);
+  
+    if (!register) 
+      return res.status(404).json({message:"register no encontrado"})
+    ;
+
+    if (!register?.uid.equals(req.uid))
+      return res.status(401).json({message:"No tiene autorizacion"})
+    ;
+
+    res.send({register});
+
+  } catch (error: any) {
+    return res.status(500).json({message: error.message});
+  }
+});
+
+registerRouter.delete('/register/:id',userAuth , async (req: any, res: any) => {
   try {
     const register = await Register.findById(req.params.id)
   
-    if (!register) return res.status(404).json({message:"register no encontrado"})
-    res.send(register)
-  } catch (error) {
-    return res.status(500).json({message:"Formato id inválido"})
+    if (!register) 
+      return res.status(404).json({message:"register no encontrado"})
+    ;
+
+    if (!register?.uid.equals(req.uid))
+      return res.status(401).json({message:"No tiene autorizacion"})
+    ;
+
+    await register.remove();
+
+    res.send({register});
+
+  } catch (error: any) {
+    return res.status(500).json({message: error.message})
   }
 });
 
-registerRouter.delete('/register/:id', async (req, res) => {
+registerRouter.put('/register/:id',userAuth , async (req: any, res: any) => {
   try {
-    const register = await Register.findByIdAndDelete(req.params.id)
-  
-    if (!register) return res.status(404).json({message:"register no encontrado"})
-    res.send(register)
-  } catch (error) {
-    return res.status(500).json({message:"Formato id inválido"})
-  }
-});
+    const register = await Register.findById(req.params.id)
 
-registerRouter.put('/register/:id', async (req, res) => {
-  try {
-    const updatedRegister = await Register.findByIdAndUpdate(req.params.id, req.body, {new: true});
+    if (!register) 
+      return res.status(404).json({message:"Registro no encontrado"})
+    ;
+    
+    if (!register?.uid.equals(req.uid))
+      return res.status(401).json({message:"No tiene autorizacion"})
+    ;
+    
+    const updatedRegister = await Register
+      .findByIdAndUpdate(req.params.id, req.body, {new: true})
+    ;
+    res.json({updatedRegister});
 
-    if (!updatedRegister) return res.status(404).json({message:"Register no encontrado"})
-    res.json(updatedRegister);
-  } catch (error) {
-    return res.status(500).json({message:"Formato id inválido"})
+  } catch (error: any) {
+    return res.status(500).json({message: error.message})
   }
 });
 
