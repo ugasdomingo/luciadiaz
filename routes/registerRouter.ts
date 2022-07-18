@@ -1,15 +1,29 @@
 //Import tools
 import { Router } from "express";
+import { adminAuth } from "../middleware/adminAuth";
 import { userAuth } from "../middleware/userAuth";
 import Register from "../models/Register";
+import { UserModel } from "../models/User";
 
 //Define router
 const registerRouter = Router();
 
 //Routes
-registerRouter.get('/register',userAuth , async (req: any, res: any) => {
+registerRouter.get('/register',adminAuth , async (req: any, res: any) => {
   try {
-    const register = await Register.find({uid: req.uid}).lean();
+    const register = await Register.find().lean();
+    return res.json({ register });
+    
+  } catch (error: any) {
+    return res.status(500).json({message: error.message})
+  }
+});
+
+registerRouter.get('/register/:email',adminAuth , async (req: any, res: any) => {
+  try {
+    const user = await UserModel.findOne({email:req.params.email})
+
+    const register = await Register.find({uid: user?.id}).lean();
     return res.json({ register });
     
   } catch (error: any) {
@@ -19,9 +33,22 @@ registerRouter.get('/register',userAuth , async (req: any, res: any) => {
 
 registerRouter.post('/register',userAuth , async (req: any, res: any) => {
   try {
-    const { date, description } = req.body
+    const { 
+      date,
+      pensamiento,
+      emocion,
+      accion,
+      detonante
+    } = req.body
 
-    const register = new Register({date,description, uid: req.uid})
+    const register = new Register({
+      date,
+      pensamiento,
+      emocion,
+      accion,
+      detonante,
+      uid: req.uid
+    })
     await register.save()
 
     res.json({register})
@@ -31,16 +58,12 @@ registerRouter.post('/register',userAuth , async (req: any, res: any) => {
   }
 });
 
-registerRouter.get('/register/:id',userAuth , async (req: any, res: any) => {
+registerRouter.get('/register/:id',adminAuth , async (req: any, res: any) => {
   try {
     const register = await Register.findById(req.params.id);
   
     if (!register) 
       return res.status(404).json({message:"register no encontrado"})
-    ;
-
-    if (!register?.uid.equals(req.uid))
-      return res.status(401).json({message:"No tiene autorizacion"})
     ;
 
     res.send({register});
@@ -50,16 +73,12 @@ registerRouter.get('/register/:id',userAuth , async (req: any, res: any) => {
   }
 });
 
-registerRouter.delete('/register/:id',userAuth , async (req: any, res: any) => {
+registerRouter.delete('/register/:id',adminAuth , async (req: any, res: any) => {
   try {
     const register = await Register.findById(req.params.id)
   
     if (!register) 
       return res.status(404).json({message:"register no encontrado"})
-    ;
-
-    if (!register?.uid.equals(req.uid))
-      return res.status(401).json({message:"No tiene autorizacion"})
     ;
 
     await register.remove();
@@ -71,16 +90,12 @@ registerRouter.delete('/register/:id',userAuth , async (req: any, res: any) => {
   }
 });
 
-registerRouter.put('/register/:id',userAuth , async (req: any, res: any) => {
+registerRouter.put('/register/:id',adminAuth , async (req: any, res: any) => {
   try {
     const register = await Register.findById(req.params.id)
 
     if (!register) 
       return res.status(404).json({message:"Registro no encontrado"})
-    ;
-    
-    if (!register?.uid.equals(req.uid))
-      return res.status(401).json({message:"No tiene autorizacion"})
     ;
     
     const updatedRegister = await Register

@@ -7,7 +7,19 @@ const registerSchema = new Schema({
     type: Date,
     default: Date.now()
   },
-  description: {
+  pensamiento: {
+    type: String,
+    required: true
+  },
+  emocion: {
+    type: String,
+    required: true
+  },
+  accion: {
+    type: String,
+    required: true
+  },
+  detonante: {
     type: String,
     required: true
   },
