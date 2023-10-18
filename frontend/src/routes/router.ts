@@ -100,6 +100,9 @@ router.beforeEach(async (to, from, next) => {
         }
     }
 
+    // use the from parameter here
+    console.log(`Navigating from ${from.path} to ${to.path}`);
+
     next();
 });
 

@@ -32,11 +32,11 @@ const changeShowTest = (order: string) => {
         <p>Obtén el resultado de manera inmediata y gratuita</p>
         <div class="tests">
             <button @click="changeShowTest('prev')">
-                <img src="src/assets/left-arrow.svg" alt="left-arrow" />
+                <img src="../../assets/left-arrow.svg" alt="left-arrow" />
             </button>
             <ShowTestCard :test="test" />
             <button @click="changeShowTest('next')">
-                <img src="src/assets/rigth-arrow.svg" alt="left-arrow" />
+                <img src="../../assets/rigth-arrow.svg" alt="left-arrow" />
             </button>
         </div>
         <h5>{{ showIn + 1 }} / {{ testsInfo.length }}</h5>

@@ -6,7 +6,7 @@ import { RouterLink } from 'vue-router';
     <div class="citas-container">
         <div class="">
             <img
-                src="src/assets/fondo-lucia2.png"
+                src="../../assets/fondo-lucia2.png"
                 alt="Lucia"
                 class="img-about-me"
             />

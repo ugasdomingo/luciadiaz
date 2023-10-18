@@ -9,7 +9,7 @@
         />
         <section class="left-content">
             <div>
-                <img src="src/assets/logo-med.png" alt="" class="logo" />
+                <img src="../../assets/logo-med.png" alt="" class="logo" />
                 <p>
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Itaque, expedita.
@@ -18,7 +18,11 @@
             </div>
         </section>
         <section class="right-content">
-            <img src="image/foto-brazos.webp" alt="foto-lucia" class="lucia" />
+            <img
+                src="../../assets/foto-brazos.webp"
+                alt="foto-lucia"
+                class="lucia"
+            />
         </section>
     </main>
 </template>
