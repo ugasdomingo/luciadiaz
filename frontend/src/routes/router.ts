@@ -14,8 +14,8 @@ const routes = [
         component: () => import('../views/auth/LoginView.vue'),
     },
     {
-        path: '/registro',
-        name: 'Register-Plan',
+        path: '/registro/:role',
+        name: 'Register-Role',
         component: () => import('../views/auth/RegisterView.vue'),
     },
 
@@ -43,7 +43,7 @@ const routes = [
     {
         path: '/agendar-cita',
         name: 'Agendar Cita',
-        component: () => import('../views/CitasView.vue'),
+        component: () => import('../views/AllTherapyView.vue'),
     },
     {
         path: '/:catchAll(.*)*',
@@ -54,6 +54,11 @@ const routes = [
         path: '/autogestion/arquetipos',
         name: 'Test Arquetipos',
         component: () => import('../views/test/ArchetypeTestView.vue'),
+    },
+    {
+        path: '/anamnesis',
+        name: 'Anamnesis',
+        component: () => import('../views/test/AnamnesisTestView.vue'),
     },
     {
         path: '/autogestion/temperamento',
@@ -70,12 +75,17 @@ const routes = [
         name: 'Test Anamnesis',
         component: () => import('../views/test/AnamnesisTestView.vue'),
     },
-    /* -----  PRivate Routes ----- */
+    /* -----  Private Routes ----- */
     {
         path: '/espacio-personal',
         name: 'Espacio Personal',
         component: () => import('../views/private/PersonalSpaceView.vue'),
         meta: { auth: true },
+    },
+    {
+        path: '/calendly-agendar-citayg76fygouyf75',
+        name: 'Calendly',
+        component: () => import('../views/private/CalendlyView.vue'),
     },
 ];
 
@@ -101,7 +111,10 @@ router.beforeEach(async (to, from, next) => {
     }
 
     // use the from parameter here
-    console.log(`Navigating from ${from.path} to ${to.path}`);
+    console.log(`from ${from.path} `);
+
+    // Goto top on next route
+    window.scrollTo(0, 0);
 
     next();
 });

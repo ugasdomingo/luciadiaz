@@ -41,7 +41,11 @@ export const useFormationStore = defineStore('formation', () => {
                 },
             });
 
-            showFormations.value = response.data.formations.slice(-showNum);
+            showNum === 0
+                ? (showFormations.value = response.data.formations)
+                : (showFormations.value = response.data.formations.slice(
+                      -showNum,
+                  ));
         } catch (error) {
             console.error(error);
             utilStore.displayAlert('Error al cargar las formaciones', 'error');

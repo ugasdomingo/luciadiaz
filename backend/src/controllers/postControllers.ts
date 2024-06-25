@@ -1,6 +1,7 @@
 //Import tools
 import { Request, Response } from 'express';
 import { Post, IPost } from '../models/Post';
+import { deleteImage } from '../utils/cloudinary';
 
 // Create --> Line 14
 // getAllPosts --> Line 37
@@ -10,14 +11,14 @@ import { Post, IPost } from '../models/Post';
 
 //Create
 export const createPost = async (req: Request, res: Response) => {
-    const { title, content, coverUrl, category, tags, author } = req.body;
+    const { title, content, cover, category, tags, author } = req.body;
 
     try {
         //Create post
         const post: IPost = new Post({
             title,
             content,
-            coverUrl,
+            cover,
             category,
             tags,
             author,
@@ -126,6 +127,9 @@ export const deletePost = async (req: Request, res: Response) => {
                 msg: 'Post no encontrado',
             });
         }
+
+        //Delete image from cloudinary
+        await deleteImage(post.cover);
 
         return res.status(200).json({
             msg: 'Post eliminado',

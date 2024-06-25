@@ -34,15 +34,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <header
-        :class="{
-            'background-white': backgroundWhite,
-            'justify-center': path == '/',
-        }"
-    >
-        <RouterLink to="/" v-if="path !== '/'">
-            <h2 class="logo">Lucia Diaz</h2>
-        </RouterLink>
+    <header>
         <NavbarComponent />
     </header>
 </template>
@@ -50,7 +42,7 @@ onUnmounted(() => {
 <style scoped lang="scss">
 header {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     width: 100%;
     max-height: 10vh;
@@ -60,21 +52,5 @@ header {
     position: fixed;
     top: 0;
     box-sizing: border-box;
-}
-/* Gestion de la barre de navigation */
-.justify-center {
-    justify-content: center;
-}
-.logo {
-    will-change: filter;
-    transition: filter 300ms;
-}
-.logo:hover {
-    filter: drop-shadow(0 0 2rem #4b1264da);
-}
-.background-white {
-    background-color: rgba(255, 255, 255, 0.95);
-    box-shadow: 0 0 1em var(--color-primary);
-    color: var(--color-primary);
 }
 </style>

@@ -12,7 +12,7 @@ const postSchema = new Schema(
             type: String,
             required: true,
         },
-        coverUrl: {
+        cover: {
             type: String,
             required: true,
         },
@@ -38,7 +38,7 @@ const postSchema = new Schema(
 export interface IPost extends Document {
     title: string;
     content: string;
-    coverUrl: string;
+    cover: string;
     category: string;
     tags: string[];
     author: string;

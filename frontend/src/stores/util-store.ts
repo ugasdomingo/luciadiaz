@@ -7,6 +7,7 @@ export const useUtilStore = defineStore('util', () => {
     const showAlert = ref(false);
     const alertMessage = ref('');
     const alertType = ref('');
+    const isLoading = ref(false);
 
     const displayAlert = (message: string, type: string) => {
         showAlert.value = true;
@@ -22,6 +23,7 @@ export const useUtilStore = defineStore('util', () => {
         showAlert,
         alertMessage,
         alertType,
+        isLoading,
         displayAlert,
     };
 });

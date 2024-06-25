@@ -1,10 +1,19 @@
 <template>
-    <main>
-        <h1>Personal Space</h1>
-    </main>
+    <AdminSpaceComponent v-if="userStore.userRole === 'Admin'" />
+    <PersonalSpaceComponent v-else />
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+//Import tools
+import { useUserStore } from '../../stores/user-store';
+
+//Import components
+import PersonalSpaceComponent from '../../components/private/PersonalSpaceComponent.vue';
+import AdminSpaceComponent from '../../components/private/AdminSpaceComponent.vue';
+
+//Active tools
+const userStore = useUserStore();
+</script>
 
 <style scoped lang="scss">
 main {

@@ -2,7 +2,7 @@
 import { Schema, model, Document } from 'mongoose';
 
 //Define Schema
-const formationSchema = new Schema(
+const formationsSchema = new Schema(
     {
         title: {
             type: String,
@@ -16,14 +16,8 @@ const formationSchema = new Schema(
             required: true,
         },
         cover: {
-            public_id: {
-                type: String,
-                required: true,
-            },
-            secure_url: {
-                type: String,
-                required: true,
-            },
+            type: String,
+            required: true,
         },
         price: {
             type: Number,
@@ -63,14 +57,11 @@ const formationSchema = new Schema(
 );
 
 //Export model
-export interface IFormation extends Document {
+export interface IFormations extends Document {
     title: string;
     description: string;
     type: string;
-    cover: {
-        public_id: string;
-        secure_url: string;
-    };
+    cover: string;
     price: number;
     duration: number;
     location: string;
@@ -83,4 +74,4 @@ export interface IFormation extends Document {
     updatedAt: Date;
 }
 
-export const Formation = model<IFormation>('Formation', formationSchema);
+export const Formations = model<IFormations>('Formations', formationsSchema);

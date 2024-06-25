@@ -1,173 +1,234 @@
 <script setup lang="ts">
-//Import tools
-import { useUserStore } from '../stores/user-store';
+import { useRouter } from 'vue-router';
+import { onMounted, ref } from 'vue';
 
-//Activate store
-const userStore = useUserStore();
+const router = useRouter();
+
+const path = ref(router.currentRoute.value.path);
+const isHome = ref(true);
+const backgroundWhite = ref(false);
+
+const getIsHome = () => {
+    if (path.value == '/') {
+        isHome.value = true;
+        window.addEventListener('scroll', changeBackground);
+    } else {
+        isHome.value = false;
+        window.removeEventListener('scroll', changeBackground);
+    }
+};
+const changeBackground = () => {
+    if (window.scrollY > 10) {
+        backgroundWhite.value = true;
+    } else {
+        backgroundWhite.value = false;
+    }
+};
+
+onMounted(() => {
+    getIsHome();
+});
+router.afterEach(() => {
+    path.value = router.currentRoute.value.path;
+    getIsHome();
+});
 
 const servicesPaths = [
-    { name: 'Terapia Individual', path: '/servicios/individual' },
-    { name: 'Terapia Parejas', path: '/servicios/parejas' },
-    { name: 'Terapia Infantil', path: '/servicios/infantil' },
-    { name: 'Orientación para Padres', path: '/servicios/padres' },
-    { name: 'Cursos', path: '/galeria/cursos' },
+    { name: 'Terapia Individual', path: '/' },
+    { name: 'Terapia Parejas', path: '/' },
+    { name: 'Terapia Infantil', path: '/' },
+    { name: 'Orientación para Padres', path: '/' },
+    { name: 'Cursos', path: '/' },
 ];
 
 const autogestionPaths = [
-    { name: 'Test de Personalidad', path: '/autogestion/arquetipos' },
-    { name: 'Test de Temperamento', path: '/autogestion/temperamento' },
-    { name: 'Desbloquear metas', path: '/autogestion/metas' },
-    { name: 'Libros', path: '/galeria/libros' },
-    { name: 'Blog', path: '/galeria/blog' },
+    { name: 'Test de Personalidad', path: '/' },
+    { name: 'Test de Temperamento', path: '/' },
+    { name: 'Desbloquear metas', path: '/' },
+    { name: 'Libros', path: '/' },
+    { name: 'Blog', path: '/' },
 ];
 </script>
 
 <template>
-    <nav>
-        <ul>
-            <li>
-                <RouterLink to="/galeria/servicios">Servicios</RouterLink>
-                <img src="../assets/down-arrow.svg" alt="down-arrow" />
-                <div class="services-submenu">
-                    <ul>
-                        <li v-for="service in servicesPaths">
-                            <RouterLink :to="service.path">
-                                {{ service.name }}
-                            </RouterLink>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-            <li>
-                <RouterLink to="/sobre-mi">Conóceme</RouterLink>
-            </li>
-            <li>
-                <RouterLink to="/galeria/autogestion">Autogestión</RouterLink>
-                <img src="../assets/down-arrow.svg" alt="down-arrow" />
-                <div class="autogestion-submenu">
-                    <ul>
-                        <li v-for="autogestion in autogestionPaths">
-                            <RouterLink :to="autogestion.path">
-                                {{ autogestion.name }}
-                            </RouterLink>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-            <li>
-                <RouterLink to="/espacio-personal">
-                    Espacio personal
-                </RouterLink>
-            </li>
-            <li>
-                <RouterLink to="/agendar-cita" class="action-btn">
-                    Agendar cita
-                </RouterLink>
-            </li>
-            <li v-if="userStore.token">
-                <RouterLink to="/logout" class="close-btn">
-                    Cerrar Sesión
-                </RouterLink>
-            </li>
-        </ul>
+    <nav
+        :class="{
+            'background-accent': !isHome,
+            'background-white': backgroundWhite,
+        }"
+    >
+        <div>
+            <RouterLink to="/galeria/servicios">
+                Servicios
+                <img
+                    src="../assets/down-arrow.svg"
+                    alt="down-arrow"
+                    class="icon"
+                />
+            </RouterLink>
+            <ul class="services-submenu">
+                <li v-for="service in servicesPaths" :key="service.name">
+                    <RouterLink :to="service.path" class="sub-link">
+                        {{ service.name }}
+                    </RouterLink>
+                </li>
+            </ul>
+        </div>
+
+        <div>
+            <RouterLink to="/">
+                Autogestión
+                <img
+                    src="../assets/down-arrow.svg"
+                    alt="down-arrow"
+                    class="icon"
+                />
+            </RouterLink>
+            <ul class="autogestion-submenu">
+                <li
+                    v-for="autogestion in autogestionPaths"
+                    :key="autogestion.name"
+                >
+                    <RouterLink :to="autogestion.path" class="sub-link">
+                        {{ autogestion.name }}
+                    </RouterLink>
+                </li>
+            </ul>
+        </div>
+
+        <RouterLink to="/">Conóceme </RouterLink>
+
+        <RouterLink to="/">
+            <img src="../assets/logo-med.png" alt="logo" class="logo" />
+        </RouterLink>
+
+        <RouterLink to="/"> Agendar cita </RouterLink>
+
+        <RouterLink to="/"> Espacio personal </RouterLink>
+
+        <div class="socials">
+            <a href="#instagram">
+                <img src="../assets/instagram-icon.svg" alt="instagram" />
+            </a>
+            <a href="#">
+                <img src="../assets/whatsapp-icon.svg" alt="whatsapp" />
+            </a>
+            <a href="#">
+                <img src="../assets/youtube-icon.svg" alt="youtube" />
+            </a>
+        </div>
     </nav>
 </template>
 
 <style scoped lang="scss">
 nav {
-    ul {
-        display: flex;
-        gap: 1rem;
-        list-style: none;
-        font-size: 1.2rem;
-        font-weight: 500;
-        margin: 0;
-        padding: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    max-height: 8vh;
+    padding: 1rem 4rem;
+    background-color: rgba(245, 245, 245, 0.65);
+    border-radius: 1rem;
+    position: fixed;
+    top: 2rem;
+    box-sizing: border-box;
+    z-index: 10;
+
+    div {
+        position: relative;
+
+        &:hover {
+            .services-submenu,
+            .autogestion-submenu {
+                display: block;
+            }
+        }
+    }
+
+    a {
+        text-decoration: none;
+        color: var(--color-dark);
+        font-weight: 700;
+        font-size: 0.75rem;
+        padding: 0 1rem;
+        transition: color 0.2s ease-in-out;
+
+        &:hover {
+            color: var(--color-accent);
+        }
+
+        .icon {
+            width: 0.7rem;
+            height: 0.7rem;
+            margin-left: 0.5rem;
+        }
+    }
+
+    .logo {
+        width: 150px;
+        will-change: filter;
+        color: var(--color-primary);
+        transition: filter 300ms;
+    }
+
+    .logo:hover {
+        filter: drop-shadow(0 0 2rem #4b1264da);
+    }
+
+    .services-submenu,
+    .autogestion-submenu {
+        display: none;
+        width: 200px;
+        position: absolute;
+        top: 40%;
+        left: 0;
+        background-color: var(--color-white);
+        border-radius: 1rem;
+        box-shadow: 0 0 1rem var(--color-primary);
+        padding: 1rem 0;
 
         li {
-            margin-left: 1rem;
-            position: relative;
+            list-style: none;
+            text-align: center;
+            padding: 0.5rem 0;
+
+            &:hover {
+                background-color: var(--color-accent);
+                color: var(--color-white);
+            }
 
             a {
-                text-decoration: none;
-                font-weight: 300;
-                letter-spacing: 0.1rem;
-                margin: 0;
-                padding: 0.5rem 1rem;
-                border-radius: 0.5rem;
-                transition: background-color 0.2s ease-in-out;
-
                 &:hover {
-                    background-color: var(--color-accent);
                     color: var(--color-white);
                 }
             }
-
-            img {
-                width: 1rem;
-                margin-left: 0;
-            }
-
-            .services-submenu,
-            .autogestion-submenu {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                background-color: var(--color-primary);
-                border-radius: 0.5rem;
-                padding: 1rem;
-                z-index: 10;
-                width: 250px;
-                height: fit-content;
-                box-sizing: border-box;
-
-                ul {
-                    list-style: none;
-                    display: flex;
-                    flex-direction: column;
-                    gap: 0.5rem;
-                    padding: 0;
-                    margin: 0;
-
-                    li {
-                        margin: 0;
-                        padding: 0;
-                        font-size: 1rem;
-                        font-weight: 400;
-
-                        a {
-                            text-decoration: none;
-                            color: var(--color-white);
-                            padding: 0.5rem 0;
-                            transition: color 0.2s ease-in-out;
-
-                            &:hover {
-                                color: var(--color-accent);
-                                background-color: transparent;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        li:hover .services-submenu,
-        li:hover .autogestion-submenu {
-            display: block;
-        }
-
-        .action-btn {
-            background-color: var(--color-accent);
-            color: var(--color-white);
-        }
-
-        .close-btn {
-            background-color: var(--color-primary);
-            border-radius: 0.5rem;
-            padding: 0.5rem 1rem;
-            margin-left: 1rem;
         }
     }
+}
+.socials {
+    display: flex;
+
+    a {
+        img {
+            width: 1rem;
+            height: 1rem;
+        }
+
+        &:hover {
+            opacity: 0.5;
+        }
+    }
+}
+.background-accent {
+    background-color: #be80bfbe;
+    color: var(--color-white);
+
+    a {
+        color: var(--color-black);
+    }
+}
+.background-white {
+    background-color: var(--color-white);
 }
 </style>

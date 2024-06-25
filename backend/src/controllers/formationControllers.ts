@@ -1,9 +1,7 @@
 //Import tools
 import { Request, Response } from 'express';
-import { Formation, IFormation } from '../models/Formation';
-import { ICover } from '../interfaces/ICover';
-import fs from 'fs-extra';
-import { uploadImage, deleteImage } from '../utils/cloudinary';
+import { Formations, IFormations } from '../models/Formation';
+import { deleteImage } from '../utils/cloudinary';
 
 // Create --> Line 14
 // getAllFormations --> Line 76
@@ -17,6 +15,7 @@ export const createFormation = async (req: any, res: Response) => {
         title,
         description,
         type,
+        cover,
         price,
         duration,
         location,
@@ -30,10 +29,11 @@ export const createFormation = async (req: any, res: Response) => {
 
     try {
         //Create post
-        const formation: IFormation = new Formation({
+        const formation: IFormations = new Formations({
             title,
             description,
             type,
+            cover,
             price,
             duration,
             location,
@@ -44,20 +44,6 @@ export const createFormation = async (req: any, res: Response) => {
             videoUrl,
             author,
         });
-
-        if (req.files) {
-            const cover = req.files.cover as ICover;
-
-            const result = await uploadImage(cover.tempFilePath as string);
-            formation.cover = {
-                public_id: result.public_id,
-                secure_url: result.secure_url,
-            };
-
-            fs.unlink(cover.tempFilePath, (err) => {
-                if (err) throw err;
-            });
-        }
 
         await formation.save();
 
@@ -76,7 +62,7 @@ export const createFormation = async (req: any, res: Response) => {
 //Get all formations
 export const getAllFormations = async (req: Request, res: Response) => {
     try {
-        const formations = await Formation.find();
+        const formations = await Formations.find();
 
         return res.status(200).json({
             msg: 'Formaciones obtenidas',
@@ -95,7 +81,7 @@ export const getFormationById = async (req: Request, res: Response) => {
     const { id } = req.params;
 
     try {
-        const formation: IFormation | null = await Formation.findById(id);
+        const formation: IFormations | null = await Formations.findById(id);
 
         if (!formation) {
             return res.status(404).json({
@@ -116,61 +102,18 @@ export const getFormationById = async (req: Request, res: Response) => {
 };
 
 //Update
-export const updateFormation = async (req: any, res: Response) => {
+export const updateFormation = async (req: Request, res: Response) => {
     const { id } = req.params;
-    const {
-        title,
-        description,
-        type,
-        price,
-        duration,
-        location,
-        category,
-        tags,
-        initialDate,
-        paypalButton,
-        videoUrl,
-    } = req.body;
 
     try {
-        const formation: IFormation | null = await Formation.findById(id);
+        const formation: IFormations | null =
+            await Formations.findByIdAndUpdate(id, req.body);
 
         if (!formation) {
             return res.status(404).json({
                 msg: 'Formación no encontrada',
             });
         }
-
-        if (req.files) {
-            if (formation.cover) {
-                await deleteImage(formation.cover);
-            }
-
-            const cover = req.files.cover as ICover;
-            const result = await uploadImage(cover.tempFilePath as string);
-            formation.cover = {
-                public_id: result.public_id,
-                secure_url: result.secure_url,
-            };
-
-            fs.unlink(cover.tempFilePath, (err) => {
-                if (err) throw err;
-            });
-        }
-
-        formation.title = title || formation.title;
-        formation.description = description || formation.description;
-        formation.type = type || formation.type;
-        formation.price = price || formation.price;
-        formation.duration = duration || formation.duration;
-        formation.location = location || formation.location;
-        formation.category = category || formation.category;
-        formation.tags = tags || formation.tags;
-        formation.initialDate = initialDate || formation.initialDate;
-        formation.paypalButton = paypalButton || formation.paypalButton;
-        formation.videoUrl = videoUrl || formation.videoUrl;
-
-        await formation.save();
 
         return res.status(200).json({
             msg: 'Formación actualizada',
@@ -189,9 +132,8 @@ export const deleteFormation = async (req: Request, res: Response) => {
     const { id } = req.params;
 
     try {
-        const formation: IFormation | null = await Formation.findByIdAndDelete(
-            id
-        );
+        const formation: IFormations | null =
+            await Formations.findByIdAndDelete(id);
 
         if (!formation) {
             return res.status(404).json({

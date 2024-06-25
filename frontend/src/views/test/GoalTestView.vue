@@ -1,45 +1,29 @@
 <template>
-    <main>
-        <h1>Test de Metas</h1>
-    </main>
+    <div class="Goal-container">
+        <GoalResultComponent v-if="testStore.metas.length > 0" />
+        <GoalFormComponent v-else />
+    </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+//Import tools
+import { onBeforeMount } from 'vue';
+import { useTestStore } from '../../stores/test-store';
+import { useUserStore } from '../../stores/user-store';
 
-<style scoped lang="scss">
-main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 80vh;
-    gap: 1rem;
-    margin: auto 0 0;
-    background-color: var(--color-primary);
-    color: var(--color-white);
+//Import components
+import GoalFormComponent from '../../components/tests/goals/GoalsFormComponent.vue';
+import GoalResultComponent from '../../components/tests/goals/GoalsResultComponent.vue';
 
-    h1 {
-        font-size: 3rem;
-        font-weight: 700;
-    }
+//Activate tools
+const testStore = useTestStore();
+const userStore = useUserStore();
 
-    p {
-        font-size: 1.5rem;
-        font-weight: 500;
-    }
+//User made the test
+onBeforeMount(async () => {
+    await userStore.refreshToken();
+    await testStore.getOwnTestResultByUserId();
+});
+</script>
 
-    a {
-        text-decoration: none;
-        margin-left: 0;
-        padding: 0.5rem 1rem;
-        border-radius: 0.5rem;
-        transition: background-color 0.2s ease-in-out;
-        color: var(--color-white);
-        background-color: var(--color-accent);
-
-        &:hover {
-            background-color: var(--color-primary);
-        }
-    }
-}
-</style>
+<style scoped lang="scss"></style>

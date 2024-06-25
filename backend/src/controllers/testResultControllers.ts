@@ -54,6 +54,24 @@ export const getAllTestResultsByUserId = async (
     }
 };
 
+//getAllTestResults own
+export const getAllOwnTestResults = async (req: IRequest, res: Response) => {
+    try {
+        const testResults: ITestResult[] = await TestResult.find({
+            uid: req.uid,
+        });
+
+        return res.status(200).json({
+            testResults,
+        });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            msg: 'Error al obtener los resultados',
+        });
+    }
+};
+
 //Delete
 export const deleteTestResult = async (req: Request, res: Response) => {
     try {

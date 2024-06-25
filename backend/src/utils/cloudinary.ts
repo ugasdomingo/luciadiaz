@@ -7,12 +7,6 @@ cloudinary.config({
     secure: true,
 });
 
-export async function uploadImage(filePath: any) {
-    return await cloudinary.uploader.upload(filePath, {
-        folder: 'LuciaWeb',
-    });
-}
-
-export async function deleteImage(image: any) {
-    return await cloudinary.uploader.destroy(image?.public_id);
+export async function deleteImage(cover: string) {
+    return await cloudinary.uploader.destroy(cover);
 }

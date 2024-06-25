@@ -26,14 +26,8 @@ const bookSchema = new Schema(
             required: true,
         },
         cover: {
-            public_id: {
-                type: String,
-                required: true,
-            },
-            secure_url: {
-                type: String,
-                required: true,
-            },
+            type: String,
+            required: true,
         },
         author: {
             type: String,
@@ -64,10 +58,7 @@ export interface IBook extends Document {
     description: string;
     price: number;
     sellUrl: string;
-    cover: {
-        public_id: string;
-        secure_url: string;
-    };
+    cover: string;
     author: string;
     category: string;
     tags: string[];

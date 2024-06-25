@@ -47,14 +47,74 @@ export const useTestStore = defineStore('test', () => {
     const getTestResultByUserId = async (uid: string) => {
         try {
             const response = await api({
-                url: `/test-results/${uid}`,
+                url: `/test-results/admin/${uid}`,
                 method: 'GET',
                 headers: {
                     Authorization: `Bearer ${userStore.token}`,
                 },
             });
 
-            response.data.testsResults.map((item: ITestResult) => {
+            response.data.testResults.map((item: ITestResult) => {
+                if (item.testTitle == 'Anamnesis') {
+                    anamnesis.value.push(item);
+                } else if (item.testTitle == 'Notas') {
+                    notas.value.push(item);
+                } else if (item.testTitle == 'Arquetipo') {
+                    arquetipo.value.push(item);
+                    const bigNumber = Object.values(item.answers).sort()[3];
+                    const { wise, warrior, wizard, lover } = item.answers;
+                    warrior == bigNumber
+                        ? (userArchetype.value = 'Guerrero')
+                        : wise == bigNumber
+                        ? (userArchetype.value = 'Sabio Rey')
+                        : wizard == bigNumber
+                        ? (userArchetype.value = 'Mago')
+                        : lover == bigNumber
+                        ? (userArchetype.value = 'Amante')
+                        : (userArchetype.value = '');
+                } else if (item.testTitle == 'Autoregistro') {
+                    autoregistro.value.push(item);
+                } else if (item.testTitle == 'Logro de Metas') {
+                    metas.value.push(item);
+                } else if (item.testTitle == 'Temperamento') {
+                    temperamento.value.push(item);
+                    const bigNumber = Object.values(item.answers).sort(
+                        (a, b) => a - b,
+                    )[3];
+                    const { sanguine, choleric, melancholic, phlegmatic } =
+                        item.answers;
+                    sanguine == bigNumber
+                        ? (userTemper.value = 'Sanguineo')
+                        : choleric == bigNumber
+                        ? (userTemper.value = 'Colérico')
+                        : melancholic == bigNumber
+                        ? (userTemper.value = 'Melancólico')
+                        : phlegmatic == bigNumber
+                        ? (userTemper.value = 'Flemático')
+                        : (userTemper.value = '');
+                } else {
+                    historial.value.push(item);
+                }
+            });
+        } catch (error) {
+            console.error(error);
+            utilStore.displayAlert('Error al obtener el test', 'error');
+        }
+    };
+
+    const getOwnTestResultByUserId = async () => {
+        try {
+            const response = await api({
+                url: '/test-results/own',
+                method: 'GET',
+                headers: {
+                    Authorization: `Bearer ${userStore.token}`,
+                },
+            });
+
+            console.log(response.data.testResults.testResults);
+
+            response.data.testResults.map((item: ITestResult) => {
                 if (item.testTitle == 'Anamnesis') {
                     anamnesis.value.push(item);
                 } else if (item.testTitle == 'Notas') {
@@ -141,6 +201,7 @@ export const useTestStore = defineStore('test', () => {
         historial,
         createTestResult,
         getTestResultByUserId,
+        getOwnTestResultByUserId,
         deleteTestResult,
         cleanData,
     };

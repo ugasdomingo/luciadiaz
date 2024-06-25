@@ -12,7 +12,7 @@ import { generateToken, generateRefreshToken } from '../utils/tokenManager';
 
 //Register
 export const register = async (req: Request, res: Response) => {
-    const { userName, email, password, role } = req.body;
+    const { userName, email, password, role, politiquesAccepted } = req.body;
 
     try {
         //Check if user exists and unique
@@ -29,6 +29,7 @@ export const register = async (req: Request, res: Response) => {
             email,
             password,
             role,
+            politiquesAccepted,
         });
 
         await user.save();

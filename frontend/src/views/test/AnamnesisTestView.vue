@@ -1,45 +1,58 @@
 <template>
     <main>
-        <h1>Test de Anamnesis</h1>
+        <h1>Test Anamnesis</h1>
+        <AnamnesisResultsComponent
+            v-if="testStore.anamnesis[0] !== undefined"
+            :answers="answers"
+        />
+        <AnamnesisFormComponent v-else />
     </main>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+//Import tools
+import { onBeforeMount } from 'vue';
+import { useUserStore } from '../../stores/user-store';
+import { useTestStore } from '../../stores/test-store';
+
+//Import components
+import AnamnesisFormComponent from '../../components/tests/anamnesis/AnamnesisFormComponent.vue';
+import AnamnesisResultsComponent from '../../components/tests/anamnesis/AnamnesisResultsComponent.vue';
+
+//Activate tools
+const userStore = useUserStore();
+const testStore = useTestStore();
+let answers: any = {};
+
+//User is logued?
+onBeforeMount(async () => {
+    if (localStorage.getItem('token')) {
+        await userStore.refreshToken();
+        await testStore.getOwnTestResultByUserId();
+
+        answers = testStore.anamnesis[0].answers;
+    }
+});
+</script>
 
 <style scoped lang="scss">
 main {
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
-    height: 80vh;
-    gap: 1rem;
-    margin: auto 0 0;
-    background-color: var(--color-primary);
-    color: var(--color-white);
+    align-items: center;
+    min-height: 100vh;
+    width: 100%;
+    padding: 12vh 4rem 2rem;
+    box-sizing: border-box;
 
     h1 {
-        font-size: 3rem;
-        font-weight: 700;
+        color: var(--color-primary);
+        margin-bottom: 2rem;
     }
 
-    p {
-        font-size: 1.5rem;
-        font-weight: 500;
-    }
-
-    a {
-        text-decoration: none;
-        margin-left: 0;
-        padding: 0.5rem 1rem;
-        border-radius: 0.5rem;
-        transition: background-color 0.2s ease-in-out;
-        color: var(--color-white);
-        background-color: var(--color-accent);
-
-        &:hover {
-            background-color: var(--color-primary);
-        }
+    .form {
+        width: 50%;
     }
 }
 </style>

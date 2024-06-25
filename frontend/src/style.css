@@ -3,11 +3,11 @@
   line-height: 1.5;
   font-weight: 400;
 
-  --color-primary: #453A8C;
-  --color-primary-light: #9A8FA6;
-  --color-secondary: #1A1440;
-  --color-tertiary: #194017;
-  --color-accent: #F29F05;
+  --color-primary: #BE80BF;
+  --color-primary-light: #be80bfe3;
+  --color-secondary: #473990;
+  --color-tertiary: #2F3273;
+  --color-accent: #BE80BF;
   --color-white: #f5f5f5;
   --color-black: #202020;
   --color-gray: #8C6448;
@@ -25,11 +25,18 @@ body {
 h1 {
   font-size: 4rem;
   line-height: 1.1;
+  font-weight: 400;
 }
 h2 {
   font-size: 3rem;
   line-height: 1.1;
+  font-weight: 400;
 }
+h3 {
+  font-size: 2rem;
+  line-height: 1.1;
+  font-weight: 300;
+} 
 
 a {
   text-decoration: none;

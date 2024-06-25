@@ -8,7 +8,7 @@ interface JwtPayload {
 
 export const userOrAdminAuth = async (req: any, res: any, next: any) => {
     try {
-        const token = req.header.authorization.split(' ')[1];
+        let token = req.headers.authorization.split(' ')[1];
 
         if (!token) {
             return res.status(401).json({
@@ -31,7 +31,7 @@ export const userOrAdminAuth = async (req: any, res: any, next: any) => {
         }
 
         if (user.role == 'Admin' || user.role == 'User') {
-            req.user = user;
+            req.uid = uid;
             next();
         } else {
             return res.status(401).json({

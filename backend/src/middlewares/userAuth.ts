@@ -8,7 +8,7 @@ interface JwtPayload {
 
 export const userAuth = async (req: any, res: any, next: any) => {
     try {
-        const token = req.header.authorization.split(' ')[1];
+        let token = req.headers.authorization;
 
         if (!token) {
             return res.status(401).json({
@@ -16,6 +16,7 @@ export const userAuth = async (req: any, res: any, next: any) => {
             });
         }
 
+        token = token.split(' ')[1];
         const { uid } = jwt.verify(
             token,
             process.env.JWT_SECRET as string
@@ -30,7 +31,7 @@ export const userAuth = async (req: any, res: any, next: any) => {
             });
         }
 
-        req.user = user;
+        req.uid = uid;
 
         next();
     } catch (error) {

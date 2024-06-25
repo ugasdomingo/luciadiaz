@@ -9,7 +9,7 @@ interface JwtPayload {
 export const adminAuth = async (req: any, res: any, next: any) => {
     try {
         //Get token
-        const token = req.header.authorization.split(' ')[1];
+        const token = req.headers.authorization.split(' ')[1];
 
         //Verify token
         if (!token) {

@@ -19,9 +19,8 @@
             <button type="submit">Iniciar Sesión</button>
             <div class="registrarse">
                 <p>¿No tienes una cuenta?</p>
-                <RouterLink to="/registro/user">Registrarse gratis</RouterLink>
-                <RouterLink to="/registro/" class="action-btn"
-                    >Afiliarme ahora</RouterLink
+                <RouterLink to="/registro/usuario"
+                    >Registrarse gratis</RouterLink
                 >
             </div>
         </form>
@@ -48,7 +47,7 @@ const login = async () => {
         await userStore.access(email.value, password.value);
 
         //Redirect
-        router.push('/mi-escritorio');
+        /* router.push('/espacio-personal'); */
     } catch (error) {
         console.log(error);
     }

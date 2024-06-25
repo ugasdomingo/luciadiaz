@@ -4,17 +4,6 @@
     <footer>
         <h2 class="slogan">¡Aprende, crece y Construye!</h2>
         <p>Todos los derechos reservados</p>
-        <div class="socials">
-            <a href="#">
-                <img src="" alt="instagram" />
-            </a>
-            <a href="#">
-                <img src="" alt="whatsapp" />
-            </a>
-            <a href="#">
-                <img src="" alt="youtube" />
-            </a>
-        </div>
     </footer>
 </template>
 
@@ -40,13 +29,6 @@ footer {
         color: var(--color-white);
         font-size: 1.25rem;
         margin: 0;
-    }
-
-    .socials {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        width: 10rem;
     }
 }
 </style>

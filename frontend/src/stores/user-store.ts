@@ -8,7 +8,7 @@ export const useUserStore = defineStore('user', () => {
     const token = ref(null);
     const expiresIn = ref(0);
     const userRole = ref('');
-    const userName = ref('');
+    const user = ref('');
 
     //Define actions
     const access = async (email: string, password: string) => {
@@ -18,33 +18,32 @@ export const useUserStore = defineStore('user', () => {
                 password,
             });
 
-            const expiresRefreshToken = 60 * 60 * 24 * 30;
-            expiresIn.value = expiresRefreshToken;
-
             token.value = res.data.token;
             userRole.value = res.data.role;
-            userName.value = res.data.userName;
+            user.value = res.data.userName;
 
-            localStorage.setItem('user', 'Algo');
-            localStorage.setItem('token', res.data.refreshToken);
-            setTime();
+            //guardar en localstorage
+            localStorage.setItem('user', res.data.userName);
+            localStorage.setItem('token', res.data.refreshToken.refreshToken);
         } catch (error) {
             console.log(error);
         }
     };
 
     const register = async (
-        name: string,
+        userName: string,
         email: string,
         password: string,
         role: string,
+        politiquesAccepted: boolean,
     ) => {
         try {
             const res = await api.post('/register', {
-                name,
+                userName,
                 email,
                 password,
                 role,
+                politiquesAccepted,
             });
 
             const expiresRefreshToken = 60 * 60 * 24 * 30;
@@ -52,11 +51,10 @@ export const useUserStore = defineStore('user', () => {
 
             token.value = res.data.token;
             userRole.value = res.data.role;
-            userName.value = res.data.userName;
+            user.value = res.data.userName;
 
-            localStorage.setItem('user', 'Algo');
-            localStorage.setItem('token', res.data.refreshToken);
-            setTime();
+            localStorage.setItem('user', res.data.userName);
+            localStorage.setItem('token', res.data.refreshToken.refreshToken);
         } catch (error) {
             console.log(error);
         }
@@ -65,22 +63,20 @@ export const useUserStore = defineStore('user', () => {
     const refreshToken = async () => {
         const refreshToken = localStorage.getItem('token');
         try {
-            const res = await api.post('/refresh', {
+            const res = await api({
+                url: '/refresh',
+                method: 'POST',
                 headers: {
                     Authorization: `Bearer ${refreshToken}`,
                 },
             });
 
-            const expiresRefreshToken = 60 * 60 * 24 * 30;
-            expiresIn.value = expiresRefreshToken;
-
             token.value = res.data.token;
             userRole.value = res.data.role;
-            userName.value = res.data.userName;
+            user.value = res.data.userName;
 
-            localStorage.setItem('user', 'Algo');
-            localStorage.setItem('token', res.data.refreshToken);
-            setTime();
+            localStorage.setItem('user', res.data.userName);
+            localStorage.setItem('token', res.data.refreshToken.refreshToken);
         } catch (error) {
             console.log(error);
             localStorage.removeItem('token');
@@ -104,7 +100,7 @@ export const useUserStore = defineStore('user', () => {
     };
 
     //Helpers funtions
-    const setTime = () => {
+    /* const setTime = () => {
         setTimeout(
             () => {
                 console.log('se refrescó');
@@ -112,7 +108,7 @@ export const useUserStore = defineStore('user', () => {
             },
             expiresIn.value * 1000 - 6000,
         );
-    };
+    }; */
 
     const logout = async () => {
         try {
@@ -120,7 +116,7 @@ export const useUserStore = defineStore('user', () => {
 
             token.value = null;
             userRole.value = '';
-            userName.value = '';
+            user.value = '';
             localStorage.removeItem('token');
             localStorage.removeItem('user');
         } catch (error) {
@@ -131,7 +127,7 @@ export const useUserStore = defineStore('user', () => {
     return {
         token,
         userRole,
-        userName,
+        user,
         access,
         register,
         refreshToken,

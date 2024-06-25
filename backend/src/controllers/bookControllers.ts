@@ -1,9 +1,7 @@
 //Import tools
 import { Request, Response } from 'express';
 import { Book, IBook } from '../models/Book';
-import { ICover } from '../interfaces/ICover';
-import fs from 'fs-extra';
-import { uploadImage, deleteImage } from '../utils/cloudinary';
+import { deleteImage } from '../utils/cloudinary';
 
 // Create --> Line 14
 // getAllBooks --> Line 76
@@ -18,6 +16,7 @@ export const createBook = async (req: Request, res: Response) => {
         type,
         price,
         sellUrl,
+        cover,
         description,
         author,
         category,
@@ -32,26 +31,13 @@ export const createBook = async (req: Request, res: Response) => {
             type,
             price,
             sellUrl,
+            cover,
             description,
             author,
             category,
             tags,
             notes,
         });
-
-        if (req.files) {
-            const cover = req.files.cover as ICover;
-
-            const result = await uploadImage(cover.tempFilePath as string);
-            book.cover = {
-                public_id: result.public_id,
-                secure_url: result.secure_url,
-            };
-
-            fs.unlink(cover.tempFilePath, (err) => {
-                if (err) throw err;
-            });
-        }
 
         await book.save();
 
