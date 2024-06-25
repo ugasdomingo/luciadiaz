@@ -231,4 +231,30 @@ nav {
 .background-white {
     background-color: var(--color-white);
 }
+
+@media screen and (max-width: 768px) {
+    nav {
+        width: 90%;
+        padding: 0;
+        box-sizing: border-box;
+        gap: 0;
+
+        div {
+            display: none;
+        }
+
+        .logo {
+            width: 100px;
+        }
+
+        a {
+            padding: 0 0.5rem;
+            font-size: 0.6rem;
+        }
+
+        .socials {
+            display: none;
+        }
+    }
+}
 </style>

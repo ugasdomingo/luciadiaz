@@ -66,4 +66,19 @@ main {
         }
     }
 }
+
+@media screen and (max-width: 768px) {
+    main {
+        padding: 10vh 2rem 0;
+        align-items: left;
+
+        h1 {
+            font-size: 3rem;
+        }
+
+        p {
+            font-size: 1.5rem;
+        }
+    }
+}
 </style>
