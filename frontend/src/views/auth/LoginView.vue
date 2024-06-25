@@ -31,11 +31,10 @@
 //Import tools
 import { useUserStore } from '../../stores/user-store';
 import { ref } from 'vue';
-import { useRouter, RouterLink } from 'vue-router';
+import { RouterLink } from 'vue-router';
 
 //Activate tools
 const userStore = useUserStore();
-const router = useRouter();
 
 //Get data
 const email = ref('');

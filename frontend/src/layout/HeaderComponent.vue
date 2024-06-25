@@ -1,6 +1,6 @@
 <script setup lang="ts">
 //Import tools
-import { RouterLink, useRouter } from 'vue-router';
+import { useRouter } from 'vue-router';
 import { onMounted, onUnmounted, ref } from 'vue';
 
 //Import components
