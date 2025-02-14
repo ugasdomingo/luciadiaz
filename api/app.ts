@@ -27,9 +27,6 @@ const allowedOrigins = [
     process.env.ORIGIN2 as string,
 ];
 
-//Setttings
-app.set('port', process.env.PORT || 4000);
-
 //Middlewares
 app.use(
     cors({
