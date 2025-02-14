@@ -22,7 +22,10 @@ import post_router from './src/routes/content/post-router';
 //Initialize app
 const app = express();
 
-const allowedOrigins = [process.env.ORIGIN1, process.env.ORIGIN2];
+const allowedOrigins = [
+    process.env.ORIGIN1 as string,
+    process.env.ORIGIN2 as string,
+];
 
 //Setttings
 app.set('port', process.env.PORT || 4000);
