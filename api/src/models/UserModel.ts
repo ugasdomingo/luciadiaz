@@ -17,6 +17,7 @@ export interface IUser extends Document {
     createdAt: Date;
     updatedAt: Date;
     comparePassword: (password: string) => Promise<boolean>;
+    changePassword: (password: string) => Promise<void>;
     verificateEmail: () => Promise<void>;
 }
 
@@ -62,6 +63,14 @@ userSchema.methods.comparePassword = async function (
     password: string
 ): Promise<boolean> {
     return await bcrypt.compare(password, this.password);
+};
+
+//Change the password
+userSchema.methods.changePassword = async function (
+    password: string
+): Promise<void> {
+    this.password = password;
+    await this.save();
 };
 
 //Verificate the email

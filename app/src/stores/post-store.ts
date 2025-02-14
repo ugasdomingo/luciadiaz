@@ -134,7 +134,7 @@ export const usePostStore = defineStore('post', () => {
     const add_like = async (id: string) => {
         try {
             const response = await api({
-                method: 'POST',
+                method: 'PUT',
                 url: `/content/post/like/${id}`,
                 headers: {
                     Authorization: `Bearer ${user_store.token}`

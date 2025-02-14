@@ -7,7 +7,9 @@ export interface IMedicalRecord extends Document {
     uid: Schema.Types.ObjectId;
     medical_record: string;
     patient_history: Schema.Types.ObjectId[] | string[];
+    history_completed: boolean;
     test_results: Schema.Types.ObjectId[] | string[];
+    send_audio_tests: boolean;
     liked_posts: Schema.Types.ObjectId[] | string[];
     liked_formations: Schema.Types.ObjectId[] | string[];
     liked_videos: Schema.Types.ObjectId[] | string[];
@@ -39,6 +41,10 @@ const medicalRecordSchema = new Schema<IMedicalRecord>(
                 },
             ],
         },
+        history_completed: {
+            type: Boolean,
+            default: false,
+        },
         test_results: {
             type: [
                 {
@@ -46,6 +52,10 @@ const medicalRecordSchema = new Schema<IMedicalRecord>(
                     ref: 'TestResult',
                 },
             ],
+        },
+        send_audio_tests: {
+            type: Boolean,
+            default: false,
         },
         liked_posts: {
             type: [

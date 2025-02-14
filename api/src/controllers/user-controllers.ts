@@ -15,6 +15,7 @@ import { create_token, create_refreshToken } from '../utils/token-manager';
 import {
     email_confirmation,
     email_notification_new_user,
+    send_email,
 } from '../utils/mailer';
 import jwt from 'jsonwebtoken';
 
@@ -26,6 +27,10 @@ const response_data = (
     medical_record: string,
     verified: boolean
 ) => ({ token, role, name, medical_record, verified } as any);
+
+//Create a 6 digit random number as string
+const create_random_number = () =>
+    Math.floor(100000 + Math.random() * 900000).toString();
 
 //Register a new user
 export const register_user = async (req: any, res: any) => {
@@ -59,8 +64,8 @@ export const register_user = async (req: any, res: any) => {
         await user.save();
 
         //Send email confirmation
-        /* email_confirmation(user.email, user._id, res);
-        email_notification_new_user(user.email, user.phone, user._id, res); */
+        email_confirmation(user.email, user._id, res);
+        email_notification_new_user(user.email, user.phone, user._id, res);
 
         //Send the response
         set_cookies(res, create_refreshToken(user._id));
@@ -199,6 +204,98 @@ export const confirm_email = async (req: any, res: any) => {
         return client_response(res, 200, 'Email confirmado, bienvenido(a)');
     } catch (error) {
         internal_response('Error while confirming the email', error);
+        return client_response(
+            res,
+            500,
+            'Error en servidor, intente más tarde'
+        );
+    }
+};
+
+//Request the reset password
+export const request_reset_password = async (req: any, res: any) => {
+    try {
+        const { email } = req.body;
+
+        //Find the user
+        const user: IUser | null = await User_model.findOne({ email });
+        if (!user) return client_response(res, 404, 'Usuario no encontrado');
+
+        //Create the reset password token
+        const reset_password_token = create_random_number();
+        user.reset_password_token = reset_password_token;
+        await user.save();
+
+        //Send the email
+        await send_email(
+            user.email,
+            'Cambia tu contraseña',
+            `Para cambiar tu contraseña, haz click en el siguiente enlace: <a href="${process.env.CLIENT_URL}/cambiar-contrasena/${reset_password_token}">Cambiar contraseña</a>`,
+            res
+        );
+
+        return client_response(
+            res,
+            200,
+            'Te he enviado un correo para cambiar tu contraseña'
+        );
+    } catch (error) {
+        internal_response('Error while requesting the reset password', error);
+        return client_response(
+            res,
+            500,
+            'Error en servidor, intente más tarde'
+        );
+    }
+};
+
+//Change the password
+export const change_password = async (req: any, res: any) => {
+    try {
+        const { password, reset_password_token } = req.body;
+
+        console.log(reset_password_token);
+        //Find the user
+        const user: IUser | null = await User_model.findOne({
+            reset_password_token,
+        });
+        if (!user) return client_response(res, 404, 'Usuario no encontrado');
+
+        //Change the password
+        await user.changePassword(password);
+
+        //Clear the reset password token
+        user.reset_password_token = '';
+        await user.save();
+
+        return client_response(res, 200, 'Contraseña cambiada correctamente');
+    } catch (error) {
+        internal_response('Error while changing the password', error);
+        return client_response(
+            res,
+            500,
+            'Error en servidor, intente más tarde'
+        );
+    }
+};
+
+//Update the user role
+export const update_user_role = async (req: any, res: any) => {
+    try {
+        const uid = req.uid;
+        const { role } = req.body;
+
+        //Find the user
+        const user: IUser | null = await User_model.findById(uid);
+        if (!user) return client_response(res, 404, 'Usuario no encontrado');
+
+        //Update the user role
+        user.role = role;
+        await user.save();
+
+        return client_response(res, 200, 'Rol actualizado correctamente');
+    } catch (error) {
+        internal_response('Error while updating the user role', error);
         return client_response(
             res,
             500,

@@ -3,9 +3,11 @@
 import { useUserStore } from '@/stores/user-store';
 import { ref } from 'vue';
 
+//Props
+defineProps<{ role: string }>();
+
 //Use tools
 const user_store = useUserStore();
-const role = ref('user');
 const policy_accepted = ref(false);
 </script>
 

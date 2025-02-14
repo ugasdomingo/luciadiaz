@@ -48,7 +48,7 @@ const handle_submit = async () => {
         }
 
         //Find if user did the test before
-        const user_test_results: object[] =
+        const user_test_results: object[] | null =
             user_store.all_user_data.test_results;
 
         if (user_test_results) {

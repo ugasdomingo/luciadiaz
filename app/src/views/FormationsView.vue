@@ -1,10 +1,30 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+//Import components
+import HomeFormationsComponent from '@/components/home-components/HomeFormationsComponent.vue';
+</script>
 
 <template>
-    <div>
-        <h1>Formations</h1>
-        <p>Formations page content</p>
-    </div>
+    <main class="page">
+        <h2>Cursos y Formaciones</h2>
+        <p>El conocimiento es la llave para vivir una vida extraordinaria</p>
+        <section class="formations__container">
+            <HomeFormationsComponent :display="0" />
+        </section>
+    </main>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.page {
+    text-align: center;
+
+    h2 {
+        margin: 0;
+        padding: 0;
+    }
+
+    p {
+        margin: 0.5rem 0 4rem;
+        padding: 0;
+    }
+}
+</style>

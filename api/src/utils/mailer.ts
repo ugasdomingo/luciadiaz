@@ -43,7 +43,7 @@ export const email_confirmation = (email: string, uid: string, res: any) => {
     const html = `
         <h1>Confirma tu email</h1>
         <p>Para confirmar tu email, haz click en el siguiente enlace:</p>
-        <a href="${process.env.CLIENT_URL}/confirm-email/${uid}">Confirmar email</a>
+        <a href="${process.env.CLIENT_URL}/auth/confirmar-correo/${uid}">Confirmar email</a>
     `;
     send_email(email, subject, html, res);
 };

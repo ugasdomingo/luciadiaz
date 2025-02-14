@@ -33,14 +33,17 @@ onMounted(() => {
         </RouterLink>
         <section class="button-area">
             <button
-                class="button__transparent"
+                class="button__simply"
                 @click="user_store.logout"
                 v-if="user_store.token"
             >
                 Cerrar sesión
             </button>
-            <RouterLink to="/area-privada" class="button__action">
+            <RouterLink to="/area-privada" class="button__transparent">
                 Área Privada
+            </RouterLink>
+            <RouterLink to="/terapias" class="button__action">
+                Agendar una cita
             </RouterLink>
         </section>
     </header>

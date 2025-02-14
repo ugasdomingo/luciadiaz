@@ -1,38 +1,35 @@
 <script setup lang="ts">
 //Import tools
-import { ref, onBeforeMount } from 'vue';
+import { computed, onBeforeMount } from 'vue';
 import { useUserStore } from '@/stores/user-store';
 
 //Import components
 import ArchetypeFormComponent from '../common/forms/tests/ArchetypeFormComponent.vue';
 
 //States
-const userStore = useUserStore();
-const all_ready_done = ref(false);
-const archetype_results = ref();
+const user_store = useUserStore();
+const archetype_results = computed(() =>
+    user_store.all_user_data.test_results.find(
+        (test: any) => test.title === 'archetype'
+    )
+);
 
 //Lifecycle
-onBeforeMount(() => {
+onBeforeMount(async () => {
     //Check if user has done the test before
-    const user_test_results: object[] =
-        userStore.all_user_data.test_results.find(
-            (test: any) => test.title === 'archetype'
-        );
-
-    if (user_test_results) {
-        if (user_test_results) {
-            all_ready_done.value = true;
-            archetype_results.value = user_test_results;
-        }
+    if (user_store.token && !user_store.all_user_data) {
+        user_store.user_role === 'Admin'
+            ? await user_store.get_data_by_admin()
+            : await user_store.get_data_by_user();
     }
 });
 </script>
 
 <template>
     <section>
-        <div class="show_results" v-if="all_ready_done">
+        <div class="show_results" v-if="archetype_results">
             <h2>
-                Felicidades {{ userStore.user_name.split(' ')[0] }} eres un
+                {{ user_store.user_name.split(' ')[0] }} eres un
                 <span> {{ archetype_results.results.archetype }}</span>
             </h2>
             <p>Todos tus resultados:</p>

@@ -25,20 +25,64 @@ onBeforeMount(async () => {
 
 <template>
     <section class="test__results__container">
-        <article>
-            <h3>
-                Arquetipo:
-                <span v-if="archetype_test_done">
-                    {{
-                        user_store.all_user_data.test_results.find(
-                            (test: any) => test.title === 'archetype'
-                        ).results.archetype
-                    }}
-                </span>
-                <RouterLink to="/tests/arquetipos">
-                    Descubre tu Arquetipo
-                </RouterLink>
-            </h3>
-        </article>
+        <h3>
+            Arquetipo:
+            <span v-if="archetype_test_done">
+                {{
+                    user_store.all_user_data.test_results.find(
+                        (test: any) => test.title === 'archetype'
+                    ).results.archetype
+                }}
+            </span>
+            <RouterLink to="/tests/arquetipos">
+                {{
+                    archetype_test_done
+                        ? 'Ver resultados'
+                        : 'Descubre tu Arquetipo'
+                }}
+            </RouterLink>
+        </h3>
+        <h3>
+            Temperamento:
+            <span v-if="temperament_test_done">
+                {{
+                    user_store.all_user_data.test_results.find(
+                        (test: any) => test.title === 'temperament'
+                    ).results.temperament
+                }}
+            </span>
+            <RouterLink to="/tests/temperamentos">
+                {{
+                    temperament_test_done
+                        ? 'Ver resultados'
+                        : 'Descubre tu Temperamento'
+                }}
+            </RouterLink>
+        </h3>
+        <h3>
+            Objetivo:
+            <span v-if="goal_test_done">
+                {{
+                    user_store.all_user_data.test_results.find(
+                        (test: any) => test.title === 'goal'
+                    ).results.goal
+                }}
+            </span>
+            <RouterLink to="/tests/meta">
+                {{ goal_test_done ? 'Ver resultados' : 'Descubre tu Objetivo' }}
+            </RouterLink>
+        </h3>
     </section>
 </template>
+
+<style scoped lang="scss">
+.test__results__container {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+
+    span {
+        margin-right: 0.5rem;
+    }
+}
+</style>

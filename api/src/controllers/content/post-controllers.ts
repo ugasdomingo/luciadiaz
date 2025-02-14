@@ -1,5 +1,6 @@
 //Import tools
 import { Post_model, IPost } from '../../models/content/PostModel';
+import { Medical_record_model } from '../../models/MedicalRecordModel';
 import { client_response, internal_response } from '../../utils/responses';
 import { upload_post_cover } from '../../utils/cloudinary';
 import { add_liked_post_id } from '../medical-record-controllers';
@@ -138,8 +139,19 @@ export const add_like = async (req: any, res: any) => {
         const post = await Post_model.findById(req.params.id);
         const { medical_record } = req.body;
 
+        //Check if the post exists
         if (!post) {
             return client_response(res, 404, 'Post no encontrado');
+        }
+
+        //Check if the user already liked the post
+        const already_liked = await Medical_record_model.findOne({
+            medical_record: medical_record,
+            liked_posts: post._id,
+        });
+
+        if (already_liked) {
+            return client_response(res, 400, 'Ya le diste like a este post');
         }
 
         //Add the post id to the user's liked posts

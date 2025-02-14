@@ -1,5 +1,6 @@
 <script setup lang="ts">
 //Import tools
+import { useFormationStore } from '@/stores/formation-store';
 
 defineProps<{
     _id: string;
@@ -9,6 +10,15 @@ defineProps<{
     price: number;
     likes: number;
 }>();
+
+//state
+const formation_store = useFormationStore();
+
+//methods
+const addLike = async (id: string) => {
+    await formation_store.like_formation(id);
+    await formation_store.get_all_formations();
+};
 </script>
 
 <template>
@@ -21,7 +31,11 @@ defineProps<{
             <p class="card-price">{{ price }} €</p>
             <p class="card-type">{{ type }}</p>
             <div class="card-social">
-                <img src="/icon/like.svg" alt="like icon" />
+                <img
+                    src="/icon/like.svg"
+                    alt="like icon"
+                    @click="addLike(_id)"
+                />
                 <p class="card-likes">{{ likes }}</p>
             </div>
         </section>
@@ -41,6 +55,7 @@ defineProps<{
     border-radius: 1rem;
     background-color: var(--color-white);
     position: relative;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
     box-sizing: border-box;
 
     .card__image {
@@ -60,7 +75,7 @@ defineProps<{
 
         .card-title {
             width: 80%;
-            margin: 0;
+            margin: 0.5rem 0 0;
             padding: 0.5rem;
             color: var(--color-white);
             background: linear-gradient(

@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { RouterLink } from 'vue-router';
-
 //Import tools
+import { usePostStore } from '@/stores/post-store';
 
 defineProps<{
     _id: string;
@@ -9,22 +8,37 @@ defineProps<{
     image: string;
     likes: number;
 }>();
+
+//state
+const post_store = usePostStore();
+
+//methods
+const post_like = async (id: string) => {
+    await post_store.add_like(id);
+    await post_store.get_all_posts();
+};
 </script>
 
 <template>
-    <RouterLink :to="`/blog/${_id}`" class="card">
-        <img :src="image" alt="post image" />
-        <section class="title">
-            <h4>{{ title }}</h4>
-        </section>
+    <article class="card">
+        <RouterLink :to="`/blog/${_id}`">
+            <img :src="image" alt="post image" />
+            <section class="title">
+                <h4>{{ title }}</h4>
+            </section>
+        </RouterLink>
         <section class="actions">
             <div class="like">
-                <img src="/icon/like.svg" alt="like icon" />
+                <img
+                    src="/icon/like.svg"
+                    alt="like icon"
+                    @click="post_like(_id)"
+                />
                 <p>{{ likes }}</p>
             </div>
             <button class="button__transparent">Leer post</button>
         </section>
-    </RouterLink>
+    </article>
 </template>
 
 <style scoped lang="scss">
@@ -40,26 +54,31 @@ defineProps<{
     color: var(--color-text);
     box-sizing: border-box;
 
-    &:hover {
-        transform: scale(1.02);
-        transition: transform 0.3s;
-    }
+    a {
+        text-decoration: none;
+        color: var(--color-text);
 
-    img {
-        width: 100%;
-        height: 200px;
-        border-radius: 0;
-        object-fit: cover;
-    }
-    .title {
-        width: 100%;
-        height: 80px;
-        padding: 1rem 0;
-        margin: 0;
+        &:hover {
+            transform: scale(1.02);
+            transition: transform 0.3s;
+        }
 
-        h4 {
+        img {
+            width: 100%;
+            height: 200px;
+            border-radius: 0;
+            object-fit: cover;
+        }
+        .title {
+            width: 100%;
+            height: 80px;
+            padding: 1rem 0;
             margin: 0;
-            padding: 0;
+
+            h4 {
+                margin: 0;
+                padding: 0;
+            }
         }
     }
 

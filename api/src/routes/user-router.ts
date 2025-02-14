@@ -9,6 +9,9 @@ import {
     refresh_token,
     logout_user,
     confirm_email,
+    request_reset_password,
+    change_password,
+    update_user_role,
     get_data_by_user,
     get_data_by_admin,
     get_all_users,
@@ -27,6 +30,12 @@ auth_router.post('/refresh', refresh_token);
 auth_router.post('/logout', logout_user);
 
 auth_router.get('/confirmar-correo/:uid', confirm_email);
+
+auth_router.post('/restablecer-contrasena', request_reset_password);
+
+auth_router.post('/cambiar-contrasena', change_password);
+
+auth_router.put('/update-role', user_auth, update_user_role);
 
 auth_router.get('/user', user_auth, get_data_by_user);
 

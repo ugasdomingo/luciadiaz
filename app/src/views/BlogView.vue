@@ -1,10 +1,14 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+//Import components
+import HomeBlogComponent from '@/components/home-components/HomeBlogComponent.vue';
+</script>
 
 <template>
-    <div>
-        <h1>Blog</h1>
-        <p>Blog page content</p>
-    </div>
+    <main class="page">
+        <section class="blog__container">
+            <HomeBlogComponent :display="0" />
+        </section>
+    </main>
 </template>
 
 <style scoped lang="scss"></style>

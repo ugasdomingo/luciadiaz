@@ -1,21 +1,28 @@
 <script setup lang="ts">
-import { ref, onBeforeMount } from 'vue';
+import { computed, onBeforeMount } from 'vue';
 import { usePostStore } from '@/stores/post-store';
 import PostCardComponent from '../common/cards/PostCardComponent.vue';
 
+//props
+const props = defineProps({
+    display: {
+        type: Number,
+        required: true
+    }
+});
+
 //States
 const post_store = usePostStore();
-const posts = ref();
-
-//Methods
-const last_posts = () => {
-    posts.value = post_store.all_posts.reverse().slice(0, 3);
-};
+const posts = computed(() => {
+    const posts_to_show = post_store.all_posts.reverse();
+    return props.display > 0
+        ? posts_to_show.slice(0, props.display)
+        : posts_to_show;
+});
 
 //life cycle hook
 onBeforeMount(async () => {
     await post_store.get_all_posts();
-    last_posts();
 });
 </script>
 
@@ -41,7 +48,7 @@ onBeforeMount(async () => {
     flex-direction: column;
     align-items: center;
     padding: 2rem;
-    margin: 0;
+    margin: 4rem 0 0;
 
     h2 {
         margin-bottom: 3rem;

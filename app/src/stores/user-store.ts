@@ -30,6 +30,7 @@ export const useUserStore = defineStore('user', () => {
 
     //Admin states
     const users = ref<IUser[]>([]);
+    const user_id = ref('');
 
     //Helpers functions
     const handle_response_user_data = (response: any) => {
@@ -196,6 +197,82 @@ export const useUserStore = defineStore('user', () => {
         }
     };
 
+    const request_reset_password = async (email: string) => {
+        try {
+            const response = await api({
+                method: 'POST',
+                url: '/auth/restablecer-contrasena',
+                data: {
+                    email
+                }
+            });
+
+            util_store.display_notification(
+                response.data.message,
+                response.status
+            );
+        } catch (error) {
+            console.log(error);
+            util_store.display_notification(
+                'Error al solicitar restablecer contraseña, intente de nuevo',
+                500
+            );
+        }
+    };
+
+    const change_password = async (
+        password: string,
+        reset_password_token: string
+    ) => {
+        try {
+            const response = await api({
+                method: 'POST',
+                url: '/auth/cambiar-contrasena',
+                data: {
+                    password,
+                    reset_password_token
+                }
+            });
+
+            util_store.display_notification(
+                response.data.message,
+                response.status
+            );
+        } catch (error) {
+            console.log(error);
+            util_store.display_notification(
+                'Error al cambiar contraseña, intente de nuevo',
+                500
+            );
+        }
+    };
+
+    const update_user_role = async (role: string) => {
+        try {
+            const response = await api({
+                method: 'PUT',
+                url: '/auth/update-role',
+                data: {
+                    role
+                },
+                headers: {
+                    Authorization: `Bearer ${token.value}`
+                }
+            });
+
+            util_store.display_notification(
+                response.data.message,
+                response.status
+            );
+        } catch (error) {
+            console.log(error);
+            util_store.display_notification(
+                'Error al actualizar rol, intente de nuevo',
+                500
+            );
+        }
+    };
+
     const get_data_by_user = async () => {
         try {
             const response = await api({
@@ -222,11 +299,11 @@ export const useUserStore = defineStore('user', () => {
     };
 
     //Admin methods
-    const get_data_by_admin = async (id: string) => {
+    const get_data_by_admin = async () => {
         try {
             const response = await api({
                 method: 'GET',
-                url: `/medical-data/user/${id}`,
+                url: `/medical-data/user/${user_id.value}`,
                 headers: {
                     Authorization: `Bearer ${token.value}`
                 }
@@ -284,11 +361,15 @@ export const useUserStore = defineStore('user', () => {
         access_phone,
         access_password,
         users,
+        user_id,
         register,
         login,
         refresh,
         logout,
         confirm_email,
+        request_reset_password,
+        change_password,
+        update_user_role,
         get_data_by_user,
         get_data_by_admin,
         get_all_users

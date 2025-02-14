@@ -1,17 +1,12 @@
 <script setup lang="ts">
 //Import tools
-import { ref, onMounted } from 'vue';
+import { ref, computed, watch, onBeforeMount } from 'vue';
 import { useUserStore } from '@/stores/user-store';
 
 //Import components
 import UserHistoryComponent from './user-data-component/UserHistoryComponent.vue';
 import UserTestResultsComponent from './user-data-component/UserTestResultsComponent.vue';
-
-const props = defineProps({
-    user_id: {
-        type: String
-    }
-});
+import UserTasksComponent from './user-data-component/UserTasksComponent.vue';
 
 //States
 const user_store = useUserStore();
@@ -21,18 +16,36 @@ const show_user_test_results = ref(false);
 const show_user_task = ref(false);
 const show_user_enrollments = ref(false);
 const show_user_likes = ref(false);
-const show_book_appointment = ref(false);
+const user_id = computed(() => user_store.user_id);
+const patient_or_admin = computed(() => {
+    if (
+        user_store.user_role === 'patient' ||
+        user_store.user_role === 'Admin'
+    ) {
+        return true;
+    } else {
+        return false;
+    }
+});
 
 const get_user_data = async () => {
-    props.user_id
-        ? await user_store.get_data_by_admin(props.user_id)
+    user_store.user_id
+        ? await user_store.get_data_by_admin()
         : await user_store.get_data_by_user();
     medical_data.value = user_store.all_user_data;
 };
 
+//computed get_user_data on user_store.user_id change
+watch(user_id, get_user_data, { immediate: true });
+
 //Lifecycle
-onMounted(async () => {
-    get_user_data();
+onBeforeMount(async () => {
+    if (localStorage.getItem('role')) {
+        await user_store.update_user_role(
+            localStorage.getItem('role') as string
+        );
+        localStorage.removeItem('role');
+    }
 });
 </script>
 
@@ -42,30 +55,31 @@ onMounted(async () => {
             <section v-if="medical_data" class="user__profile__info">
                 <h3>Hola {{ medical_data.user_name.split(' ')[0] }}</h3>
                 <h4>Información de contacto</h4>
+                <p v-if="patient_or_admin">
+                    Historial: {{ user_store.user_medical_record }}
+                </p>
                 <p>Correo: {{ medical_data.user_email }}</p>
                 <p>Teléfono: {{ medical_data.user_phone }}</p>
             </section>
             <section v-else class="user__profile__info">Cargando ...</section>
             <section class="user__profile__actions">
                 <h3>¿Tienes dudas? Te puedo ayudar</h3>
-                <a href="#">Contartar por WhatsApp</a>
-                <button
+                <a
+                    href="http://wa.me/34624721896"
+                    target="_blank"
                     class="button__simply"
-                    @click="show_book_appointment = true"
+                    >Contactar por WhatsApp</a
                 >
-                    Agendar una cita
-                </button>
             </section>
         </div>
         <div class="user__data__display">
-            {{ medical_data }}
-            <section>
+            <section v-if="patient_or_admin">
                 <button
                     class="button__simply"
                     @click="show_user_history = !show_user_history"
                 >
                     {{ show_user_history ? 'Cerrar' : 'Ver' }}
-                    <span>Historial médico</span>
+                    <span>Historia Clínica</span>
                 </button>
                 <UserHistoryComponent v-if="show_user_history" />
             </section>
@@ -79,7 +93,7 @@ onMounted(async () => {
                 </button>
                 <UserTestResultsComponent v-if="show_user_test_results" />
             </section>
-            <section>
+            <section v-if="patient_or_admin">
                 <button
                     class="button__simply"
                     @click="show_user_task = !show_user_task"
@@ -87,6 +101,7 @@ onMounted(async () => {
                     {{ show_user_task ? 'Cerrar' : 'Ver' }}
                     <span>Tareas asignadas</span>
                 </button>
+                <UserTasksComponent v-if="show_user_task" />
             </section>
             <section>
                 <button
@@ -105,6 +120,10 @@ onMounted(async () => {
                     {{ show_user_likes ? 'Cerrar' : 'Ver' }}
                     <span>Contenido favorito</span>
                 </button>
+                <h2 v-if="show_user_likes">
+                    Próximamente podrás ver aquí todos los contenidos que te
+                    gusten de mi web
+                </h2>
             </section>
         </div>
     </section>
@@ -168,6 +187,10 @@ onMounted(async () => {
             padding: 1rem;
             box-sizing: border-box;
             transition: all 0.5s ease;
+
+            h2 {
+                text-align: center;
+            }
 
             button {
                 width: 100%;

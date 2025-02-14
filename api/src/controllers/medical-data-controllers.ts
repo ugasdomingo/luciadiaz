@@ -14,6 +14,7 @@ import { Video_model } from '../models/content/VideoModel';
 import { Post_model } from '../models/content/PostModel';
 import { client_response, internal_response } from '../utils/responses';
 import { encrypt, decrypt } from '../utils/encrpt';
+import { send_email } from '../utils/mailer';
 
 //Get all the medical records by user
 export const get_all_medical_data_by_user = async (req: any, res: any) => {
@@ -98,10 +99,36 @@ export const get_all_medical_data_by_user = async (req: any, res: any) => {
         //decrypt the tasks
         const decrypted_assigned_tasks = assigned_tasks.map((task) => {
             return {
+                task_id: task._id,
                 task: decrypt(task.task),
                 status: task.status,
             };
         });
+
+        //Send email for notifications
+        if (
+            medical_record.test_results.length === 3 &&
+            medical_record.send_audio_tests === false
+        ) {
+            //Send email
+            const subject = `${user.name}, ha completado los 3 test`;
+            const text = `${user.name} ha completado los 3 test, por favor, envía un audio explicando los 3 resultados a ${user.phone} o al correo ${user.email}.`;
+            send_email('info@luciadiaz.es', subject, text, res);
+            medical_record.send_audio_tests = true;
+            await medical_record.save();
+        }
+
+        if (
+            medical_record.patient_history.length === 14 &&
+            medical_record.history_completed === false
+        ) {
+            //Send email
+            const subject = `${user.name}, ha completado el historial médico`;
+            const text = `${user.name} ha completado el historial médico, por favor, revisa los resultados y actualiza el historial médico.`;
+            send_email('info@luciadiaz.es', subject, text, res);
+            medical_record.history_completed = true;
+            await medical_record.save();
+        }
 
         return client_response(res, 200, 'Correcto', {
             user_name: user.name,
@@ -209,6 +236,7 @@ export const get_all_medical_data_by_admin = async (req: any, res: any) => {
         //decrypt the tasks
         const decrypted_assigned_tasks = assigned_tasks.map((task) => {
             return {
+                tasK_id: task._id,
                 task: decrypt(task.task),
                 status: task.status,
             };

@@ -112,7 +112,7 @@ export const useFormationStore = defineStore('formation', () => {
     const like_formation = async (id: string) => {
         try {
             const response = await api({
-                method: 'POST',
+                method: 'PUT',
                 url: `/formation/like/${id}`,
                 headers: {
                     Authorization: `Bearer ${user_store.token}`

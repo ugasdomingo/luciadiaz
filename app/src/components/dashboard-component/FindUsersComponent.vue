@@ -49,7 +49,8 @@ onBeforeMount(async () => {
                 v-for="user in show_users"
                 :key="user._id"
                 @click="
-                    user_store.get_data_by_admin(user._id),
+                    (user_store.user_id = user._id),
+                        user_store.get_data_by_admin(),
                         (text_to_filter = ''),
                         (show_users = []),
                         (show_users_data = true),

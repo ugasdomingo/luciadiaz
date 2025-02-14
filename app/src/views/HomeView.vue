@@ -12,8 +12,8 @@ import HomeBlogComponent from '@/components/home-components/HomeBlogComponent.vu
         <HomeHeroComponent />
         <HomeWellcomeComponent />
         <HomeFeaturesComponent />
-        <HomeFormationsComponent />
-        <HomeBlogComponent />
+        <HomeFormationsComponent :display="3" />
+        <HomeBlogComponent :display="3" />
     </main>
 </template>
 

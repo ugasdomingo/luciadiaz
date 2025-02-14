@@ -35,7 +35,7 @@ const handdle_submit = async () => {
 <template>
     <section class="history__form">
         <h3>{{ title }}</h3>
-        <form @submit.prevent="handdle_submit">
+        <form @submit="handdle_submit">
             <div v-for="(answer, index) in answers" :key="index">
                 <label :for="answer.question">{{ answer.question }}</label>
                 <input

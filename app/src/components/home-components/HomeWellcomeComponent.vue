@@ -17,7 +17,7 @@
                     <li>Los tests y formaciones te nutrirán de herramientas</li>
                     <li>El blog te permitirá profundizar conocimiento</li>
                     <li>
-                        con las terapias podré acompañarte y ayudarte durante
+                        Con las terapias podré acompañarte y ayudarte durante
                         todo tu proceso
                     </li>
                 </ul>
@@ -29,16 +29,16 @@
 <style scoped lang="scss">
 .wellcome {
     width: 100%;
-    height: 60vh;
+    min-height: 70vh;
     display: flex;
     align-items: flex-end;
-    padding: 0;
+    padding: 6rem 0 0;
     margin: 0;
     box-sizing: border-box;
 
     .wellcome__decoration {
         width: 90%;
-        height: 80%;
+        max-height: 400px;
         display: flex;
         justify-content: space-around;
         align-items: center;
@@ -50,7 +50,7 @@
         box-sizing: border-box;
 
         img {
-            height: 100%;
+            height: 250px;
             object-fit: cover;
         }
         .content {

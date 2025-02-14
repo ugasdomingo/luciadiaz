@@ -1,8 +1,7 @@
 <script setup lang="ts">
 //Import tools
-import { ref, onBeforeMount } from 'vue';
+import { ref, computed } from 'vue';
 import { useUserStore } from '@/stores/user-store';
-import type { IHistory } from '@/types/IPatientHistory';
 
 //Import components
 import GeneralHistoryFormComponent from '@/components/common/forms/history/GeneralHistoryFormComponent.vue';
@@ -10,28 +9,26 @@ import DisplayUserHistoryComponent from '@/components/common/displays/DisplayUse
 
 //States
 const user_store = useUserStore();
-const patient_historys = ref<IHistory[]>([]);
-const form_to_show = ref<number>(0);
+const patient_historys = computed(
+    () => user_store.all_user_data.patient_history
+);
+const form_to_show = computed(() => patient_historys.value.length + 1);
 const show_all_history_answers = ref(false);
 
 //Lifecycle
-onBeforeMount(async () => {
-    patient_historys.value = user_store.all_user_data.patient_history;
-    form_to_show.value = patient_historys.value.length + 1;
-});
 </script>
 
 <template>
     <section class="history__container">
         <h3>
             {{
-                patient_historys.length === 12
+                patient_historys.length === 14
                     ? 'Feclicidades has completado el historial'
                     : 'Por favor completa el historial'
             }}
         </h3>
         <GeneralHistoryFormComponent
-            v-if="form_to_show < 12"
+            v-if="form_to_show < 14"
             :history_number="form_to_show - 1"
         />
         <button

@@ -3,6 +3,7 @@ import {
     Formation_model,
     IFormation,
 } from '../../models/formation/FormationModel';
+import { Medical_record_model } from '../../models/MedicalRecordModel';
 import { client_response, internal_response } from '../../utils/responses';
 import { upload_formation_cover } from '../../utils/cloudinary';
 import { add_liked_formation_id } from '../medical-record-controllers';
@@ -112,12 +113,27 @@ export const add_like = async (req: any, res: any) => {
     try {
         const { medical_record } = req.body;
 
+        //Check if the formation exists
         const formation: IFormation | null = await Formation_model.findById(
             req.params.id
         );
 
         if (!formation) {
             return client_response(res, 404, 'Formación no encontrada');
+        }
+
+        //Check if the medical record has already liked the formation
+        const medical_record_exists = await Medical_record_model.findOne({
+            medical_record: medical_record,
+            liked_formations: req.params.id,
+        });
+
+        if (medical_record_exists) {
+            return client_response(
+                res,
+                400,
+                'Ya le ha dado like a esta formación'
+            );
         }
 
         await add_liked_formation_id(medical_record, formation._id);

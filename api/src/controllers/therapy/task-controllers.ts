@@ -1,9 +1,6 @@
 //Import tools
 import { Task_model, ITask } from '../../models/therapy/TaskModel';
-import {
-    Medical_record_model,
-    IMedicalRecord,
-} from '../../models/MedicalRecordModel';
+import { User_model, IUser } from '../../models/UserModel';
 import { client_response, internal_response } from '../../utils/responses';
 import { add_assigned_task_id } from '../medical-record-controllers';
 import { encrypt, decrypt } from '../../utils/encrpt';
@@ -11,7 +8,12 @@ import { encrypt, decrypt } from '../../utils/encrpt';
 //Create a new task
 export const create_task = async (req: any, res: any) => {
     try {
-        const { uid, task, medical_record } = req.body;
+        const { uid, task } = req.body;
+
+        //Find the user
+        const user: IUser | null = await User_model.findById(uid);
+
+        if (!user) return client_response(res, 404, 'Usuario no encontrado');
 
         //Encrypt the task
         const task_encrypted = encrypt(task);
@@ -26,85 +28,11 @@ export const create_task = async (req: any, res: any) => {
         await new_task.save();
 
         //Add the task to the medical record
-        await add_assigned_task_id(medical_record, new_task._id);
+        await add_assigned_task_id(user.medical_record, new_task._id);
 
         return client_response(res, 201, 'Tarea agregada correctamente');
     } catch (error) {
         internal_response('Error while creating the task', error);
-        return client_response(
-            res,
-            500,
-            'Error en servidor, intente más tarde'
-        );
-    }
-};
-
-//User get the tasks
-export const user_get_tasks = async (req: any, res: any) => {
-    try {
-        const { medical_record } = req.params;
-
-        //Find the medical record
-        const medical_record_data: IMedicalRecord | null =
-            await Medical_record_model.findOne({ medical_record }).lean();
-
-        if (!medical_record_data)
-            return client_response(res, 404, 'Medical record not found');
-
-        //Is the user allowed to see the tasks?
-        if (medical_record_data.uid !== req.uid)
-            return client_response(res, 403, 'No autorizado');
-
-        //Find the tasks
-        const tasks: ITask[] = await Task_model.find({
-            _id: { $in: medical_record_data.assigned_tasks },
-        });
-
-        //Decrypt the tasks
-        tasks.forEach((task) => {
-            task.task = decrypt(task.task);
-        });
-
-        return client_response(res, 200, 'Correcto', {
-            tasks,
-        });
-    } catch (error) {
-        internal_response('Error while getting the tasks', error);
-        return client_response(
-            res,
-            500,
-            'Error en servidor, intente más tarde'
-        );
-    }
-};
-
-//Admin get the tasks
-export const admin_get_tasks = async (req: any, res: any) => {
-    try {
-        const { medical_record } = req.params;
-
-        //Find the medical record
-        const medical_record_data: IMedicalRecord | null =
-            await Medical_record_model.findOne({ medical_record }).lean();
-
-        if (!medical_record_data)
-            return client_response(res, 404, 'Medical record not found');
-
-        //Find the tasks
-        const tasks: ITask[] = await Task_model.find({
-            _id: { $in: medical_record_data.assigned_tasks },
-        });
-
-        //Decrypt the tasks
-        tasks.forEach((task) => {
-            task.task = decrypt(task.task);
-        });
-
-        return client_response(res, 200, 'Correcto', {
-            tasks,
-        });
-    } catch (error) {
-        internal_response('Error while getting the tasks', error);
         return client_response(
             res,
             500,
@@ -124,7 +52,7 @@ export const update_task_status = async (req: any, res: any) => {
         if (!task) return client_response(res, 404, 'Tarea no encontrada');
 
         //authorized to update the task?
-        if (task.uid !== req.uid)
+        if (task.uid == req.uid)
             return client_response(res, 403, 'No autorizado');
 
         //Update the task

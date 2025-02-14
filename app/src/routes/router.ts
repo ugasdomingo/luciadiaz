@@ -18,6 +18,21 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/AuthView.vue')
     },
     {
+        path: '/cambiar-contrasena/:token',
+        name: 'ChangePassword',
+        component: () => import('@/views/ChangePasswordView.vue')
+    },
+    {
+        path: '/agendar/confirmado',
+        name: 'AppointmentPayed',
+        component: () => import('@/views/AppoinmentView.vue')
+    },
+    {
+        path: '/agendar/cita-confirmada',
+        name: 'AppointmentConfirmed',
+        component: () => import('@/views/PatientView.vue')
+    },
+    {
         path: '/blog',
         name: 'Blog',
         component: () => import('@/views/BlogView.vue')
@@ -53,7 +68,7 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/TherapiesView.vue')
     },
     {
-        path: '/terapias/:id',
+        path: '/terapias/:therapy',
         name: 'Therapy',
         component: () => import('@/views/TherapiesOneView.vue')
     },
@@ -65,7 +80,8 @@ const routes: Array<RouteRecordRaw> = [
     {
         path: '/tests/:test_name',
         name: 'Test',
-        component: () => import('@/views/TestsOneView.vue')
+        component: () => import('@/views/TestsOneView.vue'),
+        meta: { auth: true }
     },
     {
         path: '/area-privada',
