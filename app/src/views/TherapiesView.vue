@@ -23,8 +23,16 @@ import TherapyCardComponent from '@/components/common/cards/TherapyCardComponent
 <style scoped lang="scss">
 .page {
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: space-evenly;
     align-items: center;
     gap: 1rem;
+}
+
+@media screen and (max-width: 768px) {
+    .page {
+        gap: 2rem;
+        margin: 4rem 0 2rem;
+    }
 }
 </style>

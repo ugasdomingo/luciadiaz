@@ -28,7 +28,7 @@ const addLike = async (id: string) => {
             <h4 class="card-title">{{ title }}</h4>
         </RouterLink>
         <section class="card__information">
-            <p class="card-price">{{ price }} €</p>
+            <p class="card-price">{{ price === 0 ? 'Gratis' : `${price}€` }}</p>
             <p class="card-type">{{ type }}</p>
             <div class="card-social">
                 <img

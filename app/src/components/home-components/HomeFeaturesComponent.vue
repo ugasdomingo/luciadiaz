@@ -83,4 +83,24 @@ import { features } from '@/static/features';
         }
     }
 }
+
+@media screen and (max-width: 768px) {
+    .feature {
+        height: fit-content;
+        padding: 4rem 1rem;
+
+        h2 {
+            font-size: 1.5rem;
+        }
+
+        .features {
+            flex-direction: column;
+            gap: 1rem;
+
+            .feature-card {
+                width: 100%;
+            }
+        }
+    }
+}
 </style>

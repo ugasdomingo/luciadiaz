@@ -51,7 +51,9 @@ const handdleSubmit = async () => {
                     placeholder="Correo electrónico"
                     v-model="email"
                 />
-                <button type="submit" class="button__action">Enviar</button>
+                <button type="submit" class="button__action" v-if="email">
+                    Enviar
+                </button>
             </form>
             <button
                 v-if="change_password"
@@ -106,6 +108,7 @@ const handdleSubmit = async () => {
         position: absolute;
         top: 4rem;
         left: 0;
+        box-sizing: border-box;
 
         h2 {
             margin: 0;
@@ -120,6 +123,24 @@ const handdleSubmit = async () => {
             flex-direction: column;
             align-items: center;
             gap: 1rem;
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .page {
+        h2 {
+            font-size: 2.5rem;
+            text-align: center;
+        }
+
+        .login,
+        .register {
+            width: 90%;
+        }
+
+        .reset-password {
+            width: 100%;
         }
     }
 }

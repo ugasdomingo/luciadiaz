@@ -89,4 +89,48 @@
         }
     }
 }
+
+@media screen and (max-width: 768px) {
+    .wellcome {
+        padding: 0;
+        margin: 0;
+        height: fit-content;
+
+        .wellcome__decoration {
+            width: 100%;
+            max-height: fit-content;
+            flex-direction: column;
+            gap: 1rem;
+            padding: 4rem 1rem;
+            border-radius: 0;
+
+            img {
+                height: 200px;
+                width: 100%;
+                border-radius: 1rem;
+            }
+            .content {
+                width: 100%;
+                padding: 0 1rem;
+                border-radius: 0;
+                border-radius: 0;
+                h3 {
+                    font-size: 2rem;
+                }
+                p {
+                    width: 100%;
+                    font-size: 1rem;
+                }
+                ul {
+                    width: 100%;
+                    gap: 0.5rem;
+                    padding-left: 1rem;
+                    li {
+                        font-size: 0.9rem;
+                    }
+                }
+            }
+        }
+    }
+}
 </style>

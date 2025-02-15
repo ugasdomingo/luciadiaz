@@ -31,6 +31,7 @@ onBeforeMount(async () => {
     <section class="formations-list">
         <div class="background__decoration__one"></div>
         <div class="background__decoration__two"></div>
+        <h2>Próximas Formaciones</h2>
         <FormationCardComponent
             v-for="formation in formations_list"
             :key="formation._id"
@@ -57,6 +58,10 @@ onBeforeMount(async () => {
     align-items: center;
     position: relative;
 
+    h2 {
+        display: none;
+    }
+
     .background__decoration__one {
         position: absolute;
         bottom: auto;
@@ -77,6 +82,33 @@ onBeforeMount(async () => {
         border-radius: 400px 0 0 400px;
         opacity: 0.5;
         z-index: -3;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .formations-list {
+        width: 100%;
+        height: fit-content;
+        gap: 1rem;
+        padding: 0.5rem 0 2rem;
+        margin: 4rem 0 0;
+        border-top: 2px solid var(--color-primary);
+        border-bottom: 2px solid var(--color-primary);
+
+        h2 {
+            display: block;
+            font-size: 2rem;
+            text-align: center;
+            margin: 1rem 0;
+        }
+    }
+
+    .background__decoration__one {
+        display: none;
+    }
+
+    .background__decoration__two {
+        display: none;
     }
 }
 </style>

@@ -38,7 +38,7 @@ onMounted(() => {
     left: 50%;
     transform: translateX(-50%);
     z-index: 1000;
-    animation: slideIn 1s ease-in-out, fadeOut 3s 2s ease-in-out forwards;
+    animation: slideIn 1s ease-in-out, fadeOut 4s 2s ease-in-out forwards;
     p {
         margin: 0;
     }
@@ -67,6 +67,12 @@ onMounted(() => {
     }
     to {
         opacity: 0;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .message {
+        width: 80%;
     }
 }
 </style>

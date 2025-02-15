@@ -26,4 +26,10 @@ import HomeBlogComponent from '@/components/home-components/HomeBlogComponent.vu
     margin: 0;
     box-sizing: border-box;
 }
+
+@media screen and (max-width: 768px) {
+    .page__home {
+        height: fit-content;
+    }
+}
 </style>

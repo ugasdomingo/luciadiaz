@@ -91,4 +91,30 @@ header {
         gap: 1rem;
     }
 }
+
+@media screen and (max-width: 768px) {
+    header {
+        padding: 0 0.5rem;
+        height: 4rem;
+
+        .logo {
+            img {
+                width: 3rem;
+                height: 3rem;
+            }
+            h2 {
+                font-size: 1.5rem;
+                display: none;
+            }
+        }
+
+        .button-area {
+            gap: 0.5rem;
+
+            button {
+                display: none;
+            }
+        }
+    }
+}
 </style>

@@ -44,4 +44,17 @@ defineProps<{
         box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.5);
     }
 }
+
+@media screen and (max-width: 768px) {
+    .card__container {
+        width: 100%;
+        padding: 0.5rem;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+
+        &:hover {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            scale: 1;
+        }
+    }
+}
 </style>

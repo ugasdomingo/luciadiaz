@@ -3,9 +3,11 @@
 import { ref, onBeforeMount } from 'vue';
 import { useRoute } from 'vue-router';
 import { therapies } from '@/static/therapies';
+import { useUtilStore } from '@/stores/util-store';
 
 //States
 const route = useRoute();
+const util_store = useUtilStore();
 const therapy = ref();
 const show_tutorial = ref(false);
 const show_other_payments = ref(false);
@@ -30,11 +32,11 @@ onBeforeMount(() => {
 <template>
     <main class="page">
         <section class="info__container">
+            <h1>{{ therapy.title }}</h1>
             <img :src="therapy.image_url" alt="therapy.title" />
             <p>{{ therapy.description }}</p>
         </section>
         <aside class="actions__container">
-            <h1>{{ therapy.title }}</h1>
             <p>Duración: <span>45 minutos</span></p>
             <p>
                 Costo: <span>{{ therapy.cost }}€</span>
@@ -49,32 +51,11 @@ onBeforeMount(() => {
 
             <button
                 class="button__simply"
-                @click="show_other_payments = !show_other_payments"
+                @click="util_store.show_other_payment_method = true"
             >
-                {{ show_tutorial ? 'Ocultar' : 'Ver' }} otros métodos de pago
+                Ver otros métodos de pago
             </button>
-            <section class="other__payments" v-if="show_other_payments">
-                <h3>Métodos de pago adicionales</h3>
-                <p>Pagos en Europa</p>
-                <ul>
-                    <li>Cuenta: <span>BE58 9675 2118 2679</span></li>
-                    <li>Titular: <span>Lucia Antonella Diaz Gimenez</span></li>
-                    <li>
-                        Bizum España: <span>624 72 18 96 - Lucia Diaz</span>
-                    </li>
-                </ul>
-                <p>Pagos Estados Unidos</p>
-                <ul>
-                    <li>Zelle: <span>+1 </span></li>
-                    <li>Titular: <span>Milagros Gimenez</span></li>
-                </ul>
-                <p>Pago Móvil Venezuela</p>
-                <ul>
-                    <li>Teléfono: <span>0414 260 44 96</span></li>
-                    <li>Banco: <span>Provincial</span></li>
-                    <li>Cédula: <span>V-19.066.267</span></li>
-                </ul>
-            </section>
+
             <button
                 class="button__simply"
                 @click="show_tutorial = !show_tutorial"
@@ -92,13 +73,18 @@ onBeforeMount(() => {
         display: flex;
         flex-direction: column;
         gap: 1rem;
+        box-sizing: border-box;
+
+        h1 {
+            margin-bottom: 0;
+        }
 
         img {
             width: 100%;
             height: 250px;
             object-fit: cover;
             object-position: center;
-            border-radius: 10rem;
+            border-radius: 1rem;
         }
     }
 
@@ -107,9 +93,10 @@ onBeforeMount(() => {
         display: flex;
         flex-direction: column;
         gap: 2rem;
-        position: absolute;
-        top: 3rem;
+        position: fixed;
+        top: 6rem;
         right: 4rem;
+        box-sizing: border-box;
 
         h1 {
             font-size: 2rem;
@@ -124,6 +111,37 @@ onBeforeMount(() => {
             span {
                 font-weight: 700;
             }
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .page {
+        flex-direction: column;
+        margin-top: 4rem;
+
+        .info__container {
+            width: 100%;
+
+            h1 {
+                font-size: 2.5rem;
+                margin-top: 0;
+            }
+
+            img {
+                height: 200px;
+                border-radius: 1rem;
+            }
+        }
+
+        .actions__container {
+            width: 100%;
+            gap: 0.5rem;
+            margin-top: 2rem;
+            position: static;
+            top: 0;
+            right: 0;
+            padding: 0;
         }
     }
 }
