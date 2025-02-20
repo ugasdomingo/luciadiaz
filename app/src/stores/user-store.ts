@@ -68,7 +68,9 @@ export const useUserStore = defineStore('user', () => {
             );
 
             if (response.status === 201) {
-                router.push('/area-privada');
+                util_store.show_access_modal
+                    ? (util_store.show_access_modal = false)
+                    : router.push('/area-privada');
             }
         } catch (error) {
             console.log(error);
@@ -98,7 +100,9 @@ export const useUserStore = defineStore('user', () => {
             );
 
             if (response.status === 200) {
-                router.push('/area-privada');
+                util_store.show_access_modal
+                    ? (util_store.show_access_modal = false)
+                    : router.push('/area-privada');
             }
         } catch (error) {
             console.log(error);

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 //Import tools
-import { ref, computed, watch, onBeforeMount } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { useUserStore } from '@/stores/user-store';
 
 //Import components
@@ -17,17 +17,8 @@ const show_user_task = ref(false);
 const show_user_enrollments = ref(false);
 const show_user_likes = ref(false);
 const user_id = computed(() => user_store.user_id);
-const patient_or_admin = computed(() => {
-    if (
-        user_store.user_role === 'patient' ||
-        user_store.user_role === 'Admin'
-    ) {
-        return true;
-    } else {
-        return false;
-    }
-});
 
+//Funtions
 const get_user_data = async () => {
     user_store.user_id
         ? await user_store.get_data_by_admin()
@@ -35,18 +26,15 @@ const get_user_data = async () => {
     medical_data.value = user_store.all_user_data;
 };
 
+const new_role = async () => {
+    await user_store.refresh();
+    localStorage.removeItem('new_role');
+};
+
 //computed get_user_data on user_store.user_id change
 watch(user_id, get_user_data, { immediate: true });
 
-//Lifecycle
-onBeforeMount(async () => {
-    if (localStorage.getItem('role')) {
-        await user_store.update_user_role(
-            localStorage.getItem('role') as string
-        );
-        localStorage.removeItem('role');
-    }
-});
+new_role();
 </script>
 
 <template>
@@ -55,7 +43,12 @@ onBeforeMount(async () => {
             <section v-if="medical_data" class="user__profile__info">
                 <h3>Hola {{ medical_data.user_name.split(' ')[0] }}</h3>
                 <h4>Información de contacto</h4>
-                <p v-if="patient_or_admin">
+                <p
+                    v-if="
+                        user_store.user_role === 'patient' ||
+                        user_store.user_role === 'admin'
+                    "
+                >
                     Historial: {{ user_store.user_medical_record }}
                 </p>
                 <p>Correo: {{ medical_data.user_email }}</p>
@@ -73,7 +66,12 @@ onBeforeMount(async () => {
             </section>
         </div>
         <div class="user__data__display">
-            <section v-if="patient_or_admin">
+            <section
+                v-if="
+                    user_store.user_role === 'patient' ||
+                    user_store.user_role === 'admin'
+                "
+            >
                 <button
                     class="button__simply"
                     @click="show_user_history = !show_user_history"
@@ -93,7 +91,12 @@ onBeforeMount(async () => {
                 </button>
                 <UserTestResultsComponent v-if="show_user_test_results" />
             </section>
-            <section v-if="patient_or_admin">
+            <section
+                v-if="
+                    user_store.user_role === 'patient' ||
+                    user_store.user_role === 'admin'
+                "
+            >
                 <button
                     class="button__simply"
                     @click="show_user_task = !show_user_task"

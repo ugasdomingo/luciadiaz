@@ -22,7 +22,7 @@ const posts = computed(() => {
 
 //life cycle hook
 onBeforeMount(async () => {
-    await post_store.get_all_posts();
+    post_store.all_posts.length > 0 ? null : await post_store.get_all_posts();
 });
 </script>
 

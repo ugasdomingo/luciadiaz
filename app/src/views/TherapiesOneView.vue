@@ -10,7 +10,6 @@ const route = useRoute();
 const util_store = useUtilStore();
 const therapy = ref();
 const show_tutorial = ref(false);
-const show_other_payments = ref(false);
 
 //Methods
 const get_therapy_to_show = () => {
@@ -34,7 +33,7 @@ onBeforeMount(() => {
         <section class="info__container">
             <h1>{{ therapy.title }}</h1>
             <img :src="therapy.image_url" alt="therapy.title" />
-            <p>{{ therapy.description }}</p>
+            <p v-html="therapy.description"></p>
         </section>
         <aside class="actions__container">
             <p>Duración: <span>45 minutos</span></p>

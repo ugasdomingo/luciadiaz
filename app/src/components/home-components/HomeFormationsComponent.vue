@@ -23,7 +23,9 @@ const formations_list = computed(() => {
 
 //life cycle hook
 onBeforeMount(async () => {
-    await formation_store.get_all_formations();
+    formation_store.all_formations.length > 0
+        ? null
+        : await formation_store.get_all_formations();
 });
 </script>
 

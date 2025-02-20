@@ -28,7 +28,7 @@ const userSchema = new Schema(
         email: { type: String, required: true, unique: true },
         email_verified: { type: Boolean, default: false },
         password: { type: String, required: true },
-        phone: { type: String, required: true },
+        phone: { type: String },
         role: {
             type: String,
             enum: ['patient', 'therapist', 'user', 'Admin'],

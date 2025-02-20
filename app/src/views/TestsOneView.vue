@@ -2,9 +2,13 @@
 //Import tools
 import { computed, defineAsyncComponent } from 'vue';
 import { useRoute } from 'vue-router';
+import { useUserStore } from '@/stores/user-store';
+import { useUtilStore } from '@/stores/util-store';
 
 //Dinamic import components by route
 const route = useRoute();
+const user_store = useUserStore();
+const util_store = useUtilStore();
 
 const component = computed(() => {
     switch (route.path) {
@@ -32,9 +36,30 @@ const component = computed(() => {
 </script>
 
 <template>
-    <main class="page">
+    <main class="page" v-if="user_store.token">
         <component :is="component" />
+    </main>
+    <main class="page not-loggued" v-else>
+        <h2>Para realziar este test tienes que iniciar sesión</h2>
+        <button
+            class="button__action"
+            @click="util_store.show_access_modal = true"
+        >
+            Iniciar sesión
+        </button>
     </main>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.page {
+    &.not-loggued {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        h2 {
+            margin-bottom: 1rem;
+        }
+    }
+}
+</style>

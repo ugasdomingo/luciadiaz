@@ -88,9 +88,12 @@ onBeforeMount(async () => {
                 </div>
                 <div class="payment__others" v-else>
                     <h4>Debes iniciar sesión para poder inscribirte</h4>
-                    <RouterLink to="/area-privada" class="button__action">
+                    <button
+                        @click="util_store.show_access_modal = true"
+                        class="button__action"
+                    >
                         Iniciar sesión
-                    </RouterLink>
+                    </button>
                 </div>
             </section>
         </aside>

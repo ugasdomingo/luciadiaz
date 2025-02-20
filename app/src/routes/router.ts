@@ -80,8 +80,7 @@ const routes: Array<RouteRecordRaw> = [
     {
         path: '/tests/:test_name',
         name: 'Test',
-        component: () => import('@/views/TestsOneView.vue'),
-        meta: { auth: true }
+        component: () => import('@/views/TestsOneView.vue')
     },
     {
         path: '/area-privada',
@@ -106,12 +105,12 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
     const user_store = useUserStore();
     const requires_auth = to.meta.auth;
-    const user_logged = localStorage.getItem('user');
+    const user_registered = localStorage.getItem('user');
 
     if (user_store.token) {
         return next();
-    } else if (requires_auth || user_logged) {
-        await user_store.refresh();
+    } else if (requires_auth) {
+        user_registered ? await user_store.refresh() : next({ name: 'Access' });
 
         user_store.token ? next() : next({ name: 'Access' });
         console.log(from.path);
