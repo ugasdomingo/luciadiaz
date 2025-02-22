@@ -38,6 +38,7 @@ onBeforeMount(async () => {
             v-for="formation in formations_list"
             :key="formation._id"
             :_id="formation._id"
+            :landing_page="formation.landing_page"
             :description="formation.description"
             :image="formation.cover_image.secure_url"
             :likes="formation.likes"

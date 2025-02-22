@@ -5,6 +5,7 @@ import { useFormationStore } from '@/stores/formation-store';
 defineProps<{
     _id: string;
     title: string;
+    landing_page: string;
     type: string;
     image: string;
     price: number;
@@ -23,7 +24,7 @@ const addLike = async (id: string) => {
 
 <template>
     <article class="card">
-        <RouterLink class="card__image" :to="`/formaciones/${_id}`">
+        <RouterLink class="card__image" :to="`/formaciones/${landing_page}`">
             <img :src="image" alt="formation image" />
             <h4 class="card-title">{{ title }}</h4>
         </RouterLink>

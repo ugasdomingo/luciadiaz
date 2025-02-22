@@ -58,7 +58,7 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/FormationsView.vue')
     },
     {
-        path: '/formaciones/:id',
+        path: '/formaciones/:landing_page',
         name: 'Course',
         component: () => import('@/views/FormationsOneView.vue')
     },

@@ -1,6 +1,7 @@
 export interface IFormation {
     _id: string;
     title: string;
+    landing_page: string;
     type: string;
     content: string;
     description: string;

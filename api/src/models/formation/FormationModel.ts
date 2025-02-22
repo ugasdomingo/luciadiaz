@@ -5,6 +5,7 @@ import { Schema, model, Document } from 'mongoose';
 export interface IFormation extends Document {
     _id: string;
     title: string;
+    landing_page: string;
     type: string;
     content: string;
     description: string;
@@ -30,6 +31,10 @@ export interface IFormation extends Document {
 const formationSchema = new Schema<IFormation>(
     {
         title: {
+            type: String,
+            required: true,
+        },
+        landing_page: {
             type: String,
             required: true,
         },
