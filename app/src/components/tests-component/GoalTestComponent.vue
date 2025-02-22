@@ -78,4 +78,19 @@ onBeforeMount(async () => {
         align-self: center;
     }
 }
+
+@media screen and (max-width: 768px) {
+    .show_results {
+        h2 {
+            margin-bottom: 0;
+        }
+
+        .letter {
+            width: 100%;
+            font-size: 1.75rem;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+    }
+}
 </style>

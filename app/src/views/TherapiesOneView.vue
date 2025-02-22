@@ -135,7 +135,7 @@ onBeforeMount(() => {
 
         .actions__container {
             width: 100%;
-            gap: 0.5rem;
+            gap: 2rem;
             margin-top: 2rem;
             position: static;
             top: 0;

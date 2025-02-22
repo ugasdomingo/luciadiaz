@@ -17,4 +17,12 @@ const user_store = useUserStore();
     </main>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+@media screen and (max-width: 768px) {
+    .page {
+        height: fit-content;
+        padding: 4rem 1rem;
+        gap: 1rem;
+    }
+}
+</style>

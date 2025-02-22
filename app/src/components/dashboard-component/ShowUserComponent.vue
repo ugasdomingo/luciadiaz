@@ -60,7 +60,7 @@ new_role();
                 <a
                     href="http://wa.me/34624721896"
                     target="_blank"
-                    class="button__simply"
+                    class="button__transparent"
                     >Contactar por WhatsApp</a
                 >
             </section>
@@ -208,6 +208,62 @@ new_role();
                 &:hover {
                     background-color: #e0e0e0;
                 }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .user__data__container {
+        flex-direction: column;
+        align-items: center;
+        padding: 0;
+        gap: 0;
+
+        .user__profile {
+            width: 100%;
+            height: fit-content;
+            padding: 0;
+            gap: 0;
+            position: relative;
+
+            .user__profile__info {
+                width: 100%;
+                height: fit-content;
+                padding: 0;
+                gap: 0;
+
+                h3 {
+                    margin-top: 0;
+                }
+
+                h4 {
+                    margin: 0;
+                }
+            }
+
+            .user__profile__actions {
+                width: 100%;
+                height: fit-content;
+                padding: 0 0 3rem;
+                gap: 1rem;
+
+                h3 {
+                    margin-bottom: 0;
+                }
+            }
+        }
+
+        .user__data__display {
+            width: 100%;
+            height: fit-content;
+            padding: 0;
+            gap: 1rem;
+
+            section {
+                width: 100%;
+                padding: 0;
+                gap: 1rem;
             }
         }
     }

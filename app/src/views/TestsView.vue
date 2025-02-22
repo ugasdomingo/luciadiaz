@@ -46,4 +46,19 @@ import TestCardComponent from '@/components/common/cards/TestCardComponent.vue';
         justify-content: space-around;
     }
 }
+
+@media screen and (max-width: 768px) {
+    .page {
+        height: fit-content;
+        padding: 4rem 1rem;
+        gap: 1rem;
+
+        .page__content {
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+        }
+    }
+}
 </style>

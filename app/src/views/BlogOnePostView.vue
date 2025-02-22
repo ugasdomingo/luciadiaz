@@ -104,4 +104,51 @@ onMounted(() => {
         }
     }
 }
+
+@media screen and (max-width: 768px) {
+    .page {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 4rem 1rem;
+        gap: 1rem;
+
+        .post__content {
+            width: 100%;
+            h1 {
+                font-size: 1.5rem;
+            }
+        }
+
+        .post__info__container {
+            width: 100%;
+            position: relative;
+            top: 0;
+            right: 0;
+            box-sizing: border-box;
+
+            .post_info {
+                margin-bottom: 2rem;
+
+                img {
+                    width: 100%;
+                    height: 150px;
+                    object-fit: cover;
+                    margin-bottom: 0;
+                }
+
+                ul {
+                    list-style: none;
+                    li {
+                        font-size: 1rem;
+                        margin-bottom: 1rem;
+                        span {
+                            font-weight: bold;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
 </style>

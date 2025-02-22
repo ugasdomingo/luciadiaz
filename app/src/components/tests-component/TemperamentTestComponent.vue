@@ -54,7 +54,7 @@ onBeforeMount(async () => {
                 </tr>
             </table>
             <RouterLink
-                to="/blog/678a307efda39560e5f7fced"
+                to="/blog/678a587972486892f6ec7520"
                 class="button__action"
             >
                 Aprender más sobre tu temperamento
@@ -98,6 +98,14 @@ onBeforeMount(async () => {
                     text-align: left;
                 }
             }
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .show_results {
+        table {
+            width: 100%;
         }
     }
 }

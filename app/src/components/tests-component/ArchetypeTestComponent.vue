@@ -99,4 +99,12 @@ onBeforeMount(async () => {
         }
     }
 }
+
+@media screen and (max-width: 768px) {
+    .show_results {
+        table {
+            width: 100%;
+        }
+    }
+}
 </style>

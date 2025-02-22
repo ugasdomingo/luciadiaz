@@ -50,13 +50,24 @@ const show_all_history_answers = ref(false);
     flex-direction: column;
     margin: 1rem 0;
     padding: 1rem;
-    border: 1px solid #ccc;
+    border: 1px solid var(--color-primary);
     border-radius: 5px;
-    background-color: #f9f9f9;
+    background-color: var(--color-white);
     box-sizing: border-box;
 
     h3 {
         text-align: center;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .history__container {
+        padding: 0;
+        gap: 0;
+
+        h3 {
+            margin: 0;
+        }
     }
 }
 </style>

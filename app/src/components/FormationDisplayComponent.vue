@@ -46,4 +46,13 @@ onBeforeMount(async () => {
     align-items: center;
     position: relative;
 }
+
+@media screen and (max-width: 768px) {
+    .formations-list {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2rem;
+    }
+}
 </style>

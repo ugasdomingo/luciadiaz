@@ -25,4 +25,11 @@ import FormationDisplayComponent from '@/components/FormationDisplayComponent.vu
         padding: 0;
     }
 }
+
+@media screen and (max-width: 768px) {
+    .page {
+        padding: 4rem 1rem;
+        gap: 1rem;
+    }
+}
 </style>

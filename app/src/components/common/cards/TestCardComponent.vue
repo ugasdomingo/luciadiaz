@@ -40,4 +40,28 @@ defineProps<{
         width: 100%;
     }
 }
+
+@media screen and (max-width: 768px) {
+    .card {
+        width: 100%;
+        align-items: center;
+        height: fit-content;
+        margin: 0 0 1rem;
+        padding: 1rem;
+        gap: 1rem;
+        border-radius: 0.5rem;
+        box-shadow: 0 0 0.5rem 0 var(--color-primary-trans);
+
+        img {
+            width: 300px;
+            height: 300px;
+            border-radius: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            margin-top: 0;
+        }
+    }
+}
 </style>

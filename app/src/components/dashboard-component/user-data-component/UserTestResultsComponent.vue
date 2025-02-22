@@ -25,15 +25,17 @@ onBeforeMount(async () => {
 
 <template>
     <section class="test__results__container">
-        <h3>
-            Arquetipo:
-            <span v-if="archetype_test_done">
-                {{
-                    user_store.all_user_data.test_results.find(
-                        (test: any) => test.title === 'archetype'
-                    ).results.archetype
-                }}
-            </span>
+        <article>
+            <h3>
+                Arquetipo:
+                <span v-if="archetype_test_done">
+                    {{
+                        user_store.all_user_data.test_results.find(
+                            (test: any) => test.title === 'archetype'
+                        ).results.archetype
+                    }}
+                </span>
+            </h3>
             <RouterLink to="/tests/arquetipos">
                 {{
                     archetype_test_done
@@ -41,16 +43,18 @@ onBeforeMount(async () => {
                         : 'Descubre tu Arquetipo'
                 }}
             </RouterLink>
-        </h3>
-        <h3>
-            Temperamento:
-            <span v-if="temperament_test_done">
-                {{
-                    user_store.all_user_data.test_results.find(
-                        (test: any) => test.title === 'temperament'
-                    ).results.temperament
-                }}
-            </span>
+        </article>
+        <article>
+            <h3>
+                Temperamento:
+                <span v-if="temperament_test_done">
+                    {{
+                        user_store.all_user_data.test_results.find(
+                            (test: any) => test.title === 'temperament'
+                        ).results.temperament
+                    }}
+                </span>
+            </h3>
             <RouterLink to="/tests/temperamentos">
                 {{
                     temperament_test_done
@@ -58,20 +62,22 @@ onBeforeMount(async () => {
                         : 'Descubre tu Temperamento'
                 }}
             </RouterLink>
-        </h3>
-        <h3>
-            Objetivo:
-            <span v-if="goal_test_done">
-                {{
-                    user_store.all_user_data.test_results.find(
-                        (test: any) => test.title === 'goal'
-                    ).results.goal
-                }}
-            </span>
+        </article>
+        <article>
+            <h3>
+                Objetivo:
+                <span v-if="goal_test_done">
+                    {{
+                        user_store.all_user_data.test_results.find(
+                            (test: any) => test.title === 'goal'
+                        ).results.goal
+                    }}
+                </span>
+            </h3>
             <RouterLink to="/tests/meta">
                 {{ goal_test_done ? 'Ver resultados' : 'Descubre tu Objetivo' }}
             </RouterLink>
-        </h3>
+        </article>
     </section>
 </template>
 
@@ -83,6 +89,34 @@ onBeforeMount(async () => {
 
     span {
         margin-right: 0.5rem;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .test__results__container {
+        width: 100%;
+        flex-direction: column;
+        gap: 1rem;
+
+        article {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+
+            h3 {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                font-size: 1.25rem;
+                margin: 0;
+
+                a {
+                    font-size: 0.75rem;
+                }
+            }
+        }
     }
 }
 </style>
