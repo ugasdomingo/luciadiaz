@@ -3,8 +3,8 @@
 <template>
     <section class="hero">
         <img src="/img/fondo-cafe.jpg" alt="imagen fondo" class="background" />
-        <h1>Bienvenidos a mi web</h1>
-        <h4>Psicología aplicada para una vida extraordinaria</h4>
+        <h1>Te doy la bienvenida a mi web</h1>
+        <h4>Un espacio donde la Psicología se aplica a tu vida</h4>
     </section>
 </template>
 

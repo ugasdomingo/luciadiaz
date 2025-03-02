@@ -107,7 +107,10 @@ const handle_submit = async () => {
     <section class="archetype__test__container">
         <div class="test__intro">
             <h2>Arquetipos de la personalidad</h2>
-            <p @click="show_test_info = !show_test_info">
+            <p
+                class="test__show__info"
+                @click="show_test_info = !show_test_info"
+            >
                 {{
                     show_test_info
                         ? 'No ver más'
@@ -119,15 +122,13 @@ const handle_submit = async () => {
                     La teoría de arquetipos de Jung surgió de su investigación
                     sobre la estructura psíquica humana, buscando comprender los
                     patrones universales de comportamiento que trascienden
-                    culturas y épocas. Conocer tu arquetipo predominante ofrece
-                    beneficios significativos: permite una profunda
-                    autocomprensión, ayuda a identificar tus fortalezas y
-                    debilidades personales, facilita tu desarrollo personal y
-                    profesional, mejora la comunicación interpersonal al
-                    entender motivaciones propias y ajenas, y te proporciona una
-                    herramienta para el crecimiento psicológico, permitiendote
-                    alinear tus acciones con tu verdadera naturaleza internal y
-                    potenciar tus capacidades innatas.
+                    culturas y épocas. <br />
+                    <br />
+                    Este ejercicio nos servirá para identificar modelos y
+                    patrones de comportamiento para poder trabajar de forma más
+                    individualizada en nuestros planes de desarrollo personal,
+                    una forma más de conocer nuestras fortalezas y qué podemos
+                    potenciar y aportar.
                 </p>
             </transition>
         </div>
@@ -209,7 +210,7 @@ const handle_submit = async () => {
             margin-bottom: 0;
         }
 
-        p {
+        .test__show__info {
             cursor: pointer;
             color: var(--color-secondary);
             font-weight: 500;
@@ -223,6 +224,7 @@ const handle_submit = async () => {
             font-weight: 300;
             text-align: justify;
             align-self: center;
+            color: var(--color-text);
         }
     }
 

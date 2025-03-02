@@ -53,7 +53,7 @@ const addLike = async (id: string) => {
     justify-content: space-between;
     gap: 0;
     text-decoration: none;
-    border-radius: 1rem;
+    border-radius: 0.5rem;
     background-color: var(--color-white);
     position: relative;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
@@ -70,12 +70,12 @@ const addLike = async (id: string) => {
         img {
             width: 100%;
             height: 200px;
-            border-radius: 1rem 1rem 0 0;
+            border-radius: 0.5rem 0.5rem 0 0;
             object-fit: cover;
         }
 
         .card-title {
-            width: 80%;
+            width: 99%;
             margin: 0.5rem 0 0;
             padding: 0.5rem;
             color: var(--color-white);
@@ -85,7 +85,7 @@ const addLike = async (id: string) => {
                 var(--color-secondary-trans) 90%,
                 transparent 100%
             );
-            border-radius: 0 10rem 10rem 0;
+            border-radius: 0 10rem 1rem 0;
             position: absolute;
             top: 0.5rem;
             left: 0;

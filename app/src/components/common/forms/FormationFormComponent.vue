@@ -10,6 +10,7 @@ const formation_store = useFormationStore();
 //Define data
 const form_data: FormData = new FormData();
 const title = ref('');
+const landing_page = ref('');
 const type = ref('');
 const content = ref('Contenido de la formación');
 const description = ref('');
@@ -27,6 +28,7 @@ const status = ref('');
 const submitFormation = () => {
     try {
         form_data.append('title', title.value);
+        form_data.append('landing_page', landing_page.value);
         form_data.append('type', type.value);
         form_data.append('content', content.value);
         form_data.append('description', description.value);
@@ -43,6 +45,7 @@ const submitFormation = () => {
         formation_store.create_formation(form_data);
 
         title.value = '';
+        landing_page.value = '';
         type.value = '';
         content.value = '';
         description.value = '';
@@ -71,6 +74,11 @@ const handleFileChange = (event: Event) => {
 <template>
     <form @submit.prevent="submitFormation">
         <input type="text" v-model="title" placeholder="Título" />
+        <input
+            type="text"
+            v-model="landing_page"
+            placeholder="Página de aterrizaje"
+        />
         <input type="text" v-model="type" placeholder="Tipo" />
         <editor
             v-model="content"

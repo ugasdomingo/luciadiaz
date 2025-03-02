@@ -63,6 +63,11 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/FormationsOneView.vue')
     },
     {
+        path: '/formaciones/confirmado/enrollment/:paypal_code',
+        name: 'FormationPayed',
+        component: () => import('@/views/EnrollmentView.vue')
+    },
+    {
         path: '/terapias',
         name: 'Therapies',
         component: () => import('@/views/TherapiesView.vue')

@@ -4,10 +4,7 @@ import { features } from '@/static/features';
 
 <template>
     <section class="feature">
-        <h2>
-            ¿Qué quieres hacer hoy para seguir avanzando hacia tu vida
-            extraordinaria?
-        </h2>
+        <h2>¿Qué quieres hacer hoy para ti?</h2>
         <div class="features">
             <RouterLink
                 v-for="feature in features"

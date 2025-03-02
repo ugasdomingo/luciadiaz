@@ -29,7 +29,7 @@
 <style scoped lang="scss">
 .wellcome {
     width: 100%;
-    min-height: 70vh;
+    height: 70vh;
     display: flex;
     align-items: flex-end;
     padding: 6rem 0 0;
@@ -37,8 +37,9 @@
     box-sizing: border-box;
 
     .wellcome__decoration {
-        width: 90%;
-        max-height: 400px;
+        width: 100%;
+        max-height: 600px;
+        height: 50vh;
         display: flex;
         justify-content: space-around;
         align-items: center;
@@ -46,11 +47,12 @@
         padding: 0 0 0 2rem;
         margin: 0;
         background-color: var(--color-secondary);
-        border-radius: 0 400px 400px 0;
+        border-radius: 5rem 0 5rem 0;
         box-sizing: border-box;
 
         img {
             height: 250px;
+            border-radius: 0.5rem;
             object-fit: cover;
         }
         .content {

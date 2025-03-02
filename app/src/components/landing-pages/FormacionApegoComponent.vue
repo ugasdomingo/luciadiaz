@@ -15,7 +15,7 @@ const user_store = useUserStore();
 const util_store = useUtilStore();
 const show_learning_one = ref<boolean>(false);
 const show_learning_two = ref<boolean>(false);
-const show_learning_three = ref<boolean>(false);
+/* const show_learning_three = ref<boolean>(false); */
 const inscription = ref<HTMLElement | null>(null);
 const formted_date = new Date(prop.formation.date).toLocaleDateString();
 
@@ -71,8 +71,8 @@ const scroll_to_inscription = () => {
                 class="hero__background"
             />
         </section>
-        <section class="why__container">
-            <!-- WHY CONTAINER ****************************** -->
+        <!-- <section class="why__container">
+            WHY CONTAINER ******************************
             <h2>¿Para qué creé esta formación?</h2>
             <p>
                 Me he tomado el tiempo para crear esta formación dirigida a
@@ -99,36 +99,65 @@ const scroll_to_inscription = () => {
                 increible. Te espero para que juntos cambiemos tu historia
                 familiar.
             </p>
+        </section> -->
+        <section class="conclution__container">
+            <!-- CONCLUTION CONTAINER ****************************** -->
+            <p>
+                Alguna vez te has preguntado ¿por qué repites patrones en tus
+                relaciones? ¿O por qué algunas personas parecen tener relaciones
+                tan diferentes a las tuyas? La forma en que nos relacionamos de
+                adultos, está directamente conectada con nuestras primeras
+                experiencias de vida, a esto podemos darle el nombre de apego,
+                que puede explicar la relación que se genera desde el primer
+                contacto con la madre o figuras de cuidado en nuestra infancia y
+                que arrastramos a lo largo de nuestra vida.
+            </p>
+            <p>
+                En resumen, según haya sido tu relación con tus padres ha
+                determinado el 80% (por no exagerar) de lo que hoy en día vives
+                en tus relaciones. Has consciencia de cómo te sientes al leer
+                esta sentencia, pero no pasa nada, en esta vida siempre
+                tendremos la oportunidad de modificar nuestras creencias,
+                conductas y la manera en que interpretamos nuestras emociones
+            </p>
+            <p>
+                De mi mano, podrás descubrir entre los cuatro tipo de apego
+                descritos en la literatura en cúal te mueves en tu diario vivir.
+                Cómo se manifiestan en cada área de tu vida y esas cositas que
+                te incomodan o no te agradan tendrás la habilidad para
+                mejorarlas paso a paso.
+            </p>
+            <p>Con amor, Lucia Diaz</p>
         </section>
         <section class="content__container">
             <!-- CONTENT CONTAINER ****************************** -->
-            <h2>¿Qué aprenderás en esta formación?</h2>
+            <h2>¿Qué te llevarás en esta formación?</h2>
             <article>
                 <h3 @click="show_learning_one = !show_learning_one">
-                    Identificar, comprender, acompañar y validar las emociones
-                    de tu hijos
+                    Una guía sobre el apego.
                 </h3>
                 <p
                     class="learning"
                     :class="show_learning_one ? 'show' : 'hidden'"
                 >
-                    Incluso cuando no las compartas. ¡Si, lo sé, es una de las
-                    partes más difíciles de la crianza, no perder la paciencia
-                    cuando tu peque te lanza la comida al suelo!
+                    Con información clara y precisa sobre los cuatro estilos de
+                    apego y cómo gestionarlos en tu vida diaria.
                 </p>
             </article>
             <article>
                 <h3 @click="show_learning_two = !show_learning_two">
-                    Brindarle autonomía, seguridad y herramientas para la vida
+                    Un pequeño recorrido en tu historia emocional
                 </h3>
                 <p
                     class="learning"
                     :class="show_learning_two ? 'show' : 'hidden'"
                 >
-                    Es el mejor regalo que podrás darle.
+                    De esta manera, podremos revisar el estilo de apego que
+                    desarrollaste en tu infancia y ha hecho de ti lo que ahora
+                    conoces.
                 </p>
             </article>
-            <article>
+            <!-- <article>
                 <h3 @click="show_learning_three = !show_learning_three">
                     Establecer límites saludables
                 </h3>
@@ -141,28 +170,9 @@ const scroll_to_inscription = () => {
                     Y hay opciones que podemos facilitar a los más pequeños para
                     lograr el objetivo que les planteamos como adultos.
                 </p>
-            </article>
+            </article> -->
         </section>
-        <section class="conclution__container">
-            <!-- CONCLUTION CONTAINER ****************************** -->
-            <p>
-                <span
-                    >La crianza psicológicamente correcta rompe con el mito de
-                    que los niños siempre deben ser felices</span
-                >, al contrario, va de la mano con el hecho que aún en medio de
-                la frustración hay una oportunidad de aprendizaje, que lo que
-                sientes es completamente válido aunque el hogar entre en caos
-                por algunos minutos.
-            </p>
-            <p>
-                No comparte el hecho de que los niños siempre tienen la razón y
-                los adultos con nuestras acciones los vamos a traumar, se basa
-                en el respeto y empatía, en enseñarles que el mundo simplemente
-                es, y que como seres humanos tenemos la capacidad de tomar lo
-                que nos haga bien y desechar lo que nos enferme.
-            </p>
-            <p>Con amor, Lucia Diaz</p>
-        </section>
+
         <section class="features__container">
             <!-- FEATURES CONTAINER ****************************** -->
             <article>
@@ -198,19 +208,9 @@ const scroll_to_inscription = () => {
                     Con más de 7 años de experiencia como terapeuta individual y
                     familiar, y profundizando desde hace 4 años en el
                     acompañamiento emocional de niños y adolescentes, he
-                    comprobado cómo una estimulación temprana adecuada,
-                    combinada con un apoyo emocional consciente, es clave para
-                    formar niños seguros, resilientes y felices.
-                </p>
-                <p>
-                    Sin embargo, hay mucha desinformación y mitos alrededor de
-                    la crianza y la educación en internet, lo que puede generar
-                    confusión y frustración en los padres.
-                </p>
-                <p>
-                    Mi misión es brindarte información clara, práctica y basada
-                    en la evidencia científica, para que puedas criar a tus
-                    hijos con confianza y amor.
+                    comprobado cómo, con sólo saber tu estilo de apego y tu
+                    forma de relacionarte, puedes evitarte muchas tragos amargos
+                    y dificultades innecesarias en tu vida.
                 </p>
             </div>
         </section>
@@ -221,18 +221,11 @@ const scroll_to_inscription = () => {
                     ¡Estás a un paso de inscribirte en la formación! Selecciona
                     tu método de pago y completa tu inscripción.
                 </h3>
-                <a
-                    :href="formation.paypal_button"
-                    target="_blank"
+                <RouterLink
+                    to="/formaciones/confirmado/enrollment/FOR-001"
                     class="button__action"
-                    >Pagar con tarjeta o paypal</a
+                    >Inscribirme en la Formación</RouterLink
                 >
-                <button
-                    class="button__transparent"
-                    @click="util_store.show_other_payment_method = true"
-                >
-                    Ver otros métodos de pago
-                </button>
             </div>
             <div class="user-not-logged" v-else>
                 <h2>

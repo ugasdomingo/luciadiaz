@@ -51,7 +51,7 @@ onBeforeMount(async () => {
 
 <style scoped lang="scss">
 .formations-list {
-    width: 90%;
+    width: 100%;
     min-height: 70vh;
     margin-left: auto;
     padding-left: 4rem;
@@ -60,6 +60,7 @@ onBeforeMount(async () => {
     justify-content: space-around;
     align-items: center;
     position: relative;
+    box-sizing: border-box;
 
     h2 {
         display: none;
@@ -69,10 +70,10 @@ onBeforeMount(async () => {
         position: absolute;
         bottom: auto;
         right: 0;
-        width: 99%;
+        width: 100%;
         height: 75%;
         background-color: var(--color-secondary);
-        border-radius: 400px 0 0 400px;
+        border-radius: 0 5rem 0 5rem;
         z-index: -1;
     }
     .background__decoration__two {
@@ -82,7 +83,7 @@ onBeforeMount(async () => {
         width: 100%;
         height: 80%;
         background-color: var(--color-primary);
-        border-radius: 400px 0 0 400px;
+        border-radius: 0 5rem 0 5rem;
         opacity: 0.5;
         z-index: -3;
     }

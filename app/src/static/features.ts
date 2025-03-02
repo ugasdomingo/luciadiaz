@@ -10,7 +10,7 @@ export const features = [
     },
     {
         id: 2,
-        title: 'Formaciones',
+        title: 'Aprender con Formaciones',
         description:
             'Adquiere herramientas de psicología para una vida maravillosa.',
         img: '/icon/formation.svg',
@@ -19,7 +19,7 @@ export const features = [
     },
     {
         id: 3,
-        title: 'Blog',
+        title: 'Leer un Blog',
         description:
             'Familiarízate con los términos, conceptos y técnicas psicológicas.',
         img: '/icon/blog.svg',
@@ -28,7 +28,7 @@ export const features = [
     },
     {
         id: 4,
-        title: 'Terapia',
+        title: 'Iniciar Terapia',
         description:
             'Te acompaño en tu proceso de sanar, crecer y fortalecer tu mente.',
         img: '/icon/therapy.svg',
@@ -37,7 +37,7 @@ export const features = [
     },
     {
         id: 5,
-        title: 'Audios',
+        title: 'Escuchar Audios',
         description:
             'Úsalos para controlar tus emociones, pensamientos y comportamientos.',
         img: '/icon/audios.svg',

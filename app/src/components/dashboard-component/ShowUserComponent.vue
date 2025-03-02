@@ -63,6 +63,12 @@ new_role();
                     class="button__transparent"
                     >Contactar por WhatsApp</a
                 >
+                <button
+                    class="button__transparent responsive"
+                    @click="user_store.logout"
+                >
+                    Cerrar sesión
+                </button>
             </section>
         </div>
         <div class="user__data__display">
@@ -211,6 +217,10 @@ new_role();
             }
         }
     }
+
+    .responsive {
+        display: none;
+    }
 }
 
 @media screen and (max-width: 768px) {
@@ -266,6 +276,10 @@ new_role();
                 gap: 1rem;
             }
         }
+    }
+
+    .responsive {
+        display: block;
     }
 }
 </style>
