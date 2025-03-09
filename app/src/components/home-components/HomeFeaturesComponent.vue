@@ -1,5 +1,14 @@
 <script setup lang="ts">
+//Import tools
 import { features } from '@/static/features';
+
+// States
+const colors = ['blue', 'black', 'green', 'purple', 'orange'];
+
+// Methods
+const get_card_color = (index: number) => {
+    return colors[index % colors.length];
+};
 </script>
 
 <template>
@@ -7,10 +16,11 @@ import { features } from '@/static/features';
         <h2>¿Qué quieres hacer hoy para ti?</h2>
         <div class="features">
             <RouterLink
-                v-for="feature in features"
+                v-for="(feature, index) in features"
                 :key="feature.id"
                 :to="feature.link"
                 class="feature-card"
+                :class="get_card_color(index)"
             >
                 <div class="feature-title">
                     <img :src="feature.img" alt="feature.icon" />
@@ -29,12 +39,13 @@ import { features } from '@/static/features';
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 3rem 4rem;
+    padding: 0 4rem;
+    gap: 2rem;
     margin: 0;
     box-sizing: border-box;
 
     h2 {
-        margin: 0 0 2rem;
+        margin: 0;
     }
 
     .features {
@@ -52,6 +63,7 @@ import { features } from '@/static/features';
             padding: 1rem;
             text-decoration: none;
             color: var(--color-text);
+            background-color: var(--color-primary-trans);
             border-radius: 1rem;
             box-shadow: 0 0 1rem rgba(0, 0, 0, 0.4);
             box-sizing: border-box;
@@ -61,7 +73,6 @@ import { features } from '@/static/features';
                 align-items: center;
                 gap: 0.5rem;
                 margin: 0;
-                color: var(--color-secondary);
 
                 img {
                     width: 50px;
@@ -76,6 +87,39 @@ import { features } from '@/static/features';
             p {
                 margin: 0;
                 font-size: 0.9rem;
+            }
+
+            &.blue {
+                color: var(--color-white);
+                background: linear-gradient(135deg, #9b9bf8 2%, #0808c0 20%);
+            }
+
+            &.black {
+                color: var(--color-white);
+                background: linear-gradient(
+                    135deg,
+                    #333333 2%,
+                    var(--color-text) 20%
+                );
+            }
+
+            &.green {
+                color: var(--color-white);
+                background: linear-gradient(135deg, #00b300 2%, #004d00 20%);
+            }
+
+            &.purple {
+                color: var(--color-white);
+                background: linear-gradient(
+                    135deg,
+                    var(--color-primary) 2%,
+                    var(--color-secondary) 20%
+                );
+            }
+
+            &.orange {
+                color: var(--color-white);
+                background: linear-gradient(135deg, #ff9900 2%, #c07504 20%);
             }
         }
     }

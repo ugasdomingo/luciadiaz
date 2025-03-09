@@ -43,6 +43,7 @@ onMounted(() => {
     <main class="page">
         <section class="post__content">
             <h1>{{ post?.title }}</h1>
+            <video :src="post?.video_url"></video>
             <div v-html="post?.content"></div>
         </section>
         <aside class="post__info__container">

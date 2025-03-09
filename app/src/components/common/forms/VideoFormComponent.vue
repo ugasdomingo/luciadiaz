@@ -9,7 +9,8 @@ const video_store = useVideoStore();
 //Define data
 const form_data: FormData = new FormData();
 const title = ref('');
-const description = ref('');
+const instructions = ref('');
+const serves_for = ref('');
 const video_url = ref('');
 const cover_image = ref();
 const categorys = ref('');
@@ -18,7 +19,8 @@ const categorys = ref('');
 const submitVideo = () => {
     try {
         form_data.append('title', title.value);
-        form_data.append('description', description.value);
+        form_data.append('instructions', instructions.value);
+        form_data.append('serves_for', serves_for.value);
         form_data.append('video_url', video_url.value);
         form_data.append('cover_image', cover_image.value);
         form_data.append('categorys', categorys.value);
@@ -26,7 +28,8 @@ const submitVideo = () => {
         video_store.create_video(form_data);
 
         title.value = '';
-        description.value = '';
+        instructions.value = '';
+        serves_for.value = '';
         video_url.value = '';
         cover_image.value = '';
         categorys.value = '';
@@ -46,7 +49,8 @@ const handleFileChange = (event: Event) => {
 <template>
     <form @submit.prevent="submitVideo">
         <input type="text" v-model="title" placeholder="Título" />
-        <input type="text" v-model="description" placeholder="Descripción" />
+        <input type="text" v-model="instructions" placeholder="Instrucciones" />
+        <input type="text" v-model="serves_for" placeholder="Sirve para" />
         <input type="text" v-model="video_url" placeholder="URL del video" />
         <input type="file" @change="handleFileChange" />
         <input type="text" v-model="categorys" placeholder="Categorías" />

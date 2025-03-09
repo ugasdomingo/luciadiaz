@@ -28,7 +28,7 @@ onBeforeMount(async () => {
 
 <template>
     <section class="blog">
-        <h2>Últimos Post</h2>
+        <h2>Contenido reciente</h2>
         <div class="blog-list">
             <PostCardComponent
                 v-for="post in posts"

@@ -5,7 +5,8 @@ import { Schema, model, Document } from 'mongoose';
 export interface IVideo extends Document {
     _id: string;
     title: string;
-    description: string;
+    instructions: string;
+    serves_for: string;
     video_url: string;
     cover_image: {
         public_id: string;
@@ -24,7 +25,11 @@ const videoSchema = new Schema<IVideo>(
             type: String,
             required: true,
         },
-        description: {
+        instructions: {
+            type: String,
+            required: true,
+        },
+        serves_for: {
             type: String,
             required: true,
         },

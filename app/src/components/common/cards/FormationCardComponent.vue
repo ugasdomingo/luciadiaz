@@ -26,10 +26,10 @@ const addLike = async (id: string) => {
     <article class="card">
         <RouterLink class="card__image" :to="`/formaciones/${landing_page}`">
             <img :src="image" alt="formation image" />
-            <h4 class="card-title">{{ title }}</h4>
+            <p class="card-price">{{ price === 0 ? 'Gratis' : `${price}€` }}</p>
         </RouterLink>
         <section class="card__information">
-            <p class="card-price">{{ price === 0 ? 'Gratis' : `${price}€` }}</p>
+            <h3 class="card-title">{{ title }}</h3>
             <p class="card-type">{{ type }}</p>
             <div class="card-social">
                 <img
@@ -45,39 +45,35 @@ const addLike = async (id: string) => {
 
 <style scoped lang="scss">
 .card {
-    width: 300px;
-    height: 250px;
+    width: 400px;
     margin: 0;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     gap: 0;
     text-decoration: none;
-    border-radius: 0.5rem;
     background-color: var(--color-white);
     position: relative;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
     box-sizing: border-box;
+
+    &:hover {
+        transform: scale(1.02);
+        transition: transform 0.3s;
+    }
 
     .card__image {
         text-decoration: none;
-
-        &:hover {
-            transform: scale(1.02);
-            transition: transform 0.3s;
-        }
+        height: calc(100% - 50px);
 
         img {
             width: 100%;
-            height: 200px;
-            border-radius: 0.5rem 0.5rem 0 0;
+            height: 100%;
             object-fit: cover;
         }
 
-        .card-title {
-            width: 99%;
+        .card-price {
             margin: 0.5rem 0 0;
-            padding: 0.5rem;
+            padding: 0.5rem 1rem;
             color: var(--color-white);
             background: linear-gradient(
                 180deg,
@@ -85,34 +81,42 @@ const addLike = async (id: string) => {
                 var(--color-secondary-trans) 90%,
                 transparent 100%
             );
-            border-radius: 0 10rem 1rem 0;
+            border-radius: 10rem;
             position: absolute;
             top: 0.5rem;
-            left: 0;
+            right: 0.5rem;
             box-sizing: border-box;
         }
     }
 
     .card__information {
-        height: 50px;
+        width: 100%;
         display: flex;
-        justify-content: space-between;
-        align-items: center;
+        flex-direction: column;
         margin: 0;
-        padding: 0 1rem;
+        padding: 0.5rem 0;
+        gap: 0.5rem;
         box-sizing: border-box;
 
-        p {
+        .card-type {
+            width: fit-content;
             font-size: 1rem;
             margin: 0;
+            padding: 0.1rem 1.5rem;
+            border-radius: 10rem;
+            background: linear-gradient(
+                90deg,
+                transparent 2%,
+                var(--color-primary-trans) 20%,
+                var(--color-primary-trans) 80%,
+                transparent 98%
+            );
         }
 
-        .card-price {
+        .card-title {
             background-color: transparent;
-            border: 1px solid var(--color-secondary);
-            color: var(--color-secondary);
-            padding: 0.1rem 0.5rem;
-            border-radius: 0.5rem;
+            border: 1px solid var(--color-white);
+            margin: 0;
         }
 
         .card-social {
@@ -124,9 +128,12 @@ const addLike = async (id: string) => {
                 height: 1.5rem;
                 cursor: pointer;
             }
+            p {
+                font-size: 1rem;
+                margin: 0;
+            }
             .card-likes {
                 background-color: transparent;
-                color: var(--color-secondary);
                 padding: 0.1rem 0.5rem;
                 border-radius: 0.5rem;
             }
@@ -135,6 +142,35 @@ const addLike = async (id: string) => {
 
     a {
         text-align: center;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .card {
+        width: 100%;
+        height: fit-content;
+        margin: 0;
+        padding: 1rem 0.5rem;
+        box-sizing: border-box;
+
+        .card__image {
+            height: 50%;
+            img {
+                border-radius: 1rem;
+            }
+
+            .card-price {
+                top: 1rem;
+                right: 1rem;
+            }
+        }
+
+        .card__information {
+            padding: 0.5rem;
+            .card-type {
+                padding: 0.1rem 1rem;
+            }
+        }
     }
 }
 </style>
