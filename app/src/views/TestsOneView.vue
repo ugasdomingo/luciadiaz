@@ -40,7 +40,7 @@ const component = computed(() => {
         <component :is="component" />
     </main>
     <main class="page not-loggued" v-else>
-        <h2>Para realziar este test tienes que iniciar sesión</h2>
+        <h2>Para realizar este test necesittas iniciar sesión</h2>
         <button
             class="button__action"
             @click="util_store.show_access_modal = true"

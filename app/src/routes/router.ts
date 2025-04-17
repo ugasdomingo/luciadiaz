@@ -93,6 +93,22 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/DashboardView.vue'),
         meta: { auth: true }
     },
+    /* LEGAL ROUTES********************** */
+    {
+        path: '/aviso-legal',
+        name: 'LegalNotice',
+        component: () => import('@/views/legal/LegalNoticeView.vue')
+    },
+    {
+        path: '/politica-privacidad',
+        name: 'PrivacyPolicy',
+        component: () => import('@/views/legal/PrivacyPolicyView.vue')
+    },
+    {
+        path: '/terminos-y-condiciones',
+        name: 'TermsAndConditions',
+        component: () => import('@/views/legal/TermAndConditionsView.vue')
+    },
     {
         path: '/:pathMatch(.*)*',
         name: 'NotFound',
