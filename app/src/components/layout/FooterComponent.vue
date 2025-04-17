@@ -5,16 +5,16 @@
         <p>&copy; 2021 Lucia Diaz. Colegiatura: F.P.V. - 16.657</p>
         <ul>
             <li>
-                <router-link to="/terms-and-conditions"
+                <router-link to="/terminos-y-condiciones"
                     >Términos y condiciones</router-link
                 >
             </li>
             <li>
-                <router-link to="/privacy-policy"
+                <router-link to="/politica-privacidad"
                     >Política de privacidad</router-link
                 >
             </li>
-            <li><router-link to="/legal-notice">Aviso legal</router-link></li>
+            <li><router-link to="/aviso-legal">Aviso legal</router-link></li>
         </ul>
     </footer>
 </template>
