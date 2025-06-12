@@ -17,6 +17,7 @@ import note_router from './src/routes/note-router.js';
 import task_router from './src/routes/task-router.js';
 import video_router from './src/routes/video-router.js';
 import post_router from './src/routes/post-router.js';
+import util_router from './src/routes/util-router.js';
 
 //App config
 const app = express();
@@ -51,6 +52,7 @@ app.use('/api/v3/note', note_router);
 app.use('/api/v3/task', task_router);
 app.use('/api/v3/video', video_router);
 app.use('/api/v3/post', post_router);
+app.use('/api/v3/util', util_router);
 
 //Error handler
 app.use((err, req, res, next) => {
