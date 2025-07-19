@@ -5,8 +5,8 @@ import fileUpload from "express-fileupload";
 
 const video_router = Router();
 
-video_router.get('/', get_all_videos);
-video_router.get('/:video_id', get_video_by_id);
+video_router.get('/:display', get_all_videos);
+video_router.get('/video/:video_id', get_video_by_id);
 video_router.post('/', admin_auth, fileUpload({ useTempFiles: true, tempFileDir: '/tmp' }), create_video);
 video_router.put('/:video_id', admin_auth, fileUpload({ useTempFiles: true, tempFileDir: '/tmp' }), update_video);
 video_router.delete('/:video_id', admin_auth, delete_video);

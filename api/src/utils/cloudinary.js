@@ -2,15 +2,15 @@ import { v2 as cloudinary } from 'cloudinary';
 
 //Configuration
 cloudinary.config({
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET,
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.CLOUD_API_KEY,
+    api_secret: process.env.CLOUD_API_SECRET,
     secure: true
 });
 
 export const upload_formation_cover = async (file) => {
     try {
-        const result = await cloudinary.uploader.upload(file, {
+        const result = await cloudinary.uploader.upload(file.tempFilePath, {
             folder: 'Lucia/Formaciones',
             use_filename: true,
             resource_type: 'auto'
@@ -23,7 +23,7 @@ export const upload_formation_cover = async (file) => {
 
 export const upload_post_cover = async (file) => {
     try {
-        const result = await cloudinary.uploader.upload(file, {
+        const result = await cloudinary.uploader.upload(file.tempFilePath, {
             folder: 'Lucia/Posts',
             use_filename: true,
             resource_type: 'auto'
@@ -36,7 +36,7 @@ export const upload_post_cover = async (file) => {
 
 export const upload_video_cover = async (file) => {
     try {
-        const result = await cloudinary.uploader.upload(file, {
+        const result = await cloudinary.uploader.upload(file.tempFilePath, {
             folder: 'Lucia/Videos',
             use_filename: true,
             resource_type: 'auto'

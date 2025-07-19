@@ -18,22 +18,24 @@ import task_router from './src/routes/task-router.js';
 import video_router from './src/routes/video-router.js';
 import post_router from './src/routes/post-router.js';
 import util_router from './src/routes/util-router.js';
+import common_router from './src/routes/common-router.js';
 
 //App config
 const app = express();
 
 //Helpers
-const allowedOrigins = [process.env.FRONTEND_URL, process.env.ORIGIN2];
+const allowedOrigins = ['http://localhost:5173' , process.env.ORIGIN2];
 
 //Middleware
 app.use(cors({
     origin: function (origin, callback) {
-        if (!origin || allowedOrigins.includes(origin)) {
-            callback(null, true);
+        if (allowedOrigins.includes(origin)) {
+            return callback(null, true);
         } else {
-            callback(new Error(`Not allowed by CORS: ${origin}`));
+            return callback(new Error(`Not allowed by CORS: ${origin}`));
         }
-    }
+    },
+    credentials: true
 }));
 app.use(helmet());
 app.use(morgan('dev'));
@@ -53,6 +55,7 @@ app.use('/api/v3/task', task_router);
 app.use('/api/v3/video', video_router);
 app.use('/api/v3/post', post_router);
 app.use('/api/v3/util', util_router);
+app.use('/api/v3/common', common_router);
 
 //Error handler
 app.use((err, req, res, next) => {

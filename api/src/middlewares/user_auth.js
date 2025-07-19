@@ -3,9 +3,9 @@ import { User } from '../models/User-model.js';
 
 export const user_auth = (req, res, next) => {
     try {
-        const token = req.headers.authorization.split(' ')[1];
+        const token = req.header('Authorization').split(' ')[1];
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        const user = User.findById(decoded.id).lean();
+        const user = User.findById(decoded.user_id).lean();
         if (!user) {
             throw new Error('Usuario no encontrado');
         }
@@ -16,11 +16,11 @@ export const user_auth = (req, res, next) => {
     }
 }
 
-export const admin_auth = (req, res, next) => {
+export const admin_auth = async (req, res, next) => {
     try {
-        const token = req.headers.authorization.split(' ')[1];
+        const token = req.header('Authorization').split(' ')[1];
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        const user = User.findById(decoded.id).lean();
+        const user = await User.findById(decoded.user_id).lean();
         if (!user) {
             throw new Error('Usuario no encontrado');
         }

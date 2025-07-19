@@ -16,6 +16,7 @@ const userSchema = new Schema(
         medical_record: { type: String, unique: true, required: true },
         policy_accepted: { type: Boolean, required: true },
         reset_password_token: { type: String },
+        login_token: { type: Number },
     },
     {
         timestamps: true,

@@ -7,7 +7,7 @@ const like_router = Router();
 like_router.post('/', user_auth, user_create_like);
 like_router.post('/visitor', visitor_create_like);
 like_router.delete('/:like_id', user_auth, user_unlike);
-like_router.delete('/:like_id', visitor_unlike);
+like_router.delete('/visitor/:like_id', visitor_unlike);
 like_router.get('/', admin_auth, get_all_likes);
 
 export default like_router;

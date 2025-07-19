@@ -1,176 +1,104 @@
-<script setup lang="ts">
-//Import tools
-import { useFormationStore } from '@/stores/formation-store';
+<script setup>
+import { RouterLink } from 'vue-router'
 
-defineProps<{
-    _id: string;
-    title: string;
-    landing_page: string;
-    type: string;
-    image: string;
-    price: number;
-    likes: number;
-}>();
+defineProps({
+    formation: Object
+})
 
-//state
-const formation_store = useFormationStore();
+const max_length = 150
+const truncate = (text, max_length) => {
+    return text.substring(0, max_length) + '...'
+}
 
-//methods
-const addLike = async (id: string) => {
-    await formation_store.like_formation(id);
-    await formation_store.get_all_formations();
-};
+const format_date = (date) => {
+    return new Date(date).toLocaleDateString('es-ES', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    })
+}
 </script>
 
 <template>
-    <article class="card">
-        <RouterLink class="card__image" :to="`/formaciones/${landing_page}`">
-            <img :src="image" alt="formation image" />
-            <p class="card-price">{{ price === 0 ? 'Gratis' : `${price}€` }}</p>
-        </RouterLink>
-        <section class="card__information">
-            <h3 class="card-title">{{ title }}</h3>
-            <p class="card-type">{{ type }}</p>
-            <div class="card-social">
-                <img
-                    src="/icon/like.svg"
-                    alt="like icon"
-                    @click="addLike(_id)"
-                />
-                <p class="card-likes">{{ likes }}</p>
+    <RouterLink :to="`/formation/${formation._id}`" class="formation__card__container">
+        <img :src="formation.formation_cover.secure_url" alt="">
+        <section class="formation__card__container__info">
+            <h4>{{ formation.title }}</h4>
+            <p v-html="truncate(formation.content, max_length)"></p>
+            <div class="formation__card__container__info__types">
+                <p>Modalidad: {{ formation.type }}</p>
+                <p>Precio: {{ formation.price }}€</p>
+                <p>{{ format_date(formation.start_date) }}</p>
             </div>
         </section>
-    </article>
+        <button class="nobg-btn">Saber más</button>
+    </RouterLink>
 </template>
 
 <style scoped lang="scss">
-.card {
-    width: 400px;
-    margin: 0;
+.formation__card__container {
+    width: 100%;
+    max-width: 70%;
+    max-height: 10rem;
+    margin: 0 auto;
+    padding: 0;
     display: flex;
-    flex-direction: column;
+    align-items: center;
     justify-content: space-between;
-    gap: 0;
-    text-decoration: none;
-    background-color: var(--color-white);
-    position: relative;
+    gap: 1rem;
+    cursor: pointer;
     box-sizing: border-box;
+    transition: all 0.25s;
 
     &:hover {
-        transform: scale(1.02);
-        transition: transform 0.3s;
+        transform: translateY(-5px);
     }
 
-    .card__image {
-        text-decoration: none;
-        height: calc(100% - 50px);
-
-        img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .card-price {
-            margin: 0.5rem 0 0;
-            padding: 0.5rem 1rem;
-            color: var(--color-white);
-            background: linear-gradient(
-                180deg,
-                var(--color-secondary) 12%,
-                var(--color-secondary-trans) 90%,
-                transparent 100%
-            );
-            border-radius: 10rem;
-            position: absolute;
-            top: 0.5rem;
-            right: 0.5rem;
-            box-sizing: border-box;
-        }
+    img {
+        width: 10rem;
+        height: 10rem;
+        object-fit: cover;
+        border-radius: 1rem;
     }
 
-    .card__information {
+    &__info {
         width: 100%;
+        max-width: calc(100% - 22rem);
+        height: 10rem;
         display: flex;
         flex-direction: column;
+        justify-content: flex-start;
+        gap: 0;
+        padding: 0;
         margin: 0;
-        padding: 0.5rem 0;
-        gap: 0.5rem;
         box-sizing: border-box;
 
-        .card-type {
-            width: fit-content;
-            font-size: 1rem;
+        h4 {
             margin: 0;
-            padding: 0.1rem 1.5rem;
-            border-radius: 10rem;
-            background: linear-gradient(
-                90deg,
-                transparent 2%,
-                var(--color-primary-trans) 20%,
-                var(--color-primary-trans) 80%,
-                transparent 98%
-            );
+            padding: 0;
+            color: var(--color-black);
         }
 
-        .card-title {
-            background-color: transparent;
-            border: 1px solid var(--color-white);
+        p {
             margin: 0;
+            padding: 0;
         }
 
-        .card-social {
+        &__types {
+            width: 90%;
             display: flex;
-            gap: 0.1rem;
-
-            img {
-                width: 1.5rem;
-                height: 1.5rem;
-                cursor: pointer;
-            }
-            p {
-                font-size: 1rem;
-                margin: 0;
-            }
-            .card-likes {
-                background-color: transparent;
-                padding: 0.1rem 0.5rem;
-                border-radius: 0.5rem;
-            }
+            justify-content: space-between;
+            margin-top: 0;
+            color: var(--color-black);
+            opacity: 0.8;
         }
-    }
-
-    a {
-        text-align: center;
     }
 }
 
-@media screen and (max-width: 768px) {
-    .card {
-        width: 100%;
-        height: fit-content;
-        margin: 0;
-        padding: 1rem 0.5rem;
-        box-sizing: border-box;
+.nobg-btn {
+    width: 10rem;
+    border-color: var(--color-black);
+    color: var(--color-black);
 
-        .card__image {
-            height: 50%;
-            img {
-                border-radius: 1rem;
-            }
-
-            .card-price {
-                top: 1rem;
-                right: 1rem;
-            }
-        }
-
-        .card__information {
-            padding: 0.5rem;
-            .card-type {
-                padding: 0.1rem 1rem;
-            }
-        }
-    }
 }
 </style>

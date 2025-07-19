@@ -35,6 +35,11 @@ const postSchema = new Schema(
                 required: true,
             },
         ],
+        status: {
+            type: String,
+            enum: ['draft', 'published'],
+            default: 'draft',
+        },
         likes:
         {
             type: Number,

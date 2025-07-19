@@ -24,12 +24,12 @@ export const admin_get_user_data = async (uid) => {
 
         const user_data = {
             user,
-            notes: therapy_notes,
-            tasks: therapy_tasks,
-            history: patient_histories,
-            tests: test_results,
-            enrollments,
-            likes,
+            notes: therapy_notes || [],
+            tasks: therapy_tasks || [],
+            history: patient_histories || [],
+            tests: test_results || [],
+            enrollments: enrollments || [],
+            likes: likes || [],
         }
 
         return user_data;

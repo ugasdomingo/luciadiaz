@@ -40,7 +40,7 @@ export const register = async (req, res, next) => {
         await unify_email_activity(user._id, email);
 
         // 8. Notify admin
-        await notify_admin_new_registration(user._id, user.email);
+        await notify_admin_new_registration(user.name, user.email, user.phone);
 
         return client_response(res, 201, 'Te envié un correo electrónico para verificar tu cuenta');
     } catch (error) {
@@ -50,10 +50,10 @@ export const register = async (req, res, next) => {
 
 export const verify_email = async (req, res, next) => {
     try {
-        const { login_token, email } = req.query;
-
+        const { login_token, email } = req.body;
+        const login_token_int = Number(login_token);
         // 1. Find user and verify token
-        const user = await User.findOne({ login_token, email });
+        const user = await User.findOne({ login_token: login_token_int, email });
         if (!user) {
             throw new Error('Token inválido');
         }
@@ -95,11 +95,17 @@ export const login = async (req, res, next) => {
         user.login_token = login_token;
         await user.save();
 
-        // 4. Send 2FA email
-        await send_2fa_email(user.email, login_token);
+        // 4. Send 2FA email // verify email
+        if (!user.email_verified) {
+            await send_verification_email(user.email, login_token);
+        } else {
+            await send_2fa_email(user.email, login_token);
+        }
 
+        const message = user.email_verified ? 'Te envié un código de verificación a tu correo electrónico' : 'Aún no has verificado tu correo electrónico, te envié un correo electrónico para verificarlo';
+        const response_number = user.email_verified ? 200 : 201;
         // 5. Return response
-        return client_response(res, 200, 'Te evié un código de verificación a tu correo electrónico');
+        return client_response(res, response_number, message);
     } catch (error) {
         next(error);
     }
@@ -107,10 +113,10 @@ export const login = async (req, res, next) => {
 
 export const verify_login = async (req, res, next) => {
     try {
-        const { login_token, email } = req.query;
+        const { login_token, email } = req.body;
 
         // 1. Find user and verify token
-        const user = await User.findOne({ login_token, email });
+        const user = await User.findOne({ login_token: parseInt(login_token), email });
         if (!user) {
             throw new Error('Token inválido');
         }
@@ -152,13 +158,13 @@ export const refresh = async (req, res, next) => {
         const decoded = jwt.verify(refresh_token, process.env.JWT_REFRESH_SECRET);
 
         // 2. Find user
-        const user = await User.findOne({ _id: decoded.uid });
+        const user = await User.findById(decoded.user_id);
         if (!user) {
             throw new Error('Token inválido');
         }
-        const { user_data, token, new_refresh_token } = await get_login_user_data(user._id);
+        const { user_data, token, refresh_token: new_refresh_token } = await get_login_user_data(user._id);
         set_cookie(res, new_refresh_token);
-        return client_response(res, 200, 'Bienvenida(o) de regreso', { user_data, token });
+        return client_response(res, 200, 'OK', { user_data, token });
     } catch (error) {
         next(error);
     }

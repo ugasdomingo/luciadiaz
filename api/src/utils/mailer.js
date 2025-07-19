@@ -42,7 +42,7 @@ export const send_reset_password_email = async (email, reset_token) => {
     const html = `
         <h1>Restablecimiento de contraseña</h1>
         <p>Por favor, haga clic en el siguiente enlace para restablecer su contraseña:</p>
-        <a href="${process.env.FRONTEND_URL}/reset-password?token=${encodeURIComponent(reset_token)}">Restablecer contraseña</a>
+        <a href="${process.env.FRONTEND_URL}/reset-password?token=${encodeURIComponent(reset_token)}&email=${encodeURIComponent(email)}">Restablecer contraseña</a>
     `;
     await send_email(email, subject, html);
 }
@@ -59,14 +59,14 @@ export const send_2fa_email = async (email, login_token ) => {
 }
 
 //Notify admin new registration
-export const notify_admin_new_registration = async (email, name, username) => {
+export const notify_admin_new_registration = async (name, email, phone) => {
     const subject = 'Nuevo registro';
     const html = `
         <h1>Nuevo registro</h1>
         <p>Se ha registrado un nuevo usuario:</p>
         <p>Nombre: ${name}</p>
         <p>Correo electrónico: ${email}</p>
-        <p>Usuario: ${username}</p>
+        <p>Telefono: ${phone}</p>
     `;
     await send_email(process.env.MAIL_USER, subject, html);
 }

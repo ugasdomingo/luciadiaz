@@ -1,120 +1,105 @@
-<script setup lang="ts">
-//Import tools
-import { ref, onMounted } from 'vue';
-import { useUserStore } from '@/stores/user-store';
+<script setup>
+import { onMounted, ref } from 'vue';
+import { useUtilStore } from '../../stores/util-store';
+import NavbarComponent from './NavbarComponent.vue';
 
-//States
-const user_store = useUserStore();
-const hidden = ref(false);
-let last_scroll = 0;
+const util_store = useUtilStore()
+const show_header = ref(true)
+const need_bg = ref(false)
+let last_scroll_position_y = 0
 
-//Methods
-const handleScroll = () => {
-    const current_scroll = window.scrollY;
-    if (current_scroll > last_scroll && current_scroll > 50) {
-        hidden.value = true;
-    } else {
-        hidden.value = false;
-    }
-    last_scroll = current_scroll;
-};
-
-//Lifecycle
 onMounted(() => {
-    window.addEventListener('scroll', handleScroll);
-});
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > last_scroll_position_y) {
+            show_header.value = false
+        } else {
+            show_header.value = true
+        }
+
+        last_scroll_position_y = window.scrollY
+
+        if (last_scroll_position_y > 100) {
+            need_bg.value = true
+        } else {
+            need_bg.value = false
+        }
+    })
+})
 </script>
 
 <template>
-    <header :class="{ hidden: hidden }">
-        <RouterLink to="/" class="logo">
-            <img src="/img/logo-notextbg.png" alt="Logo" />
-            <h2>Lucia Diaz</h2>
+
+    <header class="header" :class="{ 'header__hidden': !show_header, 'header__bg': need_bg }">
+        <RouterLink to="/" class="header__logo">
+            <img src="/public/logo-notextbg.png" alt="logo lucia">
         </RouterLink>
-        <section class="button-area">
-            <button
-                class="button__simply"
-                @click="user_store.logout"
-                v-if="user_store.token"
-            >
-                Cerrar sesión
-            </button>
-            <RouterLink to="/area-privada" class="button__transparent">
-                Área Privada
-            </RouterLink>
-            <RouterLink to="/terapias" class="button__action">
-                Agendar una cita
-            </RouterLink>
+        <section class="header__menu">
+            <RouterLink to="/terapias" class="action-btn">Agendar consulta terapeutica</RouterLink>
+            <img src="/public/icon/icon-hamburguer-menu.svg" alt="menu" class="header__menu__icon"
+                @click="util_store.toggle_navbar">
+            <NavbarComponent :class="util_store.show_navbar ? 'header__navbar' : 'header__navbar__hidden'" />
         </section>
     </header>
 </template>
 
+
 <style scoped lang="scss">
-header {
+.header {
     width: 100%;
-    height: 5rem;
+    max-width: 1360px;
+    max-height: 4rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 4rem;
-    background-color: transparent;
-    transition: transform 0.3s;
+    padding: 1rem 4rem;
+    margin: 0 auto;
     position: fixed;
-    top: 0;
+    top: 0.5rem;
     left: 0;
-    z-index: 1000;
-    overflow-y: hidden;
+    right: 0;
+    z-index: 100;
     box-sizing: border-box;
 
-    &.hidden {
-        transform: translateY(-100%);
-    }
-
-    .logo {
-        display: flex;
-        text-decoration: none;
-        align-items: center;
-        box-sizing: border-box;
+    &__logo {
         img {
             width: 4rem;
-            height: 4rem;
-            object-fit: cover;
-        }
-        h2 {
-            margin-left: 1rem;
-            color: var(--color-primary);
+            object-fit: contain;
         }
     }
 
-    .button-area {
+    &__menu {
         display: flex;
+        align-items: center;
         gap: 1rem;
+
+        &__icon {
+            width: 2rem;
+            cursor: pointer;
+        }
+    }
+
+    &__navbar {
+        display: block;
+
+        &__hidden {
+            display: none;
+        }
     }
 }
 
-@media screen and (max-width: 768px) {
-    header {
-        padding: 0 0.5rem;
-        height: 4rem;
+.header__hidden {
+    display: none;
+}
 
-        .logo {
-            img {
-                width: 3rem;
-                height: 3rem;
-            }
-            h2 {
-                font-size: 1.5rem;
-                display: none;
-            }
-        }
+.header__bg {
+    background-color: color-mix(in srgb, var(--color-white) 80%,transparent);
+    
+}
 
-        .button-area {
-            gap: 0.5rem;
-
-            button {
-                display: none;
-            }
-        }
-    }
+@media screen and (max-width: 720px) {
+    .header {
+        padding: 1rem;
+        box-sizing: border-box;
+    } 
 }
 </style>

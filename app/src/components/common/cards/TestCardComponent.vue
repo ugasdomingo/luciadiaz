@@ -1,67 +1,54 @@
-<script setup lang="ts">
-//Import tools
-import type { ITestInfo } from '@/static/test-info';
-
-defineProps<{
-    test: ITestInfo;
-}>();
+<script setup>
+defineProps({
+    test: Object
+})
 </script>
 
 <template>
-    <RouterLink class="card" :to="`${test.link}`">
-        <img :src="test.image" alt="formation image" />
+    <RouterLink :to="test.link" class="test__card">
+        <img :src="test.image" alt="">
+        <h4>{{ test.name }}</h4>
         <p>{{ test.brief }}</p>
     </RouterLink>
 </template>
 
 <style scoped lang="scss">
-.card {
-    width: 250px;
-    height: fit-content;
-    margin: 0;
+.test__card {
+    width: 100%;
+    max-width: 15rem;
+    border-radius: 1rem;
+    padding: 0;
+    margin: 0; 
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    gap: 0;
-    text-decoration: none;
-    color: var(--color-text);
-    font-weight: 700;
-    position: relative;
     box-sizing: border-box;
+    color: var(--color-black);
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+        transform: translateY(-5px);
+    }
 
     img {
-        width: 100%;
-        height: 200px;
+        width: 15rem;
+        height: 15rem;
         object-fit: cover;
         margin-bottom: 1rem;
+        border-radius: 0.1rem;
     }
 
+    h4 {
+        font-size: 1rem;
+        margin:0;
+        padding: 0 0.5rem;
+        color: var(--color-black);
+    }
+    
     p {
-        width: 100%;
-    }
-}
-
-@media screen and (max-width: 768px) {
-    .card {
-        width: 100%;
-        align-items: center;
-        height: fit-content;
-        margin: 0 0 1rem;
-        padding: 1rem;
-        gap: 1rem;
-        border-radius: 0.5rem;
-        box-shadow: 0 0 0.5rem 0 var(--color-primary-trans);
-
-        img {
-            width: 300px;
-            height: 300px;
-            border-radius: 0.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        p {
-            margin-top: 0;
-        }
+        font-size: 0.8rem;
+        padding: 0 0.5rem;
+        margin-bottom: 1rem;
     }
 }
 </style>

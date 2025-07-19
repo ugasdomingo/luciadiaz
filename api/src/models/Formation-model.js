@@ -6,13 +6,9 @@ const formationSchema = new Schema(
             type: String,
             required: true,
         },
-        landing_page_slug: {
-            type: String,
-            required: true,
-        },
         type: {
             type: String,
-            enum: ['formation', 'webinar', 'course','online'],
+            enum: ['presencial', 'webinar', 'en_linea'], 
             required: true,
         },
         content: {
@@ -48,7 +44,7 @@ const formationSchema = new Schema(
         video_url: {
             type: String,
         },
-        cover_image: {
+        formation_cover: {
             public_id: {
                 type: String,
                 required: true,

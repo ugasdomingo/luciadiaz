@@ -11,11 +11,15 @@ const VideoSchema = new Schema(
             type: String,
             required: true,
         },
-        content: {
+        brief: {
             type: String,
             required: true,
         },
-        post_cover: {
+        video_url: {
+            type: String,
+            required: true,
+        },
+        video_cover: {
             public_id: {
                 type: String,
                 required: true,
