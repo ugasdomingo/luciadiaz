@@ -14,6 +14,26 @@ const routes = [
         name: 'Therapies',
         component: () => import('../views/Therapy.vue')
     },
+    {
+        path: '/blog',
+        name: 'Blog',
+        component: () => import('../views/Blog.vue')
+    },
+    {
+        path: '/blog/:post_id',
+        name: 'BlogOne',
+        component: () => import('../views/BlogOne.vue')
+    },
+    {
+        path: '/formaciones',
+        name: 'Formations',
+        component: () => import('../views/Formations.vue')
+    },
+    {
+        path: '/formaciones/:formation_id',
+        name: 'FormationsOne',
+        component: () => import('../views/FormationsOne.vue')
+    },
     // Auth Pages *************************************
     {
         path: '/acceso',

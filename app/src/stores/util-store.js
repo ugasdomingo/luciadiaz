@@ -40,6 +40,15 @@ export const useUtilStore = defineStore('utils', () => {
         message_type.value = ''
     }
 
+    // Format Date
+    const format_date = (date) => {
+        return new Date(date).toLocaleDateString('es-ES', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        })
+    }
+
     
 
     return {
@@ -51,7 +60,8 @@ export const useUtilStore = defineStore('utils', () => {
         message,
         message_type,
         set_message,
-        hide_message
+        hide_message,
+        format_date
     }
 })
 

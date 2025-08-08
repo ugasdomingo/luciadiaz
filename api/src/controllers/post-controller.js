@@ -18,6 +18,16 @@ export const get_all_posts = async (req, res, next) => {
     }
 }
 
+//Admin get all post
+export const get_all_posts_admin = async (req, res, next) => {
+    try {
+        const posts = await Post.find().sort({ createdAt: -1 }).lean();
+        return client_response(res, 200, 'OK', posts);
+    } catch (error) {
+        next(error);
+    }
+}
+
 //Get post by id
 export const get_post_by_id = async (req, res, next) => {
     try {

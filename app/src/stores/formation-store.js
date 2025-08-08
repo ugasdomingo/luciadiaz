@@ -25,6 +25,21 @@ export const useFormationStore = defineStore('formation', () => {
         }
     }
 
+    const get_all_formations_admin = async () => {
+        try {
+            util_store.set_loading(true)
+            const response = await api({
+                method: 'get',
+                url: '/formation/admin/all'
+            })
+            formations.value = response.data.data
+        } catch (err) {
+            console.log(err)
+        } finally {
+            util_store.set_loading(false)
+        }
+    }
+
     const get_formation_by_id = async (id) => {
         try {
             util_store.set_loading(true)
@@ -32,7 +47,7 @@ export const useFormationStore = defineStore('formation', () => {
                 method: 'get',
                 url: `/formation/${id}`
             })
-            formation.value = response.data.data
+            formation.value = response.data.data[0]
         } catch (err) {
             console.log(err)
         } finally {
@@ -122,6 +137,7 @@ export const useFormationStore = defineStore('formation', () => {
         formations,
         formation,
         get_all_formations,
+        get_all_formations_admin,
         get_formation_by_id,
         create_formation,
         update_formation,

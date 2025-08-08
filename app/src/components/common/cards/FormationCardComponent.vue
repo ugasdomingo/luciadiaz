@@ -1,5 +1,8 @@
 <script setup>
 import { RouterLink } from 'vue-router'
+import { useUtilStore } from '../../../stores/util-store.js'
+
+const util_store = useUtilStore()
 
 defineProps({
     formation: Object
@@ -10,17 +13,11 @@ const truncate = (text, max_length) => {
     return text.substring(0, max_length) + '...'
 }
 
-const format_date = (date) => {
-    return new Date(date).toLocaleDateString('es-ES', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-    })
-}
+
 </script>
 
 <template>
-    <RouterLink :to="`/formation/${formation._id}`" class="formation__card__container">
+    <RouterLink :to="`/formaciones/${formation._id}`" class="formation__card__container">
         <img :src="formation.formation_cover.secure_url" alt="">
         <section class="formation__card__container__info">
             <h4>{{ formation.title }}</h4>
@@ -28,7 +25,7 @@ const format_date = (date) => {
             <div class="formation__card__container__info__types">
                 <p>Modalidad: {{ formation.type }}</p>
                 <p>Precio: {{ formation.price }}€</p>
-                <p>{{ format_date(formation.start_date) }}</p>
+                <p>{{ util_store.format_date(formation.start_date) }}</p>
             </div>
         </section>
         <button class="nobg-btn">Saber más</button>

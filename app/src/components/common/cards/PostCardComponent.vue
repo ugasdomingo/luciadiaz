@@ -49,7 +49,7 @@ const truncate = (text, max_length) => {
         height: 15rem;
         object-fit: cover;
         margin-bottom: 1rem;
-        border-radius: 0.1rem;
+        border-radius: 0.5rem;
     }
 
     p {

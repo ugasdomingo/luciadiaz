@@ -8,11 +8,20 @@ export const get_all_formations = async (req, res, next) => {
         const { display } = req.params;
 
         if (display === '0') {
-            const formations = await Formation.find({ status: 'active' }).sort({ start_date: -1 }).lean();
+            const formations = await Formation.find({ status: 'active' }).lean();
             return client_response(res, 200, 'OK', formations);
         }
-        const formations = await Formation.find({ status: 'active' }).sort({ start_date: -1 }).limit(Number(display)).lean();
+        const formations = await Formation.find({ status: 'active' }).limit(Number(display)).lean();
 
+        return client_response(res, 200, 'OK', formations);
+    } catch (error) {
+        next(error);
+    }
+}
+
+export const get_all_formations_admin = async (req, res, next) => {
+    try {
+        const formations = await Formation.find().lean();
         return client_response(res, 200, 'OK', formations);
     } catch (error) {
         next(error);

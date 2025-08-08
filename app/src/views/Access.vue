@@ -1,3 +1,17 @@
+<template>
+    <main class="pages">
+        <h2>{{ current_component === 'Login' ? 'Inicia sesión' : current_component === 'ForgotPassword' ? 'Recuperar contraseña' : 'Regístrate' }}</h2>
+        <LoginComponent v-if="current_component === 'Login'" />
+        <RegisterComponent v-if="current_component === 'Register'" />
+        <ForgotPasswordComponent v-if="current_component === 'ForgotPassword'" />
+        <p v-if="current_component === 'Login'" @click="current_component = 'ForgotPassword'" class="forgot-password">
+            ¿Olvidaste tu contraseña? </p>
+        <p>{{ current_component === 'Login' ? '¿No tienes cuenta?' : '¿Tienes cuenta?' }} <button class="nobg-btn"
+                @click="toggle_component">{{ current_component === 'Login' ? 'Regístrate' : 'Inicia sesión' }}</button>
+        </p>
+    </main>
+</template>
+
 <script setup>
 import { ref } from 'vue'
 import LoginComponent from '../components/auth/LoginComponent.vue'
@@ -14,17 +28,6 @@ const toggle_component = () => {
     }
 }
 </script>
-
-<template>
-    <main class="pages">
-        <h2>{{ current_component === 'Login' ? 'Inicia sesión' : current_component === 'ForgotPassword' ? 'Recuperar contraseña' : 'Regístrate' }}</h2>
-        <LoginComponent v-if="current_component === 'Login'" />
-        <RegisterComponent v-if="current_component === 'Register'" />
-        <ForgotPasswordComponent v-if="current_component === 'ForgotPassword'" />
-        <p v-if="current_component === 'Login'" @click="current_component = 'ForgotPassword'" class="forgot-password">¿Olvidaste tu contraseña? </p>
-        <p>{{ current_component === 'Login' ? '¿No tienes cuenta?' : '¿Tienes cuenta?' }} <button class="nobg-btn" @click="toggle_component">{{ current_component === 'Login' ? 'Regístrate' : 'Inicia sesión' }}</button></p>
-    </main>
-</template>
 
 <style scoped lang="scss">
 main {

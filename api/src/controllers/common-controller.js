@@ -6,9 +6,9 @@ import { Formation } from "../models/Formation-model.js";
 export const home_data = async (req, res, next) => {
     try {
         const promises = [
-            Post.find().sort({ createdAt: -1 }).limit(3).lean(),
+            Post.find({ status: 'published' }).sort({ createdAt: -1 }).limit(3).lean(),
             Video.find().sort({ createdAt: -1 }).limit(3).lean(),
-            Formation.find().sort({ createdAt: -1 }).limit(3).lean(),
+            Formation.find({ status: 'active' }).limit(3).lean(),
         ]
         const [posts, videos, formations] = await Promise.all(promises);
         return client_response(res, 200, 'OK', { posts, videos, formations });

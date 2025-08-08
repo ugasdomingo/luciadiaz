@@ -8,6 +8,7 @@ export const usePostStore = defineStore('post', () => {
     const util_store = useUtilStore()
     const auth_store = useAuthStore()
     const posts = ref([])
+    const post = ref({})
 
     const get_all_posts = async (display) => {
         try {
@@ -24,14 +25,32 @@ export const usePostStore = defineStore('post', () => {
         }
     }
 
+    const get_all_posts_admin = async () => {
+        try {
+            util_store.set_loading(true)
+            const response = await api({
+                method: 'get',
+                url: '/post/admin/all',
+                headers: {
+                    'Authorization': `Bearer ${auth_store.token}`
+                }
+            })
+            posts.value = response.data.data
+        } catch (err) {
+            console.log(err)
+        } finally {
+            util_store.set_loading(false)
+        }
+    }
+
     const get_post_by_id = async (post_id) => {
         try {
             util_store.set_loading(true)
             const response = await api({
                 method: 'get',
-                url: `/post/${post_id}`
+                url: `/post/post/${post_id}`
             })
-            posts.value = response.data.data
+            post.value = response.data.data
         } catch (err) {
             console.log(err)
         } finally {
@@ -119,7 +138,9 @@ export const usePostStore = defineStore('post', () => {
 
     return {
         posts,
+        post,
         get_all_posts,
+        get_all_posts_admin,
         get_post_by_id,
         create_post,
         update_post,

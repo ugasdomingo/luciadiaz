@@ -1,7 +1,3 @@
-<script setup>
-import { therapies } from '../static/therapies.js'
-</script>
-
 <template>
     <section class="therapy">
         <h2>Terapias</h2>
@@ -15,6 +11,10 @@ import { therapies } from '../static/therapies.js'
         </div>
     </section>
 </template>
+
+<script setup>
+import { therapies } from '../static/therapies.js'
+</script>
 
 <style scoped lang="scss">
 .therapy {
@@ -57,8 +57,8 @@ import { therapies } from '../static/therapies.js'
             }
 
             img {
-                width: 100%;
-                height: 20rem;
+                width: 5rem;
+                height: 5rem;
                 object-fit: cover;
                 border-radius: 1rem;
             }

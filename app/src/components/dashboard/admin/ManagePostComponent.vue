@@ -21,7 +21,7 @@ const toggle_update_post = () => {
     show_update_post.value = !show_update_post.value
 
     if (post_store.posts.length === 0) {
-        post_store.get_all_posts(0)
+        post_store.get_all_posts_admin()
     }
 }
 
@@ -60,12 +60,34 @@ const handle_file_change = (event) => {
 
 }
 
-const update_post = () => {
-    post_store.update_post(post_to_update.value)
+//Prepare post to update
+const prepare_post_to_update = (post) => {
+    post_to_update.value = post
+    toggle_create_post()
+    title.value = post.title
+    content.value = post.content
+    category.value = post.category
+    tags.value = post.tags
 }
 
-const delete_post = (id) => {
-    post_store.delete_post(id)
+//Handdle_update
+const handle_update = async () => {
+    const form_data = new FormData()
+    form_data.append('title', title.value)
+    form_data.append('content', content.value)
+    form_data.append('category', category.value)
+    form_data.append('tags', tags.value)
+    form_data.append('post_cover', post_cover.value)
+
+    await post_store.update_post(post_to_update.value._id, form_data)
+
+    title.value = ''
+    content.value = ''
+    category.value = ''
+    tags.value = ''
+    post_cover.value = null
+    post_to_update.value = null
+    toggle_update_post()
 }
 
 </script>
@@ -80,14 +102,16 @@ const delete_post = (id) => {
             <input type="text" placeholder="Tags" v-model="tags" required>
             <input type="file" accept="image/*" @change="handle_file_change" required>
             <button type="submit" class="action-btn">Crear Post</button>
+            <button type="button" class="nobg-btn" @click="handle_update">Guardar</button>
         </form>
         <h2 @click="toggle_update_post">Actualizar Post <span>{{ show_update_post ? '-' : '+' }}</span></h2>
         <section v-if="show_update_post" class="section__container__posts">
             <div v-for="post in post_store.posts" :key="post.id">
                 <PostCardComponent :post="post" />
                 <div class="section__container__posts__actions" v-if="auth_store.user.role === 'Admin'">
-                    <button @click="post_to_update = post" class="action-btn">Editar</button>
+                    <button @click="post_store.change_post_status(post._id, 'published')" class="action-btn">Publicar</button>
                     <button @click="post_store.delete_post(post.id)" class="nobg-btn">Eliminar</button>
+                    <button @click="prepare_post_to_update(post)" class="action-btn">Editar</button>
                 </div>
             </div>
         </section>
