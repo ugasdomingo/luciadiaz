@@ -24,7 +24,7 @@ import common_router from './src/routes/common-router.js';
 const app = express();
 
 //Helpers
-const allowedOrigins = ['http://localhost:5173' , process.env.ORIGIN2];
+const allowedOrigins = [process.env.FRONTEND_URL, process.env.ORIGIN2];
 
 //Middleware
 app.use(cors({
