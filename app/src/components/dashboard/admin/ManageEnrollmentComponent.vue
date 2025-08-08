@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-import { useEnrollmentStore } from '../../stores/enrollment-store'
+import { useEnrollmentStore } from '../../../stores/enrollment-store.js'
 import { onBeforeMount } from 'vue'
 
 const enrollment_store = useEnrollmentStore()
@@ -33,7 +33,8 @@ onBeforeMount(() => {
 
 <template>
     <section class="section__container">
-        <h2>Ver Inscripciones <span @click="toggle_get_all_enrollment">{{ show_get_all_enrollment ? '-' : '+' }}</span></h2>
+        <h2>Ver Inscripciones <span @click="toggle_get_all_enrollment">{{ show_get_all_enrollment ? '-' : '+' }}</span>
+        </h2>
         <div v-if="show_get_all_enrollment" class="section__container__content">
             <table>
                 <thead>
