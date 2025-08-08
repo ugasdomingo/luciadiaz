@@ -29,6 +29,7 @@ const allowedOrigins = [process.env.FRONTEND_URL, process.env.ORIGIN2];
 //Middleware
 app.use(cors({
     origin: function (origin, callback) {
+        console.log('Request origin:', origin)
         if (allowedOrigins.includes(origin)) {
             return callback(null, true);
         } else {

@@ -7,5 +7,5 @@ export const api = axios.create({
 })
 
 // Interceptors
-// https://luciadiaz-f5cj.vercel.app/
+// https://luciadiaz-f5cj.vercel.app/api/v3
 // http://localhost:3001/api/v3
