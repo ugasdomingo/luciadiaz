@@ -1,20 +1,17 @@
 <template>
-    <section class="home__block hero">
-        <img src="/public/img/fondo-lucia-cafe.webp" alt="Imagen principal" class="hero__image">
-        <section class="hero__content">
-            <h2 class="hero__content__presentation">Hola, soy Lucia ¿Te apetece un café?</h2>
-            <article class="hero__card">
-                <div class="hero__card_title">
-                    <h4>Etimología de la palabra café</h4>
-                </div>
-                <div class="hero__card__text">
-                    <p>CA = Juntos</p>
-                    <p>FE = Inspiración</p>
-                    <p>CAFÉ = Juntos en inspiración</p>
-                </div>
-            </article>
-            <p class="hero__content__text">Busca tu bebida favorita, yo ya tengo mi café, y vamos juntos a inspirarnos en la belleza de la vida y la felicidad, en este espacio que he creado para ti.</p>
-        </section>
+    <section class="hero">
+        <img src="/public/img/fondo-lucia-cafe.webp" alt="Imagen principal" class="hero__background__image">
+        <div class="hero__image__content">
+            <img src="https://res.cloudinary.com/minteados/image/upload/v1737180498/Lucia/Lucia_y9pfhb.png"
+                alt="foto lucia" />
+            <div class="hero__image__content__decoration"></div>
+        </div>
+        <div class="hero__content">
+            <h2>Hola, soy Lucia Diaz</h2>
+            <p>He preparado este rincón para que te sientes cómodamente, disfrutes tu bebida favorita y dejemos volar la
+                mente juntos. Yo ya tengo mi café.
+            </p>
+        </div>
     </section>
 </template>
 
@@ -24,76 +21,79 @@
 
 <style scoped lang="scss">
 .hero {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 4rem 0 8rem;
+    gap: 2rem;
     position: relative;
+    box-sizing: border-box;
 
-    &__image {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        object-position: center 20%;
+    &__background__image {
         position: absolute;
         top: 0;
         left: 0;
-        right: 0;
-        bottom: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: top;
+        transform: scaleX(-1);
         z-index: -1;
+        opacity: 0.3;
     }
 
-    &__content {
-        width: 50%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        padding: 4rem;
-        align-self: flex-end;
-    }
+    &__image__content {
+        width: 30%;
+        padding-top: 2rem;
+        position: relative;
 
-    &__card {
-        width: 275px;
-        border-radius: 1rem;
-        background-color: var(--color-white);
-        box-shadow: 0 8px 32px rgba(147, 112, 219, 0.15);
-        border: 1px solid rgba(221, 160, 221, 0.2);
-    }
+        img {
+            width: 100%;
+            height: 50vh;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            object-fit: cover;
+            object-position: top;
+        }
 
-    &__card_title {
-        background-color: var(--color-soft-alert);
-        padding: 1rem 0.5rem;
-        border-radius: 1rem 1rem 0 0;
-        h4 {
-            margin: 0;
+        &__decoration {
+            width: 100%;
+            height: calc(50vh + 4rem);
+            background-color: var(--color-secondary);
+            opacity: 0.2;
+            position: absolute;
+            top: 0;
+            left: -2rem;
+            border-radius: 0.5rem;
+            z-index: -1;
         }
     }
 
-    &__card__text {
-        padding: 0 0.5rem;
-    }
+    &__content {
+        width: 70%;
+        box-sizing: border-box;
 
-    &__card_text p {
-        margin: 0.5rem 0;
-    }
+        h2 {
+            margin: 0 0 1rem 0;
+            color: var(--color-text);
+        }
 
-
-    &__content__presentation {
-        margin: 2rem 0 ;
-    }
-
-    &__content__text {
-        width: 275px;
-        margin: 1.5rem 0 0;
-        padding: 0.5rem;
-        border-radius: 1rem;
-        background-color: var(--color-white);
+        p {
+            width: 50%;
+            margin: 0;
+        }
     }
 }
 
 @media screen and (max-width: 720px) {
     .hero {
-        &__image {
+        &__image__content {
             height: 40%;
             object-position: left;
             top: 4.5rem;
         }
-    } 
+    }
 }
 </style>

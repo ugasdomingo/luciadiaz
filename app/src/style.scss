@@ -6,7 +6,7 @@
   --color-secondary: #4a4a8a;
   --color-tertiary: #8e6ba8;
 
-  --color-text: #6c757d;
+  --color-text: #000000;
   --color-text-light: #e9ecef;
   --color-text-dark: #495057;
   --color-black: #212529;
@@ -24,6 +24,18 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+@font-face {
+  font-family: 'Title';
+  src: url('../font/CormorantGaramond-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Text';
+  src: url('../font/Montserrat.ttf');
+  font-weight: 400;
+}
+
+
 body {
   margin: 0;
   padding: 0;
@@ -36,12 +48,16 @@ body {
 
 h1 {
   font-size: 4rem;
+  font-family: 'Title';
+  font-weight: 600;
   line-height: 1.1;
   color: var(--color-primary);
 }
 
 h2 {
   font-size: 2rem;
+  font-weight: 600;
+  font-family: 'Title';
   line-height: 1.1;
   color: var(--color-primary);
 }
@@ -50,24 +66,29 @@ h3 {
   font-size: 1.5rem;
   line-height: 1.1;
   color: var(--color-primary);
+  font-family: 'Title';
 }
 
 h4 {
   font-size: 1.25rem;
   line-height: 1.1;
   color: var(--color-primary);
+  font-family: 'Title';
 }
 
 p {
   font-size: 1rem;
+  font-family: 'Text';
+  font-weight: 300;
 }
 
 a {
   text-decoration: none;
   color: var(--color-secondary);
+  font-family: 'Text';
 }
 
-input{
+input {
   width: 100%;
   max-width: 30rem;
   padding: 0.75rem 0.5rem;
