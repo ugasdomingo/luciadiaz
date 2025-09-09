@@ -1,4 +1,5 @@
 import { generate_token, generate_refresh_token } from "../utils/tokens.js";
+import { decrypt } from "../utils/encrypt.js";
 //Import Models
 import { User } from "../models/User-model.js";
 import { Therapy_note } from "../models/Therapy-note-model.js";
@@ -9,25 +10,40 @@ import { Enrollment } from "../models/Enrollment-model.js";
 import { Like } from "../models/Like-model.js";
 
 //Helpers
-export const admin_get_user_data = async (uid) => {
+export const admin_get_user_data = async (user_id) => {
     try {
+
         const promises = [
-            User.findById(uid).select('-password -reset_password_token -login_token').lean(),
-            Therapy_note.find({ uid }).select('-uid').lean(),
-            Therapy_task.find({ uid }).select('-uid').lean(),
-            Patient_history.find({ uid }).select('-uid').lean(),
-            Test_result.find({ uid }).select('-uid').lean(),
-            Enrollment.find({ uid }).select('-uid').lean(),
-            Like.find({ uid }).select('-uid').lean(),
+            User.findById(user_id).select('-password -reset_password_token -login_token -_id').lean(),
+            Patient_history.find({ user_id: user_id.toString() }).select('-user_id').lean(),
+            Therapy_note.find({ user_id: user_id.toString() }).select('-user_id').lean(),
+            Therapy_task.find({ user_id: user_id.toString() }).select('-user_id').lean(),
+            Test_result.find({ user_id: user_id.toString() }).select('-user_id').lean(),
+            Enrollment.find({ user_id: user_id.toString() }).select('-user_id').lean(),
+            Like.find({ user_id: user_id.toString() }).select('-user_id').lean(),
         ]
-        const [user, therapy_notes, therapy_tasks, patient_histories, test_results, enrollments, likes] = await Promise.all(promises);
+        const [user, patient_histories, therapy_notes, therapy_tasks, test_results, enrollments, likes] = await Promise.all(promises);
+
+        //Decrypt data
+        patient_histories.forEach((history) => {
+            history.answers = JSON.parse(decrypt(history.answers));
+        });
+        therapy_notes.forEach((note) => {
+            note.content = JSON.parse(decrypt(note.content));
+        });
+        therapy_tasks.forEach((task) => {
+            task.content = JSON.parse(decrypt(task.content));
+        });
+        test_results.forEach((result) => {
+            result.results = JSON.parse(decrypt(result.results));
+        });
 
         const user_data = {
             user,
-            notes: therapy_notes || [],
-            tasks: therapy_tasks || [],
             history: patient_histories || [],
-            tests: test_results || [],
+            therapy_notes: therapy_notes || [],
+            therapy_tasks: therapy_tasks || [],
+            test_results: test_results || [],
             enrollments: enrollments || [],
             likes: likes || [],
         }
@@ -38,25 +54,46 @@ export const admin_get_user_data = async (uid) => {
     }
 }
 
-export const get_login_user_data = async (uid) => {
+export const get_login_user_data = async (user_id) => {
     try {
         const promises = [
-            User.findById(uid).select('-password -reset_password_token -login_token').lean(),
-            Therapy_task.find({ uid }).select('-uid').lean(),
-            Patient_history.find({ uid }).select('-uid').lean(),
-            Test_result.find({ uid }).select('-uid').lean(),
+            User.findById(user_id).select('-password -reset_password_token -login_token -_id').lean(),
+            Patient_history.find({ user_id: user_id.toString() }).select('-user_id').lean(),
+            Therapy_task.find({ user_id: user_id.toString() }).select('-user_id').lean(),
+            Test_result.find({ user_id: user_id.toString() }).select('-user_id').lean(),
+            Enrollment.find({ user_id: user_id.toString() }).select('-user_id').lean(),
+            Like.find({ user_id: user_id.toString() }).select('-user_id').lean(),
         ]
-        const [user, therapy_tasks, patient_histories, test_results] = await Promise.all(promises);
+        const [user, patient_histories, therapy_notes, therapy_tasks, test_results, enrollments, likes] = await Promise.all(promises);
+
+        //Decrypt data
+        if (patient_histories.length > 0) {
+            patient_histories.forEach((history) => {
+                history.answers = JSON.parse(decrypt(history.answers));
+            });
+        }
+        if (therapy_tasks.length > 0) {
+            therapy_tasks.forEach((task) => {
+                task.content = JSON.parse(decrypt(task.content));
+            });
+        }
+        if (test_results.length > 0) {
+            test_results.forEach((result) => {
+                result.results = JSON.parse(decrypt(result.results));
+            });
+        }
 
         const user_data = {
             user,
-            tasks: therapy_tasks,
-            history: patient_histories,
-            tests: test_results,
+            history: patient_histories || [],
+            therapy_tasks: therapy_tasks || [],
+            test_results: test_results || [],
+            enrollments: enrollments || [],
+            likes: likes || [],
         }
 
-        const token = generate_token(user._id);
-        const refresh_token = generate_refresh_token(user._id);
+        const token = generate_token(user_id);
+        const refresh_token = generate_refresh_token(user_id);
 
         return {
             user_data,

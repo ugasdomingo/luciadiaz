@@ -8,7 +8,7 @@ const patientHistorySchema = new Schema(
             ref: 'User',
             required: true,
         },
-        form_title: {
+        title: {
             type: String,
             required: true,
         },

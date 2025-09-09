@@ -2,11 +2,13 @@ import { defineStore } from 'pinia'
 import { api } from '../service/axios'
 import { ref } from 'vue'
 import { useUtilStore } from './util-store'
+import { useAuthStore } from './auth-store'
 
 export const useHistoryStore = defineStore('history', () => {
     const util_store = useUtilStore()
+    const auth_store = useAuthStore()
     const history = ref([])
-    
+
     const get_all_history = async () => {
         try {
             util_store.set_loading(true)
@@ -22,13 +24,16 @@ export const useHistoryStore = defineStore('history', () => {
         }
     }
 
-    const create_history = async (history) => {
+    const create_history = async (title, answers) => {
         try {
             util_store.set_loading(true)
             const response = await api({
                 method: 'post',
                 url: '/history',
-                data: history
+                headers: {
+                    Authorization: `Bearer ${auth_store.token}`
+                },
+                data: { title, answers }
             })
             util_store.set_message(response.data.message, response.data.status)
         } catch (err) {

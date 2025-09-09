@@ -34,6 +34,17 @@ const routes = [
         name: 'FormationsOne',
         component: () => import('../views/FormationsOne.vue')
     },
+    // Test Pages *************************************
+    {
+        path: '/tests',
+        name: 'Tests',
+        component: () => import('../views/Tests.vue')
+    },
+    {
+        path: '/tests/:test_name',
+        name: 'Test',
+        component: () => import('../views/TestOne.vue')
+    },
     // Auth Pages *************************************
     {
         path: '/acceso',
@@ -66,12 +77,6 @@ const routes = [
         name: 'Dashboard',
         component: () => import('../views/Dashboard.vue'),
         meta: { requires_auth: true }
-    },
-    {
-        path: '/mi-espacio/user/:user_id',
-        name: 'DashboardUserInfo',
-        component: () => import('../views/DashboardUserInfo.vue'),
-        meta: { requires_auth: true }
     }
 ]
 
@@ -87,11 +92,11 @@ router.beforeEach(async (to, from, next) => {
 
     if (!requires_auth) {
         return next()
-    } 
+    }
 
     if (auth_store.token) {
         return next()
-    } 
+    }
 
     if (login) {
         try {

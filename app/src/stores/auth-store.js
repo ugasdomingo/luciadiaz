@@ -6,7 +6,7 @@ import { useRouter } from 'vue-router'
 
 export const useAuthStore = defineStore('auth', () => {
     const util_store = useUtilStore()
-    const user = ref()
+    const user_data = ref()
     const token = ref('')
     // Data for Login/Register
     const name = ref('')
@@ -26,7 +26,7 @@ export const useAuthStore = defineStore('auth', () => {
                 data: credentials
             })
             util_store.set_message(response.data.message, response.data.status)
-            if (response.data.status === 200) {
+            if (response.status === 200) {
                 router.push('/verify-login')
             } else {
                 router.push('/go-to-email')
@@ -59,13 +59,16 @@ export const useAuthStore = defineStore('auth', () => {
             util_store.set_loading(true)
             const response = await api({
                 method: 'post',
-                url: '/auth/logout'
+                url: '/auth/logout',
+                headers: {
+                    'Authorization': `Bearer ${token.value}`
+                }
             })
             localStorage.removeItem('login')
             util_store.set_message(response.data.message, response.data.status)
-            user.value = null
+            user_data.value = null
             token.value = null
-
+            router.push('/')
         } catch (err) {
             console.log(err)
         } finally {
@@ -81,8 +84,9 @@ export const useAuthStore = defineStore('auth', () => {
                 url: '/auth/refresh'
             })
             token.value = response.data.data.token
-            user.value = response.data.data.user_data.user
+            user_data.value = response.data.data.user_data
             localStorage.setItem('login', 'true')
+            console.log(require('crypto').randomBytes(16).toString('hex'))
         } catch (err) {
             console.log(err)
         } finally {
@@ -99,7 +103,7 @@ export const useAuthStore = defineStore('auth', () => {
                 data: { login_token, email }
             })
             const { user_data, token: user_token } = response.data.data
-            user.value = user_data.user
+            user_data.value = user_data
             token.value = user_token
             localStorage.setItem('login', 'true')
             util_store.set_message(response.data.message, response.data.status)
@@ -119,7 +123,7 @@ export const useAuthStore = defineStore('auth', () => {
                 url: '/auth/verify-login',
                 data: { login_token, email }
             })
-            user.value = response.data.data.user_data.user
+            user_data.value = response.data.data.user_data
             token.value = response.data.data.token
             localStorage.setItem('login', 'true')
             util_store.set_message(response.data.message, response.data.status)
@@ -156,7 +160,7 @@ export const useAuthStore = defineStore('auth', () => {
                 data: { reset_password_token, email, password }
             })
             const { user_data, token } = response.data.data
-            user.value = user_data.user
+            user_data.value = user_data.user
             token.value = token
             localStorage.setItem('login', 'true')
             util_store.set_message(response.data.message, response.data.status)
@@ -185,7 +189,7 @@ export const useAuthStore = defineStore('auth', () => {
     }
 
     return {
-        user,
+        user_data,
         token,
         name,
         email,

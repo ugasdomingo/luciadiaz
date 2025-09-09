@@ -102,7 +102,7 @@ export const login = async (req, res, next) => {
             await send_2fa_email(user.email, login_token);
         }
 
-        const message = user.email_verified ? 'Te envié un código de verificación a tu correo electrónico' : 'Aún no has verificado tu correo electrónico, te envié un correo electrónico para verificarlo';
+        const message = user.email_verified ? 'Te envié un código a tu correo electrónico' : 'Aún no has verificado tu correo electrónico, te envié un correo electrónico para verificarlo';
         const response_number = user.email_verified ? 200 : 201;
         // 5. Return response
         return client_response(res, response_number, message);
@@ -158,7 +158,7 @@ export const refresh = async (req, res, next) => {
         const decoded = jwt.verify(refresh_token, process.env.JWT_REFRESH_SECRET);
 
         // 2. Find user
-        const user = await User.findById(decoded.user_id);
+        const user = await User.findById(decoded.user_id.toString());
         if (!user) {
             throw new Error('Token inválido');
         }

@@ -1,11 +1,11 @@
 import jwt from 'jsonwebtoken';
 import { User } from '../models/User-model.js';
 
-export const user_auth = (req, res, next) => {
+export const user_auth = async (req, res, next) => {
     try {
         const token = req.header('Authorization').split(' ')[1];
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        const user = User.findById(decoded.user_id).lean();
+        const user = await User.findById(decoded.user_id).lean();
         if (!user) {
             throw new Error('Usuario no encontrado');
         }

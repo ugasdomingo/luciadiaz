@@ -32,7 +32,6 @@
 @font-face {
   font-family: 'Text';
   src: url('../font/Montserrat.ttf');
-  font-weight: 400;
 }
 
 
@@ -112,7 +111,7 @@ input {
   border: 1px solid transparent;
   font-size: 1rem;
   font-weight: 500;
-  font-family: inherit;
+  font-family: 'Text';
   background-color: var(--color-soft-alert);
   cursor: pointer;
   transition: all 0.25s;

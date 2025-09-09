@@ -1,23 +1,23 @@
 <script setup>
 import { ref, onBeforeMount, watch } from 'vue'
-import { useUserStore } from '../../../stores/user-store.js'
+import { useAdminStore } from '../../../stores/admin-store'
 import { useUtilStore } from '../../../stores/util-store.js'
 import { RouterLink } from 'vue-router'
 
-const user_store = useUserStore()
+const admin_store = useAdminStore()
 const util_store = useUtilStore()
 const users_to_show = ref([])
 const text_filter = ref('')
 
 onBeforeMount(async () => {
     util_store.set_loading(true)
-    await user_store.get_all_users()
-    users_to_show.value = user_store.users
+    await admin_store.get_all_users()
+    users_to_show.value = admin_store.users
     util_store.set_loading(false)
 })
 
 watch(text_filter, () => {
-    users_to_show.value = user_store.users.filter(user => user.name.toLowerCase().includes(text_filter.value.toLowerCase())) 
+    users_to_show.value = admin_store.users.filter(user => user.name.toLowerCase().includes(text_filter.value.toLowerCase()))
 })
 
 </script>
@@ -45,7 +45,8 @@ watch(text_filter, () => {
                         <td>{{ user.medical_record }}</td>
                         <td class="actions">
                             <RouterLink :to="`/mi-espacio/user/${user._id}`" class="action-btn">Ver usuario</RouterLink>
-                            <button @click="user_store.role_to_patient(user._id)" class="nobg-btn">Convertir a paciente</button>
+                            <button @click="admin_store.role_to_patient(user._id)" class="nobg-btn">Convertir a
+                                paciente</button>
                         </td>
                     </tr>
                 </tbody>
@@ -75,10 +76,10 @@ watch(text_filter, () => {
 
     .actions {
         display: flex;
-        gap: 0.5rem;    
+        gap: 0.5rem;
 
         .action-btn {
-          max-width: fit-content;   
+            max-width: fit-content;
         }
     }
 }

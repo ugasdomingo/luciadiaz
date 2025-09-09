@@ -75,10 +75,10 @@ const handle_submit = async () => {
 
 //Handdle_file_change
 const handle_file_change = (event) => {
-   const file = event.target.files[0]
-   if (file) {
-       formation_cover.value = file
-   }
+    const file = event.target.files[0]
+    if (file) {
+        formation_cover.value = file
+    }
 }
 
 </script>
@@ -109,11 +109,12 @@ const handle_file_change = (event) => {
             <input type="file" name="image" @change="handle_file_change">
             <button type="submit" class="action-btn">Crear Formación</button>
         </form>
-        <h2 @click="toggle_update_formation">Actualizar Formación <span >{{ show_update_formation ? '-' : '+' }}</span></h2>
+        <h2 @click="toggle_update_formation">Actualizar Formación <span>{{ show_update_formation ? '-' : '+' }}</span>
+        </h2>
         <section v-if="show_update_formation" class="section__container__posts">
             <div v-for="formation in formation_store.formations" :key="formation.id">
                 <FormationCardComponent :formation="formation" />
-                <div class="section__container__posts__actions" v-if="auth_store.user.role === 'Admin'">
+                <div class="section__container__posts__actions" v-if="auth_store.user_data.user.role === 'Admin'">
                     <button @click="formation_to_update = formation" class="action-btn">Editar</button>
                     <button @click="formation_store.delete_formation(formation.id)" class="nobg-btn">Eliminar</button>
                 </div>

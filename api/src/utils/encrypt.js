@@ -6,17 +6,20 @@ const key = process.env.ENCRYPT_KEY;
 const iv = process.env.ENCRYPT_IV;
 
 export const encrypt = (text) => {
-    const cipher = crypto.createCipheriv(algorithm, Buffer.from(key), iv);
-    let encrypted = cipher.update(text, 'utf-8');
-    encrypted = Buffer.concat([encrypted, cipher.final()]);
-    return iv.toString('hex') + ':' + encrypted.toString('hex');
+    const cipher = crypto.createCipheriv(algorithm, Buffer.from(key, 'hex'), Buffer.from(iv, 'hex'));
+    const encrypted = Buffer.concat([cipher.update(text, 'utf-8'), cipher.final()]);
+    return encrypted.toString('hex');
 }
 
 export const decrypt = (text) => {
-    const iv = Buffer.from(text.split(':')[0], 'hex');
-    const encryptedText = Buffer.from(text.split(':')[1], 'hex');
-    const decipher = crypto.createDecipheriv(algorithm, Buffer.from(key), iv);
-    let decrypted = decipher.update(encryptedText);
-    decrypted = Buffer.concat([decrypted, decipher.final()]);
-    return decrypted.toString();
+    const decipher = crypto.createDecipheriv(
+        algorithm,
+        Buffer.from(key, 'hex'),
+        Buffer.from(iv, 'hex')
+    );
+    const decrypted = Buffer.concat([
+        decipher.update(Buffer.from(text, 'hex')),
+        decipher.final(),
+    ]);
+    return decrypted.toString('utf8');
 }

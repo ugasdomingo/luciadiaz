@@ -6,7 +6,7 @@ const auth_store = useAuthStore();
 const login_token = ref('');
 
 const handle_submit = async () => {
-    await auth_store.verify_login(login_token.value)
+    await auth_store.verify_login(login_token.value, auth_store.email)
 }
 </script>
 
@@ -41,7 +41,7 @@ const handle_submit = async () => {
             padding: 0.5rem;
             margin: 0;
             background-color: transparent;
-            border-radius: 0;   
+            border-radius: 0;
             border: 1px solid transparent;
             border-bottom: 1px solid var(--color-text);
             outline: none;
@@ -49,9 +49,9 @@ const handle_submit = async () => {
 
             &:focus {
                 border-bottom-color: var(--color-primary);
-            }   
+            }
         }
     }
-    
+
 }
 </style>

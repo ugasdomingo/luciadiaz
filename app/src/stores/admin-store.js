@@ -7,7 +7,7 @@ import { useUtilStore } from './util-store'
 const auth_store = useAuthStore()
 const util_store = useUtilStore()
 
-export const useUserStore = defineStore('user', () => {
+export const useAdminStore = defineStore('admin', () => {
     const users = ref(null)
     const user = ref(null)
 
@@ -86,7 +86,7 @@ export const useUserStore = defineStore('user', () => {
         }
     }
 
-    
+
 
     return {
         users,

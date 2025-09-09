@@ -1,9 +1,11 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import { useUtilStore } from '../../stores/util-store';
+import { useAuthStore } from '../../stores/auth-store';
 import NavbarComponent from './NavbarComponent.vue';
 
 const util_store = useUtilStore()
+const auth_store = useAuthStore()
 const show_header = ref(true)
 const need_bg = ref(false)
 let last_scroll_position_y = 0
@@ -25,6 +27,7 @@ onMounted(() => {
         }
     })
 })
+
 </script>
 
 <template>
@@ -35,6 +38,7 @@ onMounted(() => {
         </RouterLink>
         <section class="header__menu">
             <RouterLink to="/terapias" class="action-btn">Agendar consulta terapeutica</RouterLink>
+            <button @click="auth_store.logout()" v-if="auth_store.token" class="nobg-btn">Cerrar sesión</button>
             <img src="/public/icon/icon-hamburguer-menu.svg" alt="menu" class="header__menu__icon"
                 @click="util_store.toggle_navbar">
             <NavbarComponent :class="util_store.show_navbar ? 'header__navbar' : 'header__navbar__hidden'" />
@@ -76,6 +80,10 @@ onMounted(() => {
             width: 2rem;
             cursor: pointer;
         }
+
+        .action-btn {
+            max-width: fit-content;
+        }
     }
 
     &__navbar {
@@ -92,14 +100,14 @@ onMounted(() => {
 }
 
 .header__bg {
-    background-color: color-mix(in srgb, var(--color-white) 80%,transparent);
-    
+    background-color: color-mix(in srgb, var(--color-white) 80%, transparent);
+
 }
 
 @media screen and (max-width: 720px) {
     .header {
         padding: 1rem;
         box-sizing: border-box;
-    } 
+    }
 }
 </style>
