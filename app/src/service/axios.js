@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export const api = axios.create({
-    baseURL: 'https://luciadiaz-api.vercel.app/api/v3',
+    baseURL: '/api/v3',
     timeout: 15000,
     withCredentials: true,
 })
