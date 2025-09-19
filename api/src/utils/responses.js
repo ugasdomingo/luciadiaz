@@ -9,7 +9,6 @@ export const set_cookie = (res, refresh_token) => {
         secure: true,
         sameSite: 'lax',
         maxAge: 14 * 24 * 60 * 60 * 1000,
-        path: '/'
     });
 }
 

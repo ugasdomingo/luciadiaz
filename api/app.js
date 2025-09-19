@@ -47,6 +47,9 @@ app.use(express.json());
 app.use(cookieParser());
 
 //Routes
+app.use('/', (req, res) => {
+    res.json({ message: 'Welcome to the API for Luciá Diaz' });
+})
 app.use('/api/v3/user', user_router);
 app.use('/api/v3/formation', formation_router);
 app.use('/api/v3/enrollment', enrollment_router);
