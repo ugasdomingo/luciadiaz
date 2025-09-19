@@ -7,7 +7,7 @@ export const set_cookie = (res, refresh_token) => {
     res.cookie('refresh_token', refresh_token, {
         httpOnly: true,
         secure: true,
-        sameSite: 'lax',
+        sameSite: 'none',
         maxAge: 14 * 24 * 60 * 60 * 1000,
     });
 }

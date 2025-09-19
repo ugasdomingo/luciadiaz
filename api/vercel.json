@@ -12,32 +12,10 @@
             "dest": "/"
         }
     ],
-    "headers": [
+    "rewrites": [
         {
-            "source": "/(.*)",
-            "headers": [
-                {
-                    "key": "Access-Control-Allow-Credentials",
-                    "value": "true"
-                },
-                {
-                    "key": "Access-Control-Allow-Origin",
-                    "value": "https://www.luciadiaz.es"
-                },
-                {
-                    "key": "Access-Control-Allow-Methods",
-                    "value": "GET, POST, PUT, DELETE, OPTIONS"
-                },
-                {
-                    "key": "Access-Control-Allow-Headers",
-                    "value": "Content-Type, Authorization, Cookie"
-                }
-            ]
+            "source": "/api/:path*",
+            "destination": "https://luciadiaz-f5cj.vercel.app/api/:path*"
         }
-    ],
-    "functions": {
-        "index.js": {
-            "maxDuration": 10
-        }
-    }
+    ]
 }
