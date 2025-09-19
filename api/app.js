@@ -48,7 +48,7 @@ app.use(cookieParser());
 
 //Routes
 app.use('/', (req, res) => {
-    res.json({ message: 'Welcome to the API for Luciá Diaz' });
+    res.json({ message: 'Welcome to the API for Luciá Diaz, you have tu use /api/v3' });
 })
 app.use('/api/v3/user', user_router);
 app.use('/api/v3/formation', formation_router);
