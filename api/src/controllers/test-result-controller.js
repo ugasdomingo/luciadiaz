@@ -22,10 +22,15 @@ export const create_test_result = async (req, res, next) => {
         const user_id = req.user_id;
         //Validate if user did the test before
         const test_result_before = await Test_result.findOne({ user_id, test_name });
-        if (test_result_before && test_result_before.expiresAt < Date.now()) {
-            throw new Error('Debes esperar a que expire el test anterior, para realizar otro');
+
+        if (test_result_before) {
+            const expiresAt = new Date(test_result_before.expiresAt);
+            const today = new Date();
+            if (expiresAt > today) {
+                throw new Error('Debes esperar a que expire el test anterior, para realizarlo nuevamente');
+            }
         }
-        const encrypted_results = encrypt(results);
+        const encrypted_results = encrypt(JSON.stringify(results));
         const test_result = new Test_result({ user_id, test_name, results: encrypted_results });
         await test_result.save();
         return client_response(res, 201, 'Test creado correctamente');

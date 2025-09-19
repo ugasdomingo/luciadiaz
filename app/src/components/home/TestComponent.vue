@@ -1,8 +1,6 @@
 <script setup>
 import { test_info } from '../../static/test-info.js'
 import TestCardComponent from '../common/cards/TestCardComponent.vue';
-
-
 </script>
 
 <template>

@@ -2,12 +2,14 @@
 import { ref, reactive, onMounted } from 'vue'
 import { useAuthStore } from '../../../stores/auth-store.js'
 import { test_info } from '../../../static/test-info.js'
-import ArchetypeResultComponent from '../user/tests/ArchetypeResultComponent.vue'
+import ArchetypeResultComponent from '../../tests/results/ArchetypeResultComponent.vue'
+import TemperamentResultComponent from '../../tests/results/TemperamentResultComponent.vue'
+import LetterResultComponent from '../../tests/results/LetterResultComponent.vue'
 
 const auth_store = useAuthStore()
 const archetype_completed = ref(false)
 const temperament_completed = ref(false)
-const goal_completed = ref(false)
+const letter_completed = ref(false)
 const expanded_items = reactive({})
 
 const toggle_answers = (history_id) => {
@@ -18,9 +20,19 @@ onMounted(async () => {
     if (!auth_store.user_data) {
         await auth_store.refresh()
     }
-    archetype_completed.value = auth_store.user_data.test_results.find((test) => test.test_name === 'Arquetipo').length > 0 ? true : false
-    temperament_completed.value = auth_store.user_data.test_results.find((test) => test.test_name === 'Temperamento').length > 0 ? true : false
-    goal_completed.value = auth_store.user_data.test_results.find((test) => test.test_name === 'Meta').length > 0 ? true : false
+    const check_completed_tests = (tests) => {
+        if (!tests) return
+        tests.forEach(test => {
+            if (test.test_name === 'Arquetipo') {
+                archetype_completed.value = true
+            } else if (test.test_name === 'Temperamento') {
+                temperament_completed.value = true
+            } else if (test.test_name === 'Carta del Inconsciente') {
+                letter_completed.value = true
+            }
+        })
+    }
+    check_completed_tests(auth_store.user_data.test_results)
 })
 
 
@@ -30,7 +42,8 @@ onMounted(async () => {
     <section class="test-results__container">
         <h2>Resultados de tus tests</h2>
         <article class="test-results__container__article" v-for="test in test_info" :key="test.id">
-            <h3 @click="toggle_answers(test.id)" class="test-results__container__article__title">
+            <h3 @click="toggle_answers(test.id)" class="test-results__container__article__title"
+                :class="expanded_items[test.id] ? 'expanded' : ''">
                 {{ test.name }} <span class="arrow" :class="{ 'rotated': expanded_items[test.id] }">
                     <img src="/public/icon/icon-plus.svg" alt="plus icon">
                 </span>
@@ -38,7 +51,19 @@ onMounted(async () => {
             <transition name="accordion" @enter="enter" @after-enter="afterEnter" @leave="leave"
                 @after-leave="afterLeave">
                 <div v-show="expanded_items[test.id]">
-                    <ArchetypeResultComponent v-if="archetype_completed" />
+                    <section v-if="test.name === 'Arquetipos de la personalidad' && archetype_completed">
+                        <ArchetypeResultComponent
+                            :archetype="auth_store.user_data.test_results.find(result => result.test_name === 'Arquetipo')?.results.archetype" />
+
+                    </section>
+                    <section v-else-if="test.name === 'Temperamentos' && temperament_completed">
+                        <TemperamentResultComponent
+                            :temperament="auth_store.user_data.test_results.find(result => result.test_name === 'Temperamento')?.results.temperament" />
+                    </section>
+                    <section v-else-if="test.name === 'Carta del inconsciente' && letter_completed">
+                        <LetterResultComponent />
+                    </section>
+
                     <section class="not-completed__container" v-else>
                         <p>Aún no has completado el test de {{ test.name }}</p>
                         <p class="brief">{{ test.brief }}</p>
@@ -89,6 +114,10 @@ onMounted(async () => {
                 &.rotated {
                     transform: rotate(225deg);
                 }
+            }
+
+            &.expanded {
+                border-bottom: 1px solid var(--color-primary);
             }
 
 

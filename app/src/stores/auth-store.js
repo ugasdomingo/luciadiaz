@@ -86,7 +86,6 @@ export const useAuthStore = defineStore('auth', () => {
             token.value = response.data.data.token
             user_data.value = response.data.data.user_data
             localStorage.setItem('login', 'true')
-            console.log(require('crypto').randomBytes(16).toString('hex'))
         } catch (err) {
             console.log(err)
         } finally {
@@ -102,15 +101,14 @@ export const useAuthStore = defineStore('auth', () => {
                 url: '/auth/verify-email',
                 data: { login_token, email }
             })
-            const { user_data, token: user_token } = response.data.data
-            user_data.value = user_data
-            token.value = user_token
+            user_data.value = response.data.data.user_data
+            token.value = response.data.data.token
             localStorage.setItem('login', 'true')
             util_store.set_message(response.data.message, response.data.status)
         } catch (err) {
             console.log(err)
         } finally {
-            router.push('/mi-espacio')
+            util_store.last_page ? router.push(util_store.last_page) : router.push('/mi-espacio')
             util_store.set_loading(false)
         }
     }
@@ -127,7 +125,9 @@ export const useAuthStore = defineStore('auth', () => {
             token.value = response.data.data.token
             localStorage.setItem('login', 'true')
             util_store.set_message(response.data.message, response.data.status)
-            router.push('/mi-espacio')
+
+            // If last page is set, redirect to it, else redirect to dashboard
+            util_store.last_page ? router.push(util_store.last_page) : router.push('/mi-espacio')
         } catch (err) {
             console.log(err)
         } finally {

@@ -26,6 +26,7 @@ const toggle_update_formation = () => {
 
 //Formdata
 const title = ref('')
+const slug = ref('')
 const type = ref('')
 const content = ref('')
 const description = ref('')
@@ -43,6 +44,7 @@ const formation_cover = ref(null)
 const handle_submit = async () => {
     const form_data = new FormData()
     form_data.append('title', title.value)
+    form_data.append('slug', slug.value)
     form_data.append('type', type.value)
     form_data.append('content', content.value)
     form_data.append('description', description.value)
@@ -58,7 +60,8 @@ const handle_submit = async () => {
 
     await formation_store.create_formation(form_data)
 
-    title.value = ''
+    /* title.value = ''
+    slug.value = ''
     type.value = ''
     content.value = ''
     description.value = ''
@@ -70,7 +73,7 @@ const handle_submit = async () => {
     video_url.value = ''
     paypal_button.value = ''
     status.value = ''
-    formation_cover.value = null
+    formation_cover.value = null */
 }
 
 //Handdle_file_change
@@ -88,10 +91,11 @@ const handle_file_change = (event) => {
         <h2 @click="toggle_create_formation">Crear Formación <span>{{ show_create_formation ? '-' : '+' }}</span></h2>
         <form @submit.prevent="handle_submit" v-if="show_create_formation" class="section__container__content">
             <input type="text" placeholder="Título" v-model="title">
+            <input type="text" placeholder="Slug" v-model="slug">
             <select v-model="type">
                 <option value="presencial">Presencial</option>
-                <option value="webinar">Webinar</option>
-                <option value="en_linea">En línea</option>
+                <option value="live">Live</option>
+                <option value="online">Online</option>
             </select>
             <EditorComponent v-model="content" />
             <input type="text" placeholder="Descripción" v-model="description">
@@ -103,8 +107,9 @@ const handle_file_change = (event) => {
             <input type="text" placeholder="Video URL" v-model="video_url">
             <input type="text" placeholder="Paypal Button" v-model="paypal_button">
             <select v-model="status">
+                <option value="inactive">Inactivo</option>
+                <option value="active">Activo</option>
                 <option value="draft">Borrador</option>
-                <option value="published">Publicado</option>
             </select>
             <input type="file" name="image" @change="handle_file_change">
             <button type="submit" class="action-btn">Crear Formación</button>
@@ -112,11 +117,11 @@ const handle_file_change = (event) => {
         <h2 @click="toggle_update_formation">Actualizar Formación <span>{{ show_update_formation ? '-' : '+' }}</span>
         </h2>
         <section v-if="show_update_formation" class="section__container__posts">
-            <div v-for="formation in formation_store.formations" :key="formation.id">
+            <div v-for="formation in formation_store.formations" :key="formation._id">
                 <FormationCardComponent :formation="formation" />
                 <div class="section__container__posts__actions" v-if="auth_store.user_data.user.role === 'Admin'">
                     <button @click="formation_to_update = formation" class="action-btn">Editar</button>
-                    <button @click="formation_store.delete_formation(formation.id)" class="nobg-btn">Eliminar</button>
+                    <button @click="formation_store.delete_formation(formation._id)" class="nobg-btn">Eliminar</button>
                 </div>
             </div>
         </section>

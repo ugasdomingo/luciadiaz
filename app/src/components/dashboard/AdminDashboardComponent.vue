@@ -39,7 +39,6 @@ watch(() => show_component.value, async (new_value) => {
 <template>
     <section class="admin__dashboard">
         <h2>Hola Lucia, bienvenida a tu área privada</h2>
-        <p>{{ auth_store.user_data.user }}</p>
         <div class="admin__dashboard__actions">
             <button class="action-btn" @click="show_component = 'ManageUserComponent'">Buscar usuarios</button>
             <button class="action-btn" @click="show_component = 'ManagePostComponent'">Gestionar posts</button>

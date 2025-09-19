@@ -64,7 +64,7 @@ export const get_login_user_data = async (user_id) => {
             Enrollment.find({ user_id: user_id.toString() }).select('-user_id').lean(),
             Like.find({ user_id: user_id.toString() }).select('-user_id').lean(),
         ]
-        const [user, patient_histories, therapy_notes, therapy_tasks, test_results, enrollments, likes] = await Promise.all(promises);
+        const [user, patient_histories, therapy_tasks, test_results, enrollments, likes] = await Promise.all(promises);
 
         //Decrypt data
         if (patient_histories.length > 0) {

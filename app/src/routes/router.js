@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import { useAuthStore } from '../stores/auth-store'
+import { useUtilStore } from '../stores/util-store'
 
 const routes = [
     {
@@ -20,7 +21,7 @@ const routes = [
         component: () => import('../views/Blog.vue')
     },
     {
-        path: '/blog/:post_id',
+        path: '/blog/:post_slug',
         name: 'BlogOne',
         component: () => import('../views/BlogOne.vue')
     },
@@ -30,7 +31,7 @@ const routes = [
         component: () => import('../views/Formations.vue')
     },
     {
-        path: '/formaciones/:formation_id',
+        path: '/formaciones/:formation_slug',
         name: 'FormationsOne',
         component: () => import('../views/FormationsOne.vue')
     },
@@ -77,6 +78,12 @@ const routes = [
         name: 'Dashboard',
         component: () => import('../views/Dashboard.vue'),
         meta: { requires_auth: true }
+    },
+    {
+        path: '/mi-espacio/user/:user_id',
+        name: 'One User Info',
+        component: () => import('../views/admin/OneUserInfo.vue'),
+        meta: { requires_auth: true }
     }
 ]
 
@@ -110,6 +117,14 @@ router.beforeEach(async (to, from, next) => {
     }
 
     return next('/acceso', { query: { redirect: to.fullPath } })
+})
+
+router.afterEach((to, from) => {
+    if (to.name === 'Verify Login' || to.name === 'Verify Email') {
+        return
+    }
+    const util_store = useUtilStore()
+    util_store.set_last_page(from.fullPath)
 })
 
 export default router

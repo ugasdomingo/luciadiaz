@@ -17,11 +17,11 @@ const truncate = (text, max_length) => {
 </script>
 
 <template>
-    <RouterLink :to="`/formaciones/${formation._id}`" class="formation__card__container">
+    <RouterLink :to="`/formaciones/${formation.slug}`" class="formation__card__container">
         <img :src="formation.formation_cover.secure_url" alt="">
         <section class="formation__card__container__info">
             <h4>{{ formation.title }}</h4>
-            <p v-html="truncate(formation.content, max_length)"></p>
+            <p id="description" v-html="truncate(formation.description, max_length)"></p>
             <div class="formation__card__container__info__types">
                 <p>Modalidad: {{ formation.type }}</p>
                 <p>Precio: {{ formation.price }}€</p>
@@ -64,7 +64,7 @@ const truncate = (text, max_length) => {
         height: 10rem;
         display: flex;
         flex-direction: column;
-        justify-content: flex-start;
+        justify-content: space-between;
         gap: 0;
         padding: 0;
         margin: 0;

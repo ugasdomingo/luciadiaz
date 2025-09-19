@@ -25,6 +25,10 @@ const app = express();
 
 //Helpers
 const allowedOrigins = [process.env.FRONTEND_URL, process.env.ORIGIN2];
+morgan.token('hora', () => {
+    const now = new Date();
+    return now.toLocaleString().split(' ')[1];
+})
 
 //Middleware
 app.use(cors({
@@ -38,7 +42,7 @@ app.use(cors({
     credentials: true
 }));
 app.use(helmet());
-app.use(morgan('dev'));
+app.use(morgan(':hora :method :url :status :response-time ms'));
 app.use(express.json());
 app.use(cookieParser());
 

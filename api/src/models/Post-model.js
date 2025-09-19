@@ -7,6 +7,11 @@ const postSchema = new Schema(
             ref: 'User',
             required: true,
         },
+        slug: {
+            type: String,
+            unique: true,
+            required: true,
+        },
         title: {
             type: String,
             required: true,

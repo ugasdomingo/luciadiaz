@@ -19,26 +19,24 @@
 </template>
 
 <script setup>
-import {  onBeforeMount } from 'vue';
+import { onBeforeMount } from 'vue';
 import { useFormationStore } from '../stores/formation-store';
 import { useRoute } from 'vue-router';
 import { useUtilStore } from '../stores/util-store';
 
-const util_store = useUtilStore()
-
 const route = useRoute()
+const util_store = useUtilStore()
 const formation_store = useFormationStore()
 
 onBeforeMount(() => {
-    formation_store.get_formation_by_id(route.params.formation_id)
+    formation_store.get_formation_by_slug(route.params.formation_slug)
 })
 </script>
 
 <style scoped lang="scss">
-
 .pages {
     flex-direction: row;
-    justify-content: space-between; 
+    justify-content: space-between;
     position: relative;
 
     .formation__content {
@@ -62,7 +60,7 @@ onBeforeMount(() => {
             width: 100%;
             display: flex;
             gap: 1rem;
-            
+
             img {
                 width: 8rem;
                 height: 8rem;
@@ -84,6 +82,4 @@ onBeforeMount(() => {
         }
     }
 }
-
-
 </style>

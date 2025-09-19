@@ -12,7 +12,7 @@ const truncate = (text, max_length) => {
 </script>
 
 <template>
-    <RouterLink :to="`/blog/${post._id}`" class="post__card__container">
+    <RouterLink :to="`/blog/${post.slug}`" class="post__card__container">
         <img :src="post.post_cover.secure_url" alt="">
         <h4>{{ post.title }}</h4>
         <p v-html="truncate(post.content, max_length)"></p>
@@ -25,7 +25,7 @@ const truncate = (text, max_length) => {
     max-width: 15rem;
     border-radius: 1rem;
     padding: 0;
-    margin: 0; 
+    margin: 0;
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
@@ -39,7 +39,7 @@ const truncate = (text, max_length) => {
 
     h4 {
         font-size: 1rem;
-        margin:0;
+        margin: 0;
         padding: 0 0.5rem;
         color: var(--color-black);
     }

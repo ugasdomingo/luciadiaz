@@ -40,12 +40,12 @@ export const useFormationStore = defineStore('formation', () => {
         }
     }
 
-    const get_formation_by_id = async (id) => {
+    const get_formation_by_slug = async (slug) => {
         try {
             util_store.set_loading(true)
             const response = await api({
                 method: 'get',
-                url: `/formation/${id}`
+                url: `/formation/${slug}`
             })
             formation.value = response.data.data[0]
         } catch (err) {
@@ -95,12 +95,12 @@ export const useFormationStore = defineStore('formation', () => {
         }
     }
 
-    const delete_formation = async (id) => {
+    const delete_formation = async (formation_id) => {
         try {
             util_store.set_loading(true)
             const response = await api({
                 method: 'delete',
-                url: `/formation/${id}`,
+                url: `/formation/${formation_id}`,
                 headers: {
                     'Authorization': `Bearer ${auth_store.token}`
                 }
@@ -118,7 +118,7 @@ export const useFormationStore = defineStore('formation', () => {
             util_store.set_loading(true)
             const response = await api({
                 method: 'put',
-                url: `/formation/status/${id}`,
+                url: `/formation/status/${formation_id}`,
                 data: status,
                 headers: {
                     'Authorization': `Bearer ${auth_store.token}`
@@ -138,7 +138,7 @@ export const useFormationStore = defineStore('formation', () => {
         formation,
         get_all_formations,
         get_all_formations_admin,
-        get_formation_by_id,
+        get_formation_by_slug,
         create_formation,
         update_formation,
         delete_formation,

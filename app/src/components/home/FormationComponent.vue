@@ -1,14 +1,7 @@
 <script setup>
-import { onBeforeMount } from 'vue'
 import { useCommonStore } from '../../stores/common-store'
 import FormationCardComponent from '../common/cards/FormationCardComponent.vue'
 const common_store = useCommonStore()
-
-onBeforeMount(async () => {
-    if (!common_store.formations) {
-        await common_store.getCommon()
-    }
-})
 </script>
 
 <template>

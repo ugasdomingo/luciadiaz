@@ -6,9 +6,14 @@ const formationSchema = new Schema(
             type: String,
             required: true,
         },
+        slug: {
+            type: String,
+            unique: true,
+            required: true,
+        },
         type: {
             type: String,
-            enum: ['presencial', 'webinar', 'en_linea'], 
+            enum: ['presencial', 'live', 'online'],
             required: true,
         },
         content: {
@@ -56,12 +61,12 @@ const formationSchema = new Schema(
         },
         paypal_button: {
             type: String,
-            required: true,
         },
         status: {
             type: String,
             enum: ['inactive', 'active', 'draft'],
             required: true,
+            default: 'inactive',
         },
         users_enrolled: [
             {

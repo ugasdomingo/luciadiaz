@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onBeforeMount, watch } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import { useAdminStore } from '../../../stores/admin-store'
 import { useUtilStore } from '../../../stores/util-store.js'
 import { RouterLink } from 'vue-router'
@@ -9,7 +9,7 @@ const util_store = useUtilStore()
 const users_to_show = ref([])
 const text_filter = ref('')
 
-onBeforeMount(async () => {
+onMounted(async () => {
     util_store.set_loading(true)
     await admin_store.get_all_users()
     users_to_show.value = admin_store.users
@@ -44,9 +44,12 @@ watch(text_filter, () => {
                         <td>{{ user.role }}</td>
                         <td>{{ user.medical_record }}</td>
                         <td class="actions">
-                            <RouterLink :to="`/mi-espacio/user/${user._id}`" class="action-btn">Ver usuario</RouterLink>
-                            <button @click="admin_store.role_to_patient(user._id)" class="nobg-btn">Convertir a
-                                paciente</button>
+                            <RouterLink :to="`/mi-espacio/user/${user._id}`" class="action-btn">
+                                Ver usuario
+                            </RouterLink>
+                            <button @click="admin_store.role_to_patient(user._id)" class="nobg-btn">
+                                Convertir a paciente
+                            </button>
                         </td>
                     </tr>
                 </tbody>

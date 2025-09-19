@@ -20,7 +20,7 @@ export const test_info = [
         name: 'Carta del inconsciente',
         brief: 'Tu mente tiene un mensaje para ti.',
         description: 'En este test descubrirás un mensaje de tu mente inconsciente ¿estarás lista(o) para escucharlo?.',
-        link: '/tests/meta',
+        link: '/tests/carta-inconsciente',
         image: 'https://res.cloudinary.com/minteados/image/upload/v1737653354/Lucia/Test/portada-goals_v1h0fn.png'
     }
 ];

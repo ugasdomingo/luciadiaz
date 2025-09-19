@@ -1,15 +1,9 @@
 <script setup>
-import { onBeforeMount } from 'vue'
 import { useCommonStore } from '../../stores/common-store'
 import PostCardComponent from '../common/cards/PostCardComponent.vue'
 const common_store = useCommonStore()
-
-onBeforeMount(async () => {
-    if (!common_store.posts) {
-        await common_store.getCommon()
-    }
-})
 </script>
+
 <template>
     <section class="post">
         <h2>Últimas publicaciones</h2>

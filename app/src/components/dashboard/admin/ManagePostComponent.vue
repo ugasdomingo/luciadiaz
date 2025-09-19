@@ -27,6 +27,7 @@ const toggle_update_post = () => {
 
 //Formdata
 const title = ref('')
+const slug = ref('')
 const content = ref('')
 const category = ref('')
 const tags = ref('')
@@ -37,6 +38,7 @@ const post_cover = ref()
 const handle_submit = async () => {
     const form_data = new FormData()
     form_data.append('title', title.value)
+    form_data.append('slug', slug.value)
     form_data.append('content', content.value)
     form_data.append('category', category.value)
     form_data.append('tags', tags.value)
@@ -45,6 +47,7 @@ const handle_submit = async () => {
     await post_store.create_post(form_data)
 
     title.value = ''
+    slug.value = ''
     content.value = ''
     category.value = ''
     tags.value = ''
@@ -65,6 +68,7 @@ const prepare_post_to_update = (post) => {
     post_to_update.value = post
     toggle_create_post()
     title.value = post.title
+    slug.value = post.slug
     content.value = post.content
     category.value = post.category
     tags.value = post.tags
@@ -74,6 +78,7 @@ const prepare_post_to_update = (post) => {
 const handle_update = async () => {
     const form_data = new FormData()
     form_data.append('title', title.value)
+    form_data.append('slug', slug.value)
     form_data.append('content', content.value)
     form_data.append('category', category.value)
     form_data.append('tags', tags.value)
@@ -82,6 +87,7 @@ const handle_update = async () => {
     await post_store.update_post(post_to_update.value._id, form_data)
 
     title.value = ''
+    slug.value = ''
     content.value = ''
     category.value = ''
     tags.value = ''
@@ -108,9 +114,10 @@ const handle_update = async () => {
         <section v-if="show_update_post" class="section__container__posts">
             <div v-for="post in post_store.posts" :key="post.id">
                 <PostCardComponent :post="post" />
-                <div class="section__container__posts__actions" v-if="auth_store.user.role === 'Admin'">
-                    <button @click="post_store.change_post_status(post._id, 'published')" class="action-btn">Publicar</button>
-                    <button @click="post_store.delete_post(post.id)" class="nobg-btn">Eliminar</button>
+                <div class="section__container__posts__actions" v-if="auth_store.user_data.user.role === 'Admin'">
+                    <button @click="post_store.change_post_status(post._id, 'published')"
+                        class="action-btn">Publicar</button>
+                    <button @click="post_store.delete_post(post._id)" class="nobg-btn">Eliminar</button>
                     <button @click="prepare_post_to_update(post)" class="action-btn">Editar</button>
                 </div>
             </div>

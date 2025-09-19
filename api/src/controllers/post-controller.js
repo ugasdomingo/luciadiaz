@@ -28,11 +28,11 @@ export const get_all_posts_admin = async (req, res, next) => {
     }
 }
 
-//Get post by id
-export const get_post_by_id = async (req, res, next) => {
+//Get post by slug
+export const get_post_by_slug = async (req, res, next) => {
     try {
-        const { post_id } = req.params;
-        const post = await Post.findById(post_id).lean();
+        const { post_slug } = req.params;
+        const post = await Post.findOne({ slug: post_slug }).lean();
         if (!post) {
             throw new Error('Post no encontrado');
         }
@@ -45,9 +45,9 @@ export const get_post_by_id = async (req, res, next) => {
 //Create post
 export const create_post = async (req, res, next) => {
     try {
-        const { title, content, category, tags } = req.body;
+        const { title, slug, content, category, tags } = req.body;
         const user_id = req.user_id;
-        const post = new Post({ title, content, category, tags, user_id });
+        const post = new Post({ title, slug, content, category, tags, user_id });
         if (req.files?.post_cover) {
             const result = await upload_post_cover(req.files.post_cover);
             post.post_cover = {
@@ -72,6 +72,7 @@ export const update_post = async (req, res, next) => {
             throw new Error('Post no encontrado');
         }
         post.title = req.body.title || post.title;
+        post.slug = req.body.slug || post.slug;
         post.content = req.body.content || post.content;
         post.category = req.body.category || post.category;
         post.tags = req.body.tags || post.tags;
@@ -106,6 +107,7 @@ export const delete_post = async (req, res, next) => {
         if (!post) {
             throw new Error('Post no encontrado');
         }
+        await delete_image(post.post_cover.public_id);
         return client_response(res, 200, 'Post eliminado');
     } catch (error) {
         next(error);
