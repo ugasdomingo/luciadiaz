@@ -8,7 +8,8 @@ export const set_cookie = (res, refresh_token) => {
         httpOnly: true,
         secure: true,
         sameSite: 'lax',
-        maxAge: 14 * 24 * 60 * 60 * 1000
+        maxAge: 14 * 24 * 60 * 60 * 1000,
+        path: '/'
     });
 }
 
