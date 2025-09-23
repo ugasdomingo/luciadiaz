@@ -6,7 +6,7 @@ import { services } from '../../static/services.js'
         <h2>¿Que quieres hacer hoy?</h2>
         <div class="services__content">
             <div class="services__content__card" v-for="service in services" :key="service.id">
-                <img :src="service.icon" alt="">
+                <img :src="service.icon" :alt="service.title">
                 <h4>{{ service.title }}</h4>
                 <p>{{ service.description }}</p>
             </div>
@@ -28,6 +28,7 @@ import { services } from '../../static/services.js'
     h2 {
         text-align: center;
     }
+
     &__content {
         width: 100%;
         display: grid;

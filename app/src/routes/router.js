@@ -84,6 +84,11 @@ const routes = [
         name: 'One User Info',
         component: () => import('../views/admin/OneUserInfo.vue'),
         meta: { requires_auth: true }
+    },
+    {
+        path: '/:pathMatch(.*)*',
+        name: 'NotFound',
+        component: () => import('../views/NotFound.vue')
     }
 ]
 
