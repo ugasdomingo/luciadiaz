@@ -100,4 +100,10 @@ const handle_submit = async () => {
         margin: 0 auto;
     }
 }
+
+@media screen and (max-width: 768px) {
+    .anamnesis__form {
+        max-width: 100%;
+    }
+}
 </style>

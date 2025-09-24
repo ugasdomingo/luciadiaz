@@ -22,16 +22,16 @@ const common_store = useCommonStore()
 .formation {
     width: 100%;
     min-height: 70vh;
+    height: fit-content;
     margin: 0;
     padding: 4rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2rem;
     justify-content: center;
+    gap: 2rem;
     box-sizing: border-box;
     position: relative;
-    overflow-y: hidden;
 
     &__decoratio__top__left {
         width: 40%;
@@ -55,6 +55,7 @@ const common_store = useCommonStore()
 
     &__content {
         width: 100%;
+        height: fit-content;
         display: flex;
         flex-direction: column;
         gap: 3rem;
@@ -72,6 +73,22 @@ const common_store = useCommonStore()
         &:hover {
             box-shadow: 0 0 1rem rgba(0, 0, 0, 0.9);
             scale: 1.1;
+        }
+    }
+}
+
+@media screen and (max-width: 720px) {
+    .formation {
+        height: fit-content;
+        padding: 2rem 1rem;
+
+        &__content {
+            width: 100%;
+            height: fit-content;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            box-sizing: border-box;
         }
     }
 }

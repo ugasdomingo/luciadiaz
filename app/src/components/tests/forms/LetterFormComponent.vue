@@ -85,4 +85,10 @@ watch(() => answers.value, () => {
         }
     }
 }
+
+@media screen and (max-width: 768px) {
+    .letter_form {
+        max-width: 100%;
+    }
+}
 </style>

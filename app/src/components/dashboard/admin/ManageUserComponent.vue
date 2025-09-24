@@ -50,6 +50,9 @@ watch(text_filter, () => {
                             <button @click="admin_store.role_to_patient(user._id)" class="nobg-btn">
                                 Convertir a paciente
                             </button>
+                            <button @click="admin_store.active_anamnesis(user._id)" class="nobg-btn">
+                                Activar anamnesis
+                            </button>
                         </td>
                     </tr>
                 </tbody>

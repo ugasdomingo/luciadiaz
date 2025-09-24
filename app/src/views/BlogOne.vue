@@ -14,10 +14,8 @@ const route = useRoute()
 const post_store = usePostStore()
 
 onBeforeMount(() => {
-    post_store.get_post_by_id(route.params.post_id)
+    post_store.get_post_by_slug(route.params.post_slug)
 })
 </script>
 
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>

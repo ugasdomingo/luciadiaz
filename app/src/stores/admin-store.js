@@ -86,6 +86,28 @@ export const useAdminStore = defineStore('admin', () => {
         }
     }
 
+    const active_anamnesis = async (user_id) => {
+        try {
+            util_store.set_loading(true)
+            const response = await api({
+                method: 'post',
+                url: `/util/active_anamnesis`,
+                data: {
+                    user_id
+                },
+                headers: {
+                    'Authorization': `Bearer ${auth_store.token}`
+                }
+            })
+            user.value = response.data.data
+            util_store.set_message(response.data.message, response.data.status)
+        } catch (err) {
+            console.log(err)
+        } finally {
+            util_store.set_loading(false)
+        }
+    }
+
 
 
     return {
@@ -94,6 +116,7 @@ export const useAdminStore = defineStore('admin', () => {
         get_all_users,
         get_user_by_id,
         update_user,
-        role_to_patient
+        role_to_patient,
+        active_anamnesis
     }
 })

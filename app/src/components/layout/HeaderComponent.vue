@@ -8,6 +8,7 @@ const util_store = useUtilStore()
 const auth_store = useAuthStore()
 const show_header = ref(true)
 const need_bg = ref(false)
+const screen_size = ref(window.innerWidth)
 let last_scroll_position_y = 0
 
 onMounted(() => {
@@ -37,11 +38,12 @@ onMounted(() => {
             <img src="/public/logo-notextbg.png" alt="logo lucia">
         </RouterLink>
         <section class="header__menu">
-            <RouterLink to="/terapias" class="action-btn">Agendar consulta terapeutica</RouterLink>
-            <button @click="auth_store.logout()" v-if="auth_store.token" class="nobg-btn">Cerrar sesión</button>
-            <img src="/public/icon/icon-hamburguer-menu.svg" alt="menu" class="header__menu__icon"
-                @click="util_store.toggle_navbar">
-            <NavbarComponent :class="util_store.show_navbar ? 'header__navbar' : 'header__navbar__hidden'" />
+            <RouterLink to="/terapias" class="action-btn">{{ screen_size < 768 ? 'Agendar'
+                : 'Agendar consulta terapeutica' }}</RouterLink>
+                    <button @click="auth_store.logout()" v-if="auth_store.token" class="nobg-btn">Cerrar sesión</button>
+                    <img src="/public/icon/icon-hamburguer-menu.svg" alt="menu" class="header__menu__icon"
+                        @click="util_store.toggle_navbar">
+                    <NavbarComponent :class="util_store.show_navbar ? 'header__navbar' : 'header__navbar__hidden'" />
         </section>
     </header>
 </template>
@@ -108,6 +110,14 @@ onMounted(() => {
     .header {
         padding: 1rem;
         box-sizing: border-box;
+
+        &__menu {
+            gap: 0.4rem;
+        }
+    }
+
+    .nobg-btn {
+        padding: 0.5rem 0.2rem;
     }
 }
 </style>

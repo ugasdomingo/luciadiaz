@@ -98,4 +98,42 @@ const truncate = (text, max_length) => {
     color: var(--color-black);
 
 }
+
+@media screen and (max-width: 720px) {
+    .formation__card__container {
+        width: 100%;
+        max-width: 100%;
+        height: fit-content;
+        max-height: fit-content;
+        flex-direction: column;
+        padding: 0;
+        margin: 0;
+
+        img {
+            width: 100%;
+            height: auto;
+        }
+
+        &__info {
+            width: 100%;
+            max-width: 100%;
+            justify-content: center;
+            height: fit-content;
+
+            h4 {
+                margin: 0;
+                padding: 0 0 0.5rem;
+            }
+
+            p {
+                margin: 0;
+                padding: 0;
+            }
+
+            &__types {
+                display: none;
+            }
+        }
+    }
+}
 </style>

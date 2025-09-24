@@ -24,6 +24,8 @@ import { RouterLink } from 'vue-router'
                 Si completas todos los tests, recibirás <strong>3 obsequios personalizados</strong> a tu elección.
             </li>
         </ul>
+
+        <RouterLink to="/login" class="nobg-btn">Iniciar sesión</RouterLink>
     </section>
 
 </template>
@@ -64,6 +66,10 @@ import { RouterLink } from 'vue-router'
         display: flex;
         justify-content: center;
         gap: 1rem;
+    }
+
+    .nobg-btn {
+        width: fit-content;
     }
 }
 </style>

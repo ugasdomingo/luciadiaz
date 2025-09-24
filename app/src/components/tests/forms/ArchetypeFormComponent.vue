@@ -160,4 +160,10 @@ const handle_submit = async () => {
         }
     }
 }
+
+@media screen and (max-width: 768px) {
+    .archetype__form {
+        max-width: 100%;
+    }
+}
 </style>

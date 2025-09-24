@@ -142,4 +142,10 @@ const handle_submit = async () => {
     }
 
 }
+
+@media screen and (max-width: 768px) {
+    .temperament_form {
+        max-width: 100%;
+    }
+}
 </style>

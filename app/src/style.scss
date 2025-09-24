@@ -189,17 +189,8 @@ input {
   box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: var(--color-primary);
-    background-color: #ffffff;
-  }
-
-  a:hover {
-    color: var(--color-secondary);
-  }
-
-  button {
-    background-color: var(--color-primary);
+@media screen and (max-width: 768px) {
+  .pages {
+    padding: 5rem 1rem 1rem;
   }
 }

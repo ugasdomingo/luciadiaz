@@ -48,6 +48,7 @@
         width: 30%;
         padding-top: 2rem;
         position: relative;
+        box-sizing: border-box;
 
         img {
             width: 100%;
@@ -89,10 +90,45 @@
 
 @media screen and (max-width: 720px) {
     .hero {
+        width: 100%;
+        height: 100vh;
+        padding: 0 1rem;
+        margin: 0;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+
+        &__background__image {
+            object-position: calc(50% + 10rem);
+        }
+
         &__image__content {
-            height: 40%;
+            width: 100%;
             object-position: left;
-            top: 4.5rem;
+
+            img {
+                height: 100%;
+            }
+
+            &__decoration {
+                height: 100%;
+                left: 1rem;
+                top: 1rem;
+            }
+
+        }
+
+        &__content {
+            width: 100%;
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            p {
+                width: 100%;
+            }
         }
     }
 }

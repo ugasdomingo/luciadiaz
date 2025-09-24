@@ -14,6 +14,7 @@ const userSchema = new Schema(
             required: true,
         },
         medical_record: { type: String, unique: true, required: true },
+        anamnesis_kids: { type: Boolean, default: false },
         policy_accepted: { type: Boolean, required: true },
         reset_password_token: { type: String },
         login_token: { type: Number },

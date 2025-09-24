@@ -43,12 +43,12 @@ export const usePostStore = defineStore('post', () => {
         }
     }
 
-    const get_post_by_id = async (post_id) => {
+    const get_post_by_slug = async (post_slug) => {
         try {
             util_store.set_loading(true)
             const response = await api({
                 method: 'get',
-                url: `/post/post/${post_id}`
+                url: `/post/post/${post_slug}`
             })
             post.value = response.data.data
         } catch (err) {
@@ -141,7 +141,7 @@ export const usePostStore = defineStore('post', () => {
         post,
         get_all_posts,
         get_all_posts_admin,
-        get_post_by_id,
+        get_post_by_slug,
         create_post,
         update_post,
         change_post_status,

@@ -55,4 +55,14 @@ import { services } from '../../static/services.js'
         }
     }
 }
+
+@media screen and (max-width: 720px) {
+    .services {
+        padding: 4rem 1rem;
+
+        &__content {
+            grid-template-columns: repeat(1, 1fr);
+        }
+    }
+}
 </style>

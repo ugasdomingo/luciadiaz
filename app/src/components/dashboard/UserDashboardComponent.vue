@@ -16,6 +16,8 @@
                     <button class="action-btn" @click="show_component = 'results'">Resultados de Tests</button>
                     <button class="action-btn" @click="show_component = 'courses'">Cursos Inscritos</button>
                     <button class="action-btn" @click="show_component = 'likes'">Tus likes</button>
+                    <RouterLink to="/tests/anamnesis" v-if="auth_store.user_data.user.anamnesis_kids === true"
+                        class="action-btn">Anamnesis</RouterLink>
                     <RouterLink to="/terapias" class="nobg-btn">Agendar una consulta</RouterLink>
         </div>
     </aside>
@@ -130,6 +132,50 @@ const show_component = ref('initial')
             width: 50%;
             margin: 0;
             text-align: center;
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .user__dashboard__aside {
+        width: 100%;
+        max-width: 100%;
+        min-height: fit-content;
+        margin: 0;
+        padding: 0;
+        position: relative;
+
+        h2 {
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        p {
+            margin: 0;
+
+            span {
+                font-weight: 500;
+            }
+        }
+
+        &__actions {
+            padding: 1rem 0 0;
+            align-items: center;
+
+        }
+    }
+
+    .user__dashboard__component {
+        width: 100%;
+        max-width: 100%;
+        position: relative;
+        margin: 0;
+        padding: 0;
+
+        &__greeting {
+            p {
+                width: 100%;
+            }
         }
     }
 }
