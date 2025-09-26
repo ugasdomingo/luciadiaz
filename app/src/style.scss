@@ -102,6 +102,15 @@ input {
   }
 }
 
+textarea {
+  max-width: 30rem;
+  padding: 0.75rem 0.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--color-text);
+  outline: none;
+  transition: all 0.25s;
+}
+
 .action-btn {
   width: 100%;
   max-width: 30rem;

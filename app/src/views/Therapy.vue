@@ -2,37 +2,32 @@
     <section class="therapy">
         <h2>Terapias</h2>
         <div class="therapy__content">
-            <div class="therapy__content__card" v-for="therapy in therapies" :key="therapy.id">
-                <img :src="therapy.image" :alt="`Imagen de ${therapy.title}`">
-                <h3>{{ therapy.title }}</h3>
-                <p>{{ therapy.description }}</p>
-                <a :href="therapy.link" target="_blank">Reservar</a>
-            </div>
+            <TherapyCardComponent v-for="therapy in therapies" :key="therapy.id" :therapy="therapy" />
         </div>
     </section>
 </template>
 
 <script setup>
 import { therapies } from '../static/therapies.js'
+import TherapyCardComponent from '../components/common/cards/TherapyCardComponent.vue'
 </script>
 
 <style scoped lang="scss">
 .therapy {
     width: 100%;
-    min-height: 70vh;
+    height: 100vh;
     margin: 0;
     padding: 4rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 2rem;
-    box-sizing: border-box;
     position: relative;
-    overflow-y: hidden;
+    box-sizing: border-box;
 
     h2 {
         text-align: center;
-        margin-bottom: 4rem;
+        margin: 1rem 0
     }
 
     &__content {
@@ -42,26 +37,18 @@ import { therapies } from '../static/therapies.js'
         gap: 3rem;
         box-sizing: border-box;
 
+    }
+}
 
-        &__card {
-            width: 100%;
-            max-width: 20rem;
-            padding: 1rem;
-            border-radius: 1rem;
-            box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.4);
-            transition: all 0.25s;
+@media screen and (max-width: 768px) {
+    .therapy {
+        padding: 4rem 1rem;
 
-            &:hover {
-                box-shadow: 0 0 1rem rgba(0, 0, 0, 0.9);
-                scale: 1.1;
-            }
-
-            img {
-                width: 5rem;
-                height: 5rem;
-                object-fit: cover;
-                border-radius: 1rem;
-            }
+        &__content {
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
         }
     }
 }

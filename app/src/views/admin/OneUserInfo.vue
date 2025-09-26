@@ -41,9 +41,12 @@
             </div>
             <div class="content__component">
                 <InfoUserHistoryComponent v-if="show_component === 'medical'" :user_history="user_info?.history" />
-                <InfoUserNotesComponent v-if="show_component === 'notes'" :user_notes="user_info?.therapy_notes" />
-                <InfoUserTaskComponent v-if="show_component === 'tasks'" :user_tasks="user_info?.therapy_tasks" />
-                <InfoUserTestComponent v-if="show_component === 'results'" :user_tests="user_info?.test_results" />
+                <InfoUserNotesComponent v-if="show_component === 'notes'" :user_notes="user_info?.therapy_notes"
+                    :user_id="route.params.user_id" />
+                <InfoUserTaskComponent v-if="show_component === 'tasks'" :user_tasks="user_info?.therapy_tasks"
+                    :user_id="route.params.user_id" />
+                <InfoUserTestComponent v-if="show_component === 'results'" :user_tests="user_info?.test_results"
+                    :user_name="user_info?.user?.name" />
                 <InfoUserFormationComponent v-if="show_component === 'courses'"
                     :user_formation="user_info?.enrollments" />
                 <InfoUserLikeComponent v-if="show_component === 'likes'" :user_likes="user_info?.likes" />
@@ -115,6 +118,35 @@ onMounted(async () => {
         flex-direction: column;
         gap: 1rem;
         margin: 0 0 0 auto;
+
+        .content__navegation {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .pages {
+        .basic__info {
+            width: 100%;
+            position: static;
+        }
+
+        .content {
+            width: 100%;
+            padding-top: 2rem;
+
+            .content__navegation {
+                justify-content: center;
+            }
+
+            .content__component {
+                overflow-x: auto;
+            }
+        }
     }
 }
 </style>

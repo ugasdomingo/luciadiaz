@@ -1,19 +1,25 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, defineProps } from 'vue';
 import { useAuthStore } from '../../../stores/auth-store';
 
+const props = defineProps({
+    letter_results: { type: Object || null, default: null },
+    user_name: { type: String || null }
+})
 const auth_store = useAuthStore()
-const goal = ref(auth_store.user_data.test_results.find(result => result.test_name === 'Carta del Inconsciente')?.results.goal)
-const reasons = ref(auth_store.user_data.test_results.find(result => result.test_name === 'Carta del Inconsciente')?.results.reasons)
+const goal = ref(props.letter_results.goal)
+const reasons = ref(props.letter_results.reasons)
 </script>
 
 <template>
     <section class="letter-result-section">
         <h2>
-            Felicidades {{ auth_store.user_data.user.name.split(" ")[0] }}, tu inconsciente te ha enviado una carta.
+            Felicidades {{ props.user_name || auth_store.user_data.user.name.split(" ")[0] }}, tu inconsciente te ha
+            enviado una carta.
         </h2>
         <p class="letter">
-            Yo, {{ auth_store.user_data.user.name }}, conscientemente quiero <strong>{{ goal }}</strong>. Ya que bloqueo
+            Yo, {{ props.user_name || auth_store.user_data.user.name }}, conscientemente quiero <strong>{{ goal
+                }}</strong>. Ya que bloqueo
             en mi <strong>{{ reasons[2] }}</strong>. Ademas quisiera <strong>{{ reasons[3] }}</strong> ya que rechazo en
             mi <strong>{{ reasons[5] }}</strong>
         </p>
@@ -27,7 +33,7 @@ const reasons = ref(auth_store.user_data.test_results.find(result => result.test
                 rechazando (en tu caso: <strong>{{ reasons[5] }}</strong>).
                 Eso te va a permitir conectar con <strong>{{ reasons[3] }}</strong> y resolver el bloqueo que tienes con
                 <strong>{{ reasons[2] }}</strong>. Una vez liberado de ese bloqueo alcanzarás tu meta de <strong>{{ goal
-                    }}</strong>.
+                }}</strong>.
             </p>
             <p>
                 Si no te suena lo que dice la carta, no lo entiendes o existe algo que te hace ruido y no te deja

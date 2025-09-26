@@ -1,9 +1,10 @@
 import { Therapy_note } from "../models/Therapy-note-model.js";
 import { client_response } from "../utils/responses.js";
+import { encrypt } from "../utils/encrypt.js";
 
-export const get_all_pending_notes = async (req, res, next) => {
+export const get_all_notes = async (req, res, next) => {
     try {
-        const notes = await Therapy_note.find({ status: 'pending' }).populate('user_id').sort({ createdAt: -1 }).lean();
+        const notes = await Therapy_note.find().populate('user_id').sort({ createdAt: -1 }).lean();
         return client_response(res, 200, 'OK', notes);
     } catch (error) {
         next(error);
@@ -12,9 +13,10 @@ export const get_all_pending_notes = async (req, res, next) => {
 
 export const create_note = async (req, res, next) => {
     try {
-        const { reason, notes } = req.body;
-        const { user_id } = req.params;
-        const note = new Therapy_note({ reason, notes, user_id });
+        const { user_id, reason, notes } = req.body;
+        const encrypted_notes = encrypt(notes);
+        const encrypted_reason = encrypt(reason);
+        const note = new Therapy_note({ reason: encrypted_reason, notes: encrypted_notes, user_id });
         await note.save();
         return client_response(res, 201, 'Nota creada');
     } catch (error) {
@@ -30,7 +32,7 @@ export const update_note = async (req, res, next) => {
             throw new Error('Nota no encontrada');
         }
         note.reason = req.body.reason || note.reason;
-        note.notes = req.body.notes || note.notes;
+        note.notes = encrypt(req.body.notes || note.notes);
         await note.save();
         return client_response(res, 200, 'Nota actualizada');
     } catch (error) {

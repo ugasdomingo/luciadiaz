@@ -29,10 +29,12 @@ export const admin_get_user_data = async (user_id) => {
             history.answers = JSON.parse(decrypt(history.answers));
         });
         therapy_notes.forEach((note) => {
-            note.content = JSON.parse(decrypt(note.content));
+            note.notes = decrypt(note.notes);
+            note.reason = decrypt(note.reason);
         });
         therapy_tasks.forEach((task) => {
-            task.content = JSON.parse(decrypt(task.content));
+            task.task = JSON.parse(decrypt(task.task));
+            task.observations = JSON.parse(decrypt(task.observations));
         });
         test_results.forEach((result) => {
             result.results = JSON.parse(decrypt(result.results));
@@ -74,7 +76,8 @@ export const get_login_user_data = async (user_id) => {
         }
         if (therapy_tasks.length > 0) {
             therapy_tasks.forEach((task) => {
-                task.content = JSON.parse(decrypt(task.content));
+                task.task = JSON.parse(decrypt(task.task));
+                task.observations = JSON.parse(decrypt(task.observations));
             });
         }
         if (test_results.length > 0) {

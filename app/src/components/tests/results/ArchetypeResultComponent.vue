@@ -4,19 +4,21 @@ import { archetype_results_info } from '../../../static/answers/archetype-result
 import { useAuthStore } from '../../../stores/auth-store.js';
 
 const props = defineProps({
-    archetype: { type: String || null, default: null }
+    archetype_results: { type: Object || null, default: null },
+    user_name: { type: String, default: '' }
 })
 const auth_store = useAuthStore()
 
-const archetype_result = ref(archetype_results_info.find(result => result.archetype_name === props.archetype))
-const archetype_others = ref(archetype_results_info.filter(result => result.archetype_name !== props.archetype))
+const archetype_result = ref(archetype_results_info.find(result => result.archetype_name === props.archetype_results.archetype))
+const archetype_others = ref(archetype_results_info.filter(result => result.archetype_name !== props.archetype_results.archetype))
 const show_others = ref(false)
 </script>
 
 <template>
     <section class="archetype-result-section">
         <h3>
-            {{ auth_store.user_data.user.name.split(" ")[0] }}, eres {{ props.archetype }}.
+            {{ props.user_name.split(" ")[0] || auth_store.user_data.user.name.split(" ")[0] }}, eres {{
+                props.archetype_results.archetype }}.
         </h3>
         <article class="archetype-info">
             <p>Para ti la máxima necesidad es <strong>{{
@@ -34,20 +36,16 @@ const show_others = ref(false)
             <h3>Resultados totales</h3>
             <ul>
                 <li>
-                    <strong>Sabio Rey:</strong> {{auth_store.user_data.test_results.find(result => result.test_name
-                        === 'Arquetipo')?.results.wise}}
+                    <strong>Sabio Rey:</strong> {{ props.archetype_results.wise }}
                 </li>
                 <li>
-                    <strong>Guerrero:</strong> {{auth_store.user_data.test_results.find(result => result.test_name ===
-                        'Arquetipo')?.results.warrior}}
+                    <strong>Guerrero:</strong> {{ props.archetype_results.warrior }}
                 </li>
                 <li>
-                    <strong>Mago:</strong> {{auth_store.user_data.test_results.find(result => result.test_name ===
-                        'Arquetipo')?.results.wizard}}
+                    <strong>Mago:</strong> {{ props.archetype_results.wizard }}
                 </li>
                 <li>
-                    <strong>Amante:</strong> {{auth_store.user_data.test_results.find(result => result.test_name ===
-                        'Arquetipo')?.results.lover}}
+                    <strong>Amante:</strong> {{ props.archetype_results.lover }}
                 </li>
             </ul>
         </div>

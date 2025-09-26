@@ -5,19 +5,22 @@ import { temperament_results_info } from '../../../static/answers/temperament-re
 
 const auth_store = useAuthStore()
 const props = defineProps({
-    temperament: { type: String || null, default: null }
+    temperament_results: { type: Object || null, default: null },
+    user_name: { type: String, default: '' }
 })
 
-const temperament_result = ref(temperament_results_info.find(result => result.title === props.temperament))
-const other_temperaments = ref(temperament_results_info.filter(result => result.title !== props.temperament))
+const temperament_result = ref(temperament_results_info.find(result => result.title === props.temperament_results.temperament))
+const other_temperaments = ref(temperament_results_info.filter(result => result.title !== props.temperament_results.temperament))
 const show_others = ref(false)
 </script>
 
 <template>
     <section class="temperament-result-section">
-        <h3>{{ auth_store.user_data.user.name.split(" ")[0] }}, eres {{ temperament_result.title }}.</h3>
+        <h3>{{ props.user_name.split(" ")[0] || auth_store.user_data.user.name.split(" ")[0] }}, eres {{
+            temperament_result.title }}.
+        </h3>
         <article class="temperament-info">
-            <h4>El lema de los {{ props.temperament }}s, es: "{{ temperament_result.slogan }}"</h4>
+            <h4>El lema de los {{ temperament_result.title }}s, es: "{{ temperament_result.slogan }}"</h4>
             <ul>
                 <li><strong>Deseo:</strong> {{ temperament_result.deseo }}</li>
                 <li><strong>Necesidades:</strong> {{ temperament_result.necesidades }}</li>
@@ -38,20 +41,16 @@ const show_others = ref(false)
             <h3>Resultados totales</h3>
             <ul>
                 <li>
-                    <strong>Melancólico:</strong> {{auth_store.user_data.test_results.find(result => result.test_name
-                        === 'Temperamento')?.results.melancholic}}
+                    <strong>Melancólico:</strong> {{ props.temperament_results.melancholic }}
                 </li>
                 <li>
-                    <strong>Sanguíneo:</strong> {{auth_store.user_data.test_results.find(result => result.test_name ===
-                        'Temperamento')?.results.sanguine}}
+                    <strong>Sanguíneo:</strong> {{ props.temperament_results.sanguine }}
                 </li>
                 <li>
-                    <strong>Colérico:</strong> {{auth_store.user_data.test_results.find(result => result.test_name ===
-                        'Temperamento')?.results.choleric}}
+                    <strong>Colérico:</strong> {{ props.temperament_results.choleric }}
                 </li>
                 <li>
-                    <strong>Flemático:</strong> {{auth_store.user_data.test_results.find(result => result.test_name ===
-                        'Temperamento')?.results.phlegmatic}}
+                    <strong>Flemático:</strong> {{ props.temperament_results.phlegmatic }}
                 </li>
             </ul>
         </div>

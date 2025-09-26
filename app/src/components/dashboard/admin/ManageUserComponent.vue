@@ -50,7 +50,8 @@ watch(text_filter, () => {
                             <button @click="admin_store.role_to_patient(user._id)" class="nobg-btn">
                                 Convertir a paciente
                             </button>
-                            <button @click="admin_store.active_anamnesis(user._id)" class="nobg-btn">
+                            <button @click="admin_store.active_anamnesis(user._id)" class="nobg-btn"
+                                :class="user.anamnesis_kids ? 'active' : ''">
                                 Activar anamnesis
                             </button>
                         </td>
@@ -86,6 +87,29 @@ watch(text_filter, () => {
 
         .action-btn {
             max-width: fit-content;
+        }
+
+        .active {
+            background-color: var(--color-primary);
+            color: var(--color-white);
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .manage__users__container {
+        h2 {
+            text-align: center;
+        }
+
+        .actions__container {
+            input {
+                width: 100%;
+            }
+        }
+
+        .component__displayer {
+            overflow-x: auto;
         }
     }
 }

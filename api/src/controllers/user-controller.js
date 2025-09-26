@@ -5,7 +5,7 @@ import { admin_get_user_data } from "../services/auth-service.js";
 //Get all users
 export const get_all_users = async (req, res, next) => {
     try {
-        const users = await User.find().select('_id name medical_record role').lean();
+        const users = await User.find().select('_id name medical_record role anamnesis_kids').lean();
 
         return client_response(res, 200, 'OK', users);
     } catch (error) {

@@ -45,7 +45,7 @@ onMounted(() => {
 <template>
     <section class="medical-history__container">
         <h2>{{ auth_store.user_data.history.length < 13 ? 'Historial Médico Pendiente' : 'Historial Médico Completado'
-                }}</h2>
+        }}</h2>
                 <div class="medical-history__container__header" v-if="auth_store.user_data.history.length < 13">
                     <p>
                         Haz completado el
@@ -63,7 +63,7 @@ onMounted(() => {
                             :class="{ 'active': expanded_items[history._id] }">
                             {{ history.title }}
                             <span class="arrow" :class="{ 'rotated': expanded_items[history._id] }">
-                                <img src="/public/icon/icon-plus.svg" alt="plus icon">
+                                <img src="/icon/icon-plus.svg" alt="plus icon">
                             </span>
                         </h4>
                         <transition name="accordion" @enter="enter" @after-enter="afterEnter" @leave="leave"

@@ -82,4 +82,32 @@ onBeforeMount(() => {
         }
     }
 }
+
+@media screen and (max-width: 768px) {
+    .pages {
+        flex-direction: column-reverse;
+        gap: 1rem;
+        padding: 5rem 1rem 2rem;
+
+        .formation__content {
+            width: 100%;
+        }
+
+        .formation__aside {
+            width: 100%;
+            position: relative;
+            top: auto;
+            right: auto;
+            box-sizing: border-box;
+
+            &__content {
+                width: 100%;
+                display: flex;
+                gap: 1rem;
+
+
+            }
+        }
+    }
+}
 </style>

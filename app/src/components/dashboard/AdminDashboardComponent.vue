@@ -92,4 +92,14 @@ watch(() => show_component.value, async (new_value) => {
         height: 100%;
     }
 }
+
+@media screen and (max-width: 768px) {
+    .admin__dashboard {
+        &__actions {
+            flex-direction: column;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--color-primary);
+        }
+    }
+}
 </style>

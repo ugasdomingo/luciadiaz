@@ -53,7 +53,7 @@ onMounted(async () => {
                 <div v-show="expanded_items[test.id]">
                     <section v-if="test.name === 'Arquetipos de la personalidad' && archetype_completed">
                         <ArchetypeResultComponent
-                            :archetype="auth_store.user_data.test_results.find(result => result.test_name === 'Arquetipo')?.results.archetype" />
+                            :archetype_results="auth_store.user_data.test_results.find(result => result.test_name === 'Arquetipo')?.results" />
 
                     </section>
                     <section v-else-if="test.name === 'Temperamentos' && temperament_completed">

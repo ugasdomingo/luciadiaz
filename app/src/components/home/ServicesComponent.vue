@@ -5,11 +5,12 @@ import { services } from '../../static/services.js'
     <section class="services">
         <h2>¿Que quieres hacer hoy?</h2>
         <div class="services__content">
-            <div class="services__content__card" v-for="service in services" :key="service.id">
+            <RouterLink class="services__content__card" v-for="service in services" :key="service.id"
+                :to="service.route">
                 <img :src="service.icon" :alt="service.title">
                 <h4>{{ service.title }}</h4>
                 <p>{{ service.description }}</p>
-            </div>
+            </RouterLink>
         </div>
     </section>
 </template>

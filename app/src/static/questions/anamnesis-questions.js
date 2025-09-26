@@ -1,7 +1,7 @@
 export const anamnesis_questions = [
-    { question: 'Nombre del niño:', type: 'text' },
-    { question: 'Edad:', type: 'text' },
-    { question: 'Grado escolar:', type: 'text' },
+    { question: 'Nombre del niño', type: 'text' },
+    { question: 'Edad', type: 'text' },
+    { question: 'Grado escolar', type: 'text' },
     { question: '¿Embarazo planificado?', type: 'text' },
     { question: 'Tiempo de gestación', type: 'text' },
     { question: 'Parto natural o cesarea', type: 'text' },
