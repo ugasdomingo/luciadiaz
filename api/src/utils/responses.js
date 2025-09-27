@@ -4,6 +4,7 @@ export const client_response = (res, status, message, data = undefined) => {
 
 //Set cookie
 export const set_cookie = (res, refresh_token) => {
+    console.log(process.env.NODE_ENV, refresh_token);
     res.cookie('refresh_token', refresh_token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
