@@ -6,9 +6,10 @@ export const client_response = (res, status, message, data = undefined) => {
 export const set_cookie = (res, refresh_token) => {
     res.cookie('refresh_token', refresh_token, {
         httpOnly: true,
-        secure: true,
-        sameSite: 'lax',
-        maxAge: 14 * 24 * 60 * 60 * 1000
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+        maxAge: 14 * 24 * 60 * 60 * 1000,
+        path: '/'
     });
 }
 
