@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { login, register, forgot_password, reset_password, change_password, logout, verify_email, verify_login, refresh } from "../controllers/auth-controller.js";
+import { login, register, forgot_password, reset_password, change_password, verify_email, verify_login, refresh } from "../controllers/auth-controller.js";
 import { user_auth } from "../middlewares/user_auth.js";
 import { auth_data_validation } from "../middlewares/data-validation.js";
 
@@ -13,6 +13,5 @@ auth_router.post('/refresh', refresh);
 auth_router.post('/forgot-password', forgot_password);
 auth_router.post('/reset-password', auth_data_validation, reset_password);
 auth_router.post('/change-password', user_auth, change_password);
-auth_router.post('/logout', user_auth, logout);
 
 export default auth_router;

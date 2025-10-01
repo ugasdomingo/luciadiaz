@@ -57,15 +57,8 @@ export const useAuthStore = defineStore('auth', () => {
     const logout = async () => {
         try {
             util_store.set_loading(true)
-            const response = await api({
-                method: 'post',
-                url: '/auth/logout',
-                headers: {
-                    'Authorization': `Bearer ${token.value}`
-                }
-            })
             localStorage.removeItem('login')
-            util_store.set_message(response.data.message, response.data.status)
+            util_store.set_message('Hasta luego', 'success')
             user_data.value = null
             token.value = null
             router.push('/')
@@ -79,13 +72,15 @@ export const useAuthStore = defineStore('auth', () => {
     const refresh = async () => {
         try {
             util_store.set_loading(true)
+            const refresh_token = localStorage.getItem('login')
             const response = await api({
                 method: 'post',
-                url: '/auth/refresh'
+                url: '/auth/refresh',
+                data: { refresh_token }
             })
             token.value = response.data.data.token
             user_data.value = response.data.data.user_data
-            localStorage.setItem('login', 'true')
+            localStorage.setItem('login', response.data.data.refresh_token)
         } catch (err) {
             console.log(err)
         } finally {
@@ -103,7 +98,7 @@ export const useAuthStore = defineStore('auth', () => {
             })
             user_data.value = response.data.data.user_data
             token.value = response.data.data.token
-            localStorage.setItem('login', 'true')
+            localStorage.setItem('login', response.data.data.refresh_token)
             util_store.set_message(response.data.message, response.data.status)
         } catch (err) {
             console.log(err)
@@ -123,7 +118,7 @@ export const useAuthStore = defineStore('auth', () => {
             })
             user_data.value = response.data.data.user_data
             token.value = response.data.data.token
-            localStorage.setItem('login', 'true')
+            localStorage.setItem('login', response.data.data.refresh_token)
             util_store.set_message(response.data.message, response.data.status)
 
             // If last page is set, redirect to it, else redirect to dashboard
@@ -162,7 +157,7 @@ export const useAuthStore = defineStore('auth', () => {
             const { user_data, token } = response.data.data
             user_data.value = user_data.user
             token.value = token
-            localStorage.setItem('login', 'true')
+            localStorage.setItem('login', response.data.data.refresh_token)
             util_store.set_message(response.data.message, response.data.status)
             router.push('/mi-espacio')
         } catch (err) {

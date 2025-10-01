@@ -2,7 +2,7 @@ import { User } from "../models/User-model.js";
 import { get_login_user_data, unify_email_activity } from "../services/auth-service.js";
 import { Util } from "../models/Util-model.js";
 import { send_verification_email, send_reset_password_email, send_2fa_email, notify_admin_new_registration } from "../utils/mailer.js";
-import { client_response, set_cookie, remove_cookies } from "../utils/responses.js";
+import { client_response } from "../utils/responses.js";
 import { generate_six_digits_code } from "../utils/tokens.js";
 import jwt from "jsonwebtoken";
 
@@ -66,10 +66,9 @@ export const verify_email = async (req, res, next) => {
 
         // 4. Send login data
         const { user_data, token, refresh_token } = await get_login_user_data(user._id);
-        set_cookie(res, refresh_token);
 
         // 5. Return response
-        return client_response(res, 200, 'Correo electrónico verificado', { user_data, token });
+        return client_response(res, 200, 'Correo electrónico verificado', { user_data, token, refresh_token });
     } catch (error) {
         next(error);
     }
@@ -128,19 +127,9 @@ export const verify_login = async (req, res, next) => {
 
         // 4. Send login data
         const { user_data, token, refresh_token } = await get_login_user_data(user._id);
-        set_cookie(res, refresh_token);
 
         // 5. Return response
-        return client_response(res, 200, 'Bienvenida(o) de regreso', { user_data, token });
-    } catch (error) {
-        next(error);
-    }
-}
-
-export const logout = async (req, res, next) => {
-    try {
-        remove_cookies(res);
-        return client_response(res, 200, 'Hasta luego');
+        return client_response(res, 200, 'Bienvenida(o) de regreso', { user_data, token, refresh_token });
     } catch (error) {
         next(error);
     }
@@ -148,7 +137,7 @@ export const logout = async (req, res, next) => {
 
 export const refresh = async (req, res, next) => {
     try {
-        const { refresh_token } = req.cookies;
+        const { refresh_token } = req.body;
 
         if (!refresh_token) {
             throw new Error('Debes iniciar sesión para acceder a esta funcionalidad');
@@ -163,8 +152,7 @@ export const refresh = async (req, res, next) => {
             throw new Error('Token inválido');
         }
         const { user_data, token, refresh_token: new_refresh_token } = await get_login_user_data(user._id);
-        set_cookie(res, new_refresh_token);
-        return client_response(res, 200, 'OK', { user_data, token });
+        return client_response(res, 200, 'OK', { user_data, token, refresh_token: new_refresh_token });
     } catch (error) {
         next(error);
     }
