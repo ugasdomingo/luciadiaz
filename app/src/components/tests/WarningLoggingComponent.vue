@@ -25,7 +25,7 @@ import { RouterLink } from 'vue-router'
             </li>
         </ul>
 
-        <RouterLink to="/login" class="nobg-btn">Iniciar sesión</RouterLink>
+        <RouterLink to="/acceso" class="nobg-btn">Iniciar sesión</RouterLink>
     </section>
 
 </template>
