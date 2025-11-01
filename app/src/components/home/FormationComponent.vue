@@ -8,7 +8,7 @@ const common_store = useCommonStore()
     <section class="formation">
         <div class="formation__decoratio__top__left"></div>
         <div class="formation__decoratio__bottom__right"></div>
-        <h2>Próximas formaciones</h2>
+        <h2>Próximas formaciones y talleres vivenciales</h2>
         <div class="formation__content">
             <FormationCardComponent v-for="formation in common_store.formations" :key="formation.id"
                 :formation="formation" />
@@ -56,9 +56,11 @@ const common_store = useCommonStore()
     &__content {
         width: 100%;
         height: fit-content;
-        display: flex;
-        flex-direction: column;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
         gap: 3rem;
+        max-width: 1200px;
+        margin: 0 auto;
         box-sizing: border-box;
     }
 
@@ -83,12 +85,8 @@ const common_store = useCommonStore()
         padding: 2rem 1rem;
 
         &__content {
-            width: 100%;
-            height: fit-content;
-            display: flex;
-            flex-direction: column;
+            grid-template-columns: 1fr;
             gap: 1rem;
-            box-sizing: border-box;
         }
     }
 }
