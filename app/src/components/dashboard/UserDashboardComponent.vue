@@ -3,11 +3,11 @@
         <h2>Tus datos registrados</h2>
         <p>Nombre completo: <span> {{ auth_store.user_data.user.name }}</span></p>
         <p>Correo: <span> {{ auth_store.user_data.user.email }}</span></p>
-        <p>Historial médico: <span> {{ auth_store.user_data.user.medical_record }}</span></p>
+        <p>Historia Clínica: <span> {{ auth_store.user_data.user.medical_record }}</span></p>
         <div class="user__dashboard__aside__actions">
             <button class="action-btn" @click="show_component = 'medical'"
                 v-if="auth_store.user_data.user.role === 'patient'">
-                {{ auth_store.user_data.history.length < 13 ? 'Completa tu historial médico' : 'Historial médico' }}
+                {{ auth_store.user_data.history.length < 13 ? 'Completa tu historia clínica' : 'Historial clínico' }}
                     </button>
                     <button class="action-btn" @click="show_component = 'tasks'"
                         v-if="auth_store.user_data.user.role === 'patient'">

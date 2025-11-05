@@ -146,6 +146,19 @@ const handle_submit = async () => {
 @media screen and (max-width: 768px) {
     .temperament_form {
         max-width: 100%;
+
+        form {
+            max-width: 100%;
+
+            .question {
+                max-width: 100%;
+
+                &__options {
+                    flex-direction: column;
+                    gap: 0.25rem;
+                }
+            }
+        }
     }
 }
 </style>
