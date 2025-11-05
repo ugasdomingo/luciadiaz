@@ -281,6 +281,7 @@ const copy_link = async () => {
         :deep(p) {
             margin: 1.5rem 0;
             line-height: 1.8;
+            text-align: justify;
         }
 
         :deep(ul),

@@ -6,6 +6,7 @@ import { useTestStore } from '../../../stores/test-store'
 const test_store = useTestStore()
 
 const answers = ref({})
+const show_test_info = ref(false)
 
 const answers_length = ref(0)
 
@@ -57,9 +58,7 @@ const handle_submit = async () => {
         <h2>Arquetipos de la personalidad</h2>
         <p class="test__show__info" @click="show_test_info = !show_test_info">
             {{
-                show_test_info
-                    ? 'No ver más'
-                    : 'Ver más información de este test'
+                show_test_info ? 'No ver más' : 'Ver más información de este test'
             }}
         </p>
         <transition name="fade">

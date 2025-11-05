@@ -35,6 +35,16 @@ const routes = [
         name: 'FormationsOne',
         component: () => import('../views/FormationsOne.vue')
     },
+    {
+        path: '/inscripcion/:formation_slug',
+        name: 'Enrollment',
+        component: () => import('../views/Enrollment.vue')
+    },
+    {
+        path: '/inscripcion-exitosa/:formation_slug',
+        name: 'EnrollmentConfirmation',
+        component: () => import('../views/confirmations/EnrollmentConfirmation.vue')
+    },
     // Test Pages *************************************
     {
         path: '/tests',

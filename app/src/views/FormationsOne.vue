@@ -122,18 +122,19 @@
                         </div>
                     </div>
 
-                    <!-- PayPal Button -->
-                    <div class="sidebar-card__paypal" v-if="formation_store.formation.paypal_button"
-                        v-html="formation_store.formation.paypal_button"></div>
-
-                    <!-- Fallback Button -->
-                    <button v-else class="sidebar-card__cta" @click="handle_enrollment">
+                    <RouterLink v-if="formation_store.formation.price === 0"
+                        :to="`/inscripcion/${formation_store.formation.slug}`" class="sidebar-card__cta">
+                        Inscribirme gratis
+                    </RouterLink>
+                    <a v-else :href="formation_store.formation.paypal_button" class="sidebar-card__cta">
                         Inscribirme ahora
-                    </button>
-
-                    <p class="sidebar-card__note">
-                        ¿Tienes dudas? <RouterLink to="/terapias">Contáctame</RouterLink>
-                    </p>
+                    </a>
+                    <div v-if="formation_store.formation.price > 0" class="sidebar-card__alternative">
+                        <p class="alternative-text">¿Prefieres otro método de pago?</p>
+                        <a :href="util_store.whatsapp_link" target="_blank" class="alternative-btn">
+                            💬 Contactar por WhatsApp
+                        </a>
+                    </div>
                 </div>
             </aside>
         </div>
@@ -142,12 +143,14 @@
 
 <script setup>
 import { useFormationStore } from '../stores/formation-store'
+import { useUtilStore } from '../stores/util-store'
 import { useRoute } from 'vue-router'
 import { onBeforeMount, ref } from 'vue'
 
 const route = useRoute()
 const formation_store = useFormationStore()
 const copied = ref(false)
+const util_store = useUtilStore()
 
 onBeforeMount(() => {
     formation_store.get_formation_by_slug(route.params.formation_slug)
@@ -526,16 +529,18 @@ const handle_enrollment = () => {
         position: fixed;
         top: 5.5rem;
         right: 4rem;
-        max-height: calc(100vh - 8rem);
-        box-sizing: border-box;
+        max-height: 100vh;
     }
 }
 
 .sidebar-card {
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
     background: var(--color-white);
     border-radius: 1rem;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-    overflow: hidden;
+    box-sizing: border-box;
 
     &__image {
         width: 100%;
@@ -560,7 +565,6 @@ const handle_enrollment = () => {
         box-sizing: border-box;
 
         .price-value {
-            display: block;
             font-size: 2rem;
             font-family: 'Title';
             font-weight: 700;
@@ -607,23 +611,15 @@ const handle_enrollment = () => {
         }
     }
 
-    &__paypal {
-        padding: 0 1.5rem 1.5rem;
-
-        :deep(form) {
-            display: flex;
-            justify-content: center;
-        }
-    }
-
     &__cta {
-        width: calc(100% - 3rem);
+        width: fit-content;
         margin: 0 1.5rem 1.5rem;
         padding: 1rem;
         background: var(--color-secondary);
         color: white;
         border: none;
         border-radius: 0.5rem;
+        align-self: center;
         font-family: 'Text';
         font-size: 1rem;
         font-weight: 600;
@@ -636,6 +632,39 @@ const handle_enrollment = () => {
             background: var(--color-primary);
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(107, 76, 147, 0.3);
+        }
+    }
+
+    &__alternative {
+        padding: 1rem 1.5rem;
+        border-top: 1px solid var(--color-disable);
+        text-align: center;
+
+        .alternative-text {
+            margin: 0 0 0.75rem;
+            font-size: 0.9rem;
+            color: var(--color-text-dark);
+            font-family: 'Text';
+        }
+
+        .alternative-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: #25D366;
+            color: white;
+            border-radius: 0.5rem;
+            font-family: 'Text';
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+
+            &:hover {
+                background: #20ba5a;
+                transform: translateY(-2px);
+            }
         }
     }
 

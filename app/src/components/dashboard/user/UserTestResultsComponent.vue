@@ -48,6 +48,7 @@ onMounted(async () => {
                     <img src="/public/icon/icon-plus.svg" alt="plus icon">
                 </span>
             </h3>
+            {{ test.name }}
             <transition name="accordion" @enter="enter" @after-enter="afterEnter" @leave="leave"
                 @after-leave="afterLeave">
                 <div v-show="expanded_items[test.id]">
@@ -58,10 +59,13 @@ onMounted(async () => {
                     </section>
                     <section v-else-if="test.name === 'Temperamentos' && temperament_completed">
                         <TemperamentResultComponent
-                            :temperament="auth_store.user_data.test_results.find(result => result.test_name === 'Temperamento')?.results.temperament" />
+                            :temperament_results="auth_store.user_data.test_results.find(result => result.test_name === 'Temperamento')?.results"
+                            :user_name="auth_store.user_data.user.name.split(' ')[0]" />
                     </section>
                     <section v-else-if="test.name === 'Carta del inconsciente' && letter_completed">
-                        <LetterResultComponent />
+                        <LetterResultComponent
+                            :letter_results="auth_store.user_data.test_results.find(result => result.test_name === 'Carta del Inconsciente')?.results"
+                            :user_name="auth_store.user_data.user.name.split(' ')[0]" />
                     </section>
 
                     <section class="not-completed__container" v-else>

@@ -5,8 +5,8 @@ import { temperament_results_info } from '../../../static/answers/temperament-re
 
 const auth_store = useAuthStore()
 const props = defineProps({
-    temperament_results: { type: Object || null, default: null },
-    user_name: { type: String, default: '' }
+    temperament_results: { type: Object, required: true },
+    user_name: { type: String, required: true }
 })
 
 const temperament_result = ref(temperament_results_info.find(result => result.title === props.temperament_results.temperament))

@@ -14,6 +14,7 @@ const enrollmentSchema = new Schema(
         },
         payment_method: {
             type: String,
+            enum: ['paypal', 'bizum', 'efectivo', 'gratuito'],
             required: true,
         },
         payment_status: {
@@ -29,10 +30,13 @@ const enrollmentSchema = new Schema(
                 type: String,
             },
         },
+        access_key_used: {
+            type: String,
+        },
     },
     {
         timestamps: true
     }
-)
+);
 
 export const Enrollment = model('Enrollment', enrollmentSchema);

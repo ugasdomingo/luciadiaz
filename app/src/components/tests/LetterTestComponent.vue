@@ -19,7 +19,8 @@ onMounted(async () => {
     <section v-else>
         <LetterResultComponent
             v-if="auth_store.user_data.test_results.find(test => test.test_name === 'Carta del Inconsciente')"
-            :temperament="auth_store.user_data.test_results.find(test => test.test_name === 'Carta del Inconsciente').results.archetype" />
-        <LetterFormComponent v-else :logged="auth_store.token ? true : false" />
+            :letter_results="auth_store.user_data.test_results.find(test => test.test_name === 'Carta del Inconsciente')?.results"
+            :user_name="auth_store.user_data.user.name.split(' ')[0]" />
+        <LetterFormComponent v-else />
     </section>
 </template>
