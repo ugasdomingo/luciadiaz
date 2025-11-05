@@ -140,6 +140,43 @@ const show_others = ref(false)
         display: flex;
         flex-direction: column;
         gap: 1rem;
+
+        .temperament-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            padding: 1rem;
+            border-radius: 1rem;
+            box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.5);
+            box-sizing: border-box;
+        }
+    }
+}
+
+@media screen and (max-width: 720px) {
+    .temperament-result-section {
+        padding: 0 0 0 1rem;
+
+        .temperament-info {
+            padding: 0.5rem;
+        }
+
+        .total-results {
+
+            padding: 0.5rem;
+            box-sizing: border-box;
+
+            h3 {
+                margin: 0;
+            }
+
+            ul {
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+                list-style: none;
+            }
+        }
     }
 }
 </style>

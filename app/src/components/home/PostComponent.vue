@@ -56,4 +56,15 @@ const common_store = useCommonStore()
         }
     }
 }
+
+@media screen and (max-width: 720px) {
+    .post {
+        padding: 1rem;
+
+        &__content {
+            flex-direction: column;
+            gap: 1rem;
+        }
+    }
+}
 </style>

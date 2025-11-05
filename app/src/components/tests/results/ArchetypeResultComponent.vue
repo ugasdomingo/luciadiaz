@@ -141,4 +141,30 @@ const show_others = ref(false)
         }
     }
 }
+
+@media screen and (max-width: 720px) {
+    .archetype-result-section {
+        padding: 0 0 0 1rem;
+
+        .archetype-info {
+            padding: 0.5rem;
+        }
+
+        .total-results {
+            padding: 0.5rem;
+            box-sizing: border-box;
+
+            h3 {
+                margin: 0;
+            }
+
+            ul {
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+                list-style: none;
+            }
+        }
+    }
+}
 </style>

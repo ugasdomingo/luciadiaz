@@ -68,4 +68,14 @@ const reasons = ref(props.letter_results.reasons)
 
     }
 }
+
+@media screen and (max-width: 720px) {
+    .letter-result-section {
+        padding: 0 0 0 1rem;
+
+        .letter {
+            max-width: 90%;
+        }
+    }
+}
 </style>

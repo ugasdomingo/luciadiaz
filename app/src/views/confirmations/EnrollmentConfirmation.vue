@@ -82,9 +82,9 @@
 <script setup>
 import { ref, onBeforeMount } from 'vue'
 import { useRoute } from 'vue-router'
-import { useFormationStore } from '../stores/formation-store'
-import { useAuthStore } from '../stores/auth-store'
-import { useUtilStore } from '../stores/util-store'
+import { useFormationStore } from '../../stores/formation-store'
+import { useAuthStore } from '../../stores/auth-store'
+import { useUtilStore } from '../../stores/util-store'
 
 const route = useRoute()
 const formation_store = useFormationStore()

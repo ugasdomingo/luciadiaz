@@ -19,7 +19,8 @@ onMounted(async () => {
     <section v-else>
         <TemperamentResultComponent
             v-if="auth_store.user_data.test_results.find(test => test.test_name === 'Temperamento')"
-            :temperament="auth_store.user_data.test_results.find(test => test.test_name === 'Temperamento').results.archetype" />
+            :temperament_results="auth_store.user_data.test_results.find(test => test.test_name === 'Temperamento').results"
+            :user_name="auth_store.user_data.user.name" />
         <TemperamentFormComponent v-else :logged="auth_store.token ? true : false" />
     </section>
 </template>

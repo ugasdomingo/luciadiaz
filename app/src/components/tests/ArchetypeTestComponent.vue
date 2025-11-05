@@ -18,7 +18,8 @@ onMounted(async () => {
     <WarningLoggingComponent v-if="!auth_store.token" />
     <section v-else>
         <ArchetypeResultComponent v-if="auth_store.user_data.test_results.find(test => test.test_name === 'Arquetipo')"
-            :archetype="auth_store.user_data.test_results.find(test => test.test_name === 'Arquetipo').results.archetype" />
+            :archetype_results="auth_store.user_data.test_results.find(test => test.test_name === 'Arquetipo').results"
+            :user_name="auth_store.user_data.user.name" />
         <ArchetypeFormComponent v-else :logged="auth_store.token ? true : false" />
     </section>
 </template>

@@ -48,7 +48,6 @@ onMounted(async () => {
                     <img src="/public/icon/icon-plus.svg" alt="plus icon">
                 </span>
             </h3>
-            {{ test.name }}
             <transition name="accordion" @enter="enter" @after-enter="afterEnter" @leave="leave"
                 @after-leave="afterLeave">
                 <div v-show="expanded_items[test.id]">
