@@ -12,7 +12,9 @@ export const register = async (req, res, next) => {
         // 1. Check if email is already registered
         const email_registered = await User.findOne({ email });
         if (email_registered) {
-            throw new Error('El correo electrónico ya está registrado');
+            const error = new Error('El correo electrónico ya está registrado');
+            error.response_code = 400;
+            throw error;
         }
         // 2. Create new user
         const user = new User({ name, email, password, role, phone, policy_accepted });
@@ -20,7 +22,9 @@ export const register = async (req, res, next) => {
         // 3. Get last history number and create medical record
         const util = await Util.findOne();
         if (!util) {
-            throw new Error('No se encontró el último número de historia');
+            const error = new Error('No se encontró el último número de historia');
+            error.response_code = 400;
+            throw error;
         }
         const history_number = util.last_histoty_number + 1;
         await Util.updateOne({ _id: util._id }, { $set: { last_histoty_number: history_number } });
@@ -55,7 +59,9 @@ export const verify_email = async (req, res, next) => {
         // 1. Find user and verify token
         const user = await User.findOne({ login_token: login_token_int, email });
         if (!user) {
-            throw new Error('Token inválido');
+            const error = new Error('Token inválido');
+            error.response_code = 400;
+            throw error;
         }
         // 2. Verify email
         user.email_verified = true;

@@ -11,7 +11,7 @@ cloudinary.config({
 export const upload_formation_cover = async (file) => {
     try {
         const result = await cloudinary.uploader.upload(file.tempFilePath, {
-            folder: 'Lucia/Formaciones',
+            folder: 'Lucia/formations',
             use_filename: true,
             resource_type: 'auto'
         });
@@ -24,7 +24,7 @@ export const upload_formation_cover = async (file) => {
 export const upload_post_cover = async (file) => {
     try {
         const result = await cloudinary.uploader.upload(file.tempFilePath, {
-            folder: 'Lucia/Posts',
+            folder: 'Lucia/blog',
             use_filename: true,
             resource_type: 'auto'
         });
@@ -37,7 +37,7 @@ export const upload_post_cover = async (file) => {
 export const upload_video_cover = async (file) => {
     try {
         const result = await cloudinary.uploader.upload(file.tempFilePath, {
-            folder: 'Lucia/Videos',
+            folder: 'Lucia/videos',
             use_filename: true,
             resource_type: 'auto'
         });
@@ -50,7 +50,7 @@ export const upload_video_cover = async (file) => {
 export const upload_offline_payment = async (file) => {
     try {
         const result = await cloudinary.uploader.upload(file, {
-            folder: 'Lucia/Pagos',
+            folder: 'Lucia/payment',
             use_filename: true,
             resource_type: 'auto'
         });

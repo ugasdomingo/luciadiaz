@@ -1,6 +1,6 @@
 import { Post } from "../models/Post-model.js";
 import { client_response } from "../utils/responses.js";
-import { upload_post_cover } from "../utils/cloudinary.js";
+import { upload_post_cover, delete_image } from "../utils/cloudinary.js";
 import fs from 'fs-extra';
 
 //Get all posts
@@ -107,7 +107,9 @@ export const delete_post = async (req, res, next) => {
         if (!post) {
             throw new Error('Post no encontrado');
         }
-        await delete_image(post.post_cover.public_id);
+        if (post.post_cover) {
+            await delete_image(post.post_cover.public_id);
+        }
         return client_response(res, 200, 'Post eliminado');
     } catch (error) {
         next(error);

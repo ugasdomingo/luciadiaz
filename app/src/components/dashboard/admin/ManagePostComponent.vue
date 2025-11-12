@@ -43,6 +43,7 @@ const handle_submit = async () => {
     form_data.append('category', category.value)
     form_data.append('tags', tags.value)
     form_data.append('post_cover', post_cover.value)
+    form_data.append('status', 'published')
 
     await post_store.create_post(form_data)
 
@@ -103,6 +104,7 @@ const handle_update = async () => {
         <h2 @click="toggle_create_post">Crear Post <span>{{ show_create_post ? '-' : '+' }}</span></h2>
         <form @submit.prevent="handle_submit" v-if="show_create_post" class="section__container__create">
             <input type="text" placeholder="Titulo" v-model="title" required>
+            <input type="text" placeholder="Slug" v-model="slug" required>
             <EditorComponent v-model="content" />
             <input type="text" placeholder="Categoria" v-model="category" required>
             <input type="text" placeholder="Tags" v-model="tags" required>

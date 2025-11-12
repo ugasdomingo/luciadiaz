@@ -30,10 +30,5 @@ const accessKeySchema = new Schema(
     }
 );
 
-// Índice para búsquedas rápidas por clave
-accessKeySchema.index({ key: 1 });
-
-// Índice para búsquedas por formación
-accessKeySchema.index({ formation_id: 1 });
 
 export const Access_key = model('AccessKey', accessKeySchema);

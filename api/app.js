@@ -62,8 +62,11 @@ app.use('/api/v3/util', util_router);
 app.use('/api/v3/common', common_router);
 
 //Error handler
-app.use((err, req, res, next) => {
-    console.error(err.stack);
+app.use((error, req, res, next) => {
+    console.error(error.stack);
+    if (error.response_code) {
+        return client_response(res, error.response_code, error.message);
+    }
     client_response(res, 500, 'Ha ocurrido un error, por favor intente más tarde');
 });
 
