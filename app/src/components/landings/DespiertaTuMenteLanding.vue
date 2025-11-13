@@ -256,7 +256,7 @@ const props = defineProps({
 const util_store = useUtilStore()
 
 // PayPal URLs
-const PAYPAL_RESERVA_URL = 'https://www.paypal.com/YOUR_RESERVA_LINK_HERE' // ← Cambia esta URL
+const PAYPAL_RESERVA_URL = 'https://www.paypal.com/ncp/payment/F8N63LKAVK5C8' // ← Cambia esta URL
 
 // Data
 const facilitator = lucia_info
