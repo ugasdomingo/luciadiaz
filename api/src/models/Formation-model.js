@@ -16,10 +16,6 @@ const formationSchema = new Schema(
             enum: ['presencial', 'live', 'online'],
             required: true,
         },
-        content: {
-            type: String,
-            required: true,
-        },
         description: {
             type: String,
             required: true,

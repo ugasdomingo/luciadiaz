@@ -87,12 +87,16 @@ export const login = async (req, res, next) => {
         // 1. Find user
         const user = await User.findOne({ email });
         if (!user) {
-            throw new Error('Usuario no encontrado');
+            const error = new Error('Usuario no encontrado');
+            error.response_code = 400;
+            throw error;
         }
         // 2. Verify password
         const is_match = await user.comparePassword(password);
         if (!is_match) {
-            throw new Error('Contraseña incorrecta');
+            const error = new Error('Contraseña incorrecta');
+            error.response_code = 400;
+            throw error;
         }
 
         // 3. Generate login token
@@ -123,7 +127,9 @@ export const verify_login = async (req, res, next) => {
         // 1. Find user and verify token
         const user = await User.findOne({ login_token: parseInt(login_token), email });
         if (!user) {
-            throw new Error('Token inválido');
+            const error = new Error('Token inválido');
+            error.response_code = 400;
+            throw error;
         }
         // 2. Clean login token
         user.login_token = undefined;
@@ -146,7 +152,9 @@ export const refresh = async (req, res, next) => {
         const { refresh_token } = req.body;
 
         if (!refresh_token) {
-            throw new Error('Debes iniciar sesión para acceder a esta funcionalidad');
+            const error = new Error('Debes iniciar sesión para acceder a esta funcionalidad');
+            error.response_code = 401;
+            throw error;
         }
 
         // 1. Decode refresh token
@@ -155,7 +163,9 @@ export const refresh = async (req, res, next) => {
         // 2. Find user
         const user = await User.findById(decoded.user_id.toString());
         if (!user) {
-            throw new Error('Token inválido');
+            const error = new Error('Token inválido');
+            error.response_code = 400;
+            throw error;
         }
         const { user_data, token, refresh_token: new_refresh_token } = await get_login_user_data(user._id);
         return client_response(res, 200, 'OK', { user_data, token, refresh_token: new_refresh_token });
@@ -171,7 +181,9 @@ export const forgot_password = async (req, res, next) => {
         // 1. Find user
         const user = await User.findOne({ email });
         if (!user) {
-            throw new Error('Usuario no encontrado');
+            const error = new Error('Usuario no encontrado');
+            error.response_code = 400;
+            throw error;
         }
 
         // 2. Generate reset password token
@@ -195,7 +207,9 @@ export const reset_password = async (req, res, next) => {
         // 1. Find user
         const user = await User.findOne({ reset_password_token, email });
         if (!user) {
-            throw new Error('Token inválido');
+            const error = new Error('Token inválido');
+            error.response_code = 400;
+            throw error;
         }
 
         // 2. Update password
@@ -221,13 +235,17 @@ export const change_password = async (req, res, next) => {
         // 1. Find user
         const user = await User.findById(req.user_id);
         if (!user) {
-            throw new Error('Usuario no encontrado');
+            const error = new Error('Usuario no encontrado');
+            error.response_code = 400;
+            throw error;
         }
 
         // 2. Verify password
         const is_match = await user.comparePassword(password);
         if (!is_match) {
-            throw new Error('Contraseña incorrecta');
+            const error = new Error('Contraseña incorrecta');
+            error.response_code = 400;
+            throw error;
         }
 
         // 3. Update password

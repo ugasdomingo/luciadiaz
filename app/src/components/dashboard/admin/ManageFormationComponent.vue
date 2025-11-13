@@ -3,8 +3,6 @@ import { ref } from 'vue'
 import { useFormationStore } from '../../../stores/formation-store.js'
 import { useAuthStore } from '../../../stores/auth-store.js'
 import FormationCardComponent from '../../common/cards/FormationCardComponent.vue'
-import EditorComponent from '../../common/EditorComponent.vue'
-import { onBeforeMount } from 'vue'
 
 const formation_store = useFormationStore()
 const auth_store = useAuthStore()
@@ -28,7 +26,6 @@ const toggle_update_formation = () => {
 const title = ref('')
 const slug = ref('')
 const type = ref('')
-const content = ref('')
 const description = ref('')
 const duration = ref('')
 const location = ref('')
@@ -46,7 +43,6 @@ const handle_submit = async () => {
     form_data.append('title', title.value)
     form_data.append('slug', slug.value)
     form_data.append('type', type.value)
-    form_data.append('content', content.value)
     form_data.append('description', description.value)
     form_data.append('duration', duration.value)
     form_data.append('location', location.value)
@@ -97,7 +93,6 @@ const handle_file_change = (event) => {
                 <option value="live">Live</option>
                 <option value="online">Online</option>
             </select>
-            <EditorComponent v-model="content" />
             <input type="text" placeholder="Descripción" v-model="description">
             <input type="text" placeholder="Duración" v-model="duration">
             <input type="text" placeholder="Ubicación" v-model="location">

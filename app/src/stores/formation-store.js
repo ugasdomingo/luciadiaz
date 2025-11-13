@@ -8,7 +8,7 @@ export const useFormationStore = defineStore('formation', () => {
     const util_store = useUtilStore()
     const auth_store = useAuthStore()
     const formations = ref([])
-    const formation = ref({})
+    const formation = ref(null)
 
     const get_all_formations = async (display) => {
         try {
@@ -45,9 +45,10 @@ export const useFormationStore = defineStore('formation', () => {
             util_store.set_loading(true)
             const response = await api({
                 method: 'get',
-                url: `/formation/${slug}`
+                url: `/formation/info/${slug}`
             })
-            formation.value = response.data.data[0]
+            formation.value = response.data.data
+
         } catch (err) {
             console.log(err)
         } finally {

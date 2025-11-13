@@ -33,7 +33,9 @@ export const get_formation_by_slug = async (req, res, next) => {
         const { formation_slug } = req.params;
         const formation = await Formation.findOne({ slug: formation_slug }).lean();
         if (!formation) {
-            throw new Error('Formación no encontrada');
+            const error = new Error('Formación no encontrada');
+            error.status = 404;
+            throw error;
         }
         return client_response(res, 200, 'OK', formation);
     } catch (error) {
@@ -43,12 +45,12 @@ export const get_formation_by_slug = async (req, res, next) => {
 
 export const create_formation = async (req, res, next) => {
     try {
-        const { title, slug, content, description, duration, location, price, start_date, categorys, type, video_url = '', paypal_button = '', status = 'inactive' } = req.body;
+        const { title, slug, description, duration, location, price, start_date, categorys, type, video_url = '', paypal_button = '', status = 'inactive' } = req.body;
 
         if (await Formation.findOne({ slug })) {
             throw new Error('Formación ya existe');
         }
-        const formation = new Formation({ title, slug, content, description, duration, location, price, start_date, categorys, type, video_url, paypal_button, status });
+        const formation = new Formation({ title, slug, description, duration, location, price, start_date, categorys, type, video_url, paypal_button, status });
 
         if (req.files?.formation_cover) {
             const result = await upload_formation_cover(req.files.formation_cover);
@@ -68,14 +70,13 @@ export const create_formation = async (req, res, next) => {
 export const update_formation = async (req, res, next) => {
     try {
         const { formation_id } = req.params;
-        const { title, slug, content, description, duration, location, price, start_date, categorys, type, video_url, paypal_button, status } = req.body;
+        const { title, slug, description, duration, location, price, start_date, categorys, type, video_url, paypal_button, status } = req.body;
         const formation = await Formation.findById(formation_id);
         if (!formation) {
             throw new Error('Formación no encontrada');
         }
         formation.title = title || formation.title;
         formation.slug = slug || formation.slug;
-        formation.content = content || formation.content;
         formation.description = description || formation.description;
         formation.duration = duration || formation.duration;
         formation.location = location || formation.location;
