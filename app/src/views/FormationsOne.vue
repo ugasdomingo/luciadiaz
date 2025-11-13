@@ -48,7 +48,7 @@ const landing_component = shallowRef(null)
 // Mapa de slugs a nombres de archivo de componentes
 const landing_map = {
     'despierta-a-tu-mente': 'DespiertaTuMenteLanding',
-    // 'apego': 'ApegoLanding',
+    'construye-relaciones-saludables': 'ApegoLanding',
     // Agregar más landings aquí conforme se crean (1 línea por landing)
 }
 
