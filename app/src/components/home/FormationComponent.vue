@@ -1,19 +1,22 @@
 <script setup>
 import { useCommonStore } from '../../stores/common-store'
 import FormationCardComponent from '../common/cards/FormationCardComponent.vue'
+import { use_scroll_reveal } from '../../composables/use-scroll-reveal.js'
+
+use_scroll_reveal()
 const common_store = useCommonStore()
 </script>
 
 <template>
     <section class="formation">
-        <div class="formation__decoratio__top__left"></div>
-        <div class="formation__decoratio__bottom__right"></div>
-        <h2>Próximas formaciones y talleres vivenciales</h2>
+        <div class="formation__decoratio__top__left" data-scroll-reveal></div>
+        <div class="formation__decoratio__bottom__right" data-scroll-reveal></div>
+        <h2 data-scroll-reveal>Próximas formaciones y talleres vivenciales</h2>
         <div class="formation__content">
             <FormationCardComponent v-for="formation in common_store.formations" :key="formation.id"
-                :formation="formation" />
+                :formation="formation" data-scroll-reveal :style="{ '--delay': `${0.6 + index * 0.15}s` }" />
         </div>
-        <RouterLink to="/formaciones" class="action">Ver todas las formaciones</RouterLink>
+        <RouterLink to="/formaciones" class="action" data-scroll-reveal>Ver todas las formaciones</RouterLink>
     </section>
 </template>
 
@@ -33,6 +36,17 @@ const common_store = useCommonStore()
     box-sizing: border-box;
     position: relative;
 
+    h2 {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+
+        &.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
     &__decoratio__top__left {
         width: 40%;
         height: 0.25rem;
@@ -40,7 +54,15 @@ const common_store = useCommonStore()
         position: absolute;
         top: 0;
         left: 0;
-        opacity: 0.5;
+        opacity: 0;
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+
+        &.is-visible {
+            opacity: 0.5;
+            transform: scaleX(1);
+        }
     }
 
     &__decoratio__bottom__right {
@@ -50,7 +72,15 @@ const common_store = useCommonStore()
         position: absolute;
         bottom: 0;
         right: 0;
-        opacity: 0.5;
+        opacity: 0;
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+
+        &.is-visible {
+            opacity: 0.5;
+            transform: scaleX(1);
+        }
     }
 
     &__content {
@@ -62,6 +92,18 @@ const common_store = useCommonStore()
         max-width: 1200px;
         margin: 0 auto;
         box-sizing: border-box;
+
+        .formation__content__card {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            transition-delay: var(--delay, 0s);
+
+            &.is-visible {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
     }
 
     .action {
@@ -70,11 +112,18 @@ const common_store = useCommonStore()
         border-radius: 1rem;
         box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.4);
         cursor: pointer;
-        transition: all 0.25s;
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.3s ease;
+
+        &.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
         &:hover {
-            box-shadow: 0 0 1rem rgba(0, 0, 0, 0.9);
-            scale: 1.1;
+            box-shadow: 0 6px 20px rgba(107, 76, 147, 0.3);
+            transform: translateY(-3px);
         }
     }
 }

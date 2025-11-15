@@ -33,6 +33,11 @@ const enrollmentSchema = new Schema(
         access_key_used: {
             type: String,
         },
+        progress: {
+            type: Number,
+            default: 0,
+        },
+
     },
     {
         timestamps: true

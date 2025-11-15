@@ -36,6 +36,12 @@ const routes = [
         component: () => import('../views/FormationsOne.vue')
     },
     {
+        path: '/formaciones/:formation_slug/dashboard',
+        name: 'FormationsDashboard',
+        component: () => import('../views/FormationsDashboard.vue'),
+        meta: { requires_auth: true }
+    },
+    {
         path: '/inscripcion/:formation_slug',
         name: 'Enrollment',
         component: () => import('../views/Enrollment.vue')

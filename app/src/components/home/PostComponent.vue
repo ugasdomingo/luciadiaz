@@ -1,12 +1,15 @@
 <script setup>
 import { useCommonStore } from '../../stores/common-store'
 import PostCardComponent from '../common/cards/PostCardComponent.vue'
+import { use_scroll_reveal } from '../../composables/use-scroll-reveal.js'
+
+use_scroll_reveal()
 const common_store = useCommonStore()
 </script>
 
 <template>
     <section class="post">
-        <h2>Últimas publicaciones</h2>
+        <h2 data-scroll-reveal>Últimas publicaciones</h2>
         <div class="post__content">
             <PostCardComponent v-for="post in common_store.posts" :key="post.id" :post="post" />
         </div>
@@ -31,6 +34,14 @@ const common_store = useCommonStore()
     h2 {
         text-align: center;
         margin-bottom: 4rem;
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+
+        &.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 
     &__content {

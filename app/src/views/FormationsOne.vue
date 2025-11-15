@@ -30,13 +30,16 @@
 
 <script setup>
 import { ref, onBeforeMount, shallowRef } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useFormationStore } from '../stores/formation-store'
 import { useUtilStore } from '../stores/util-store'
+import { useAuthStore } from '../stores/auth-store'
 
 const route = useRoute()
+const router = useRouter()
 const formation_store = useFormationStore()
 const util_store = useUtilStore()
+const auth_store = useAuthStore()
 
 const formation = ref(null)
 const error_loading = ref(false)
@@ -82,6 +85,13 @@ onBeforeMount(async () => {
             return
         }
 
+        // 2. Validar si el usuario está inscrito
+        const is_enrolled = auth_store.user_data.enrollments.some(enrollment => enrollment.formation_id === formation.value._id)
+
+        if (is_enrolled) {
+            router.push(`/formaciones/${route.params.formation_slug}/dashboard`)
+            return
+        }
         // 2. Cargar el componente de landing dinámicamente
         await load_landing_component(formation.value.slug)
 
