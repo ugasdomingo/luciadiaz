@@ -1,6 +1,7 @@
 import { Enrollment } from "../models/Enrollment-model.js";
 import { Access_key } from "../models/Access-key-Model.js";
 import { Formation } from "../models/Formation-model.js";
+import { Progress } from "../models/Formation-progress.js";
 import { client_response } from "../utils/responses.js";
 import fs from 'fs-extra';
 import { upload_offline_payment, delete_image } from "../utils/cloudinary.js";
@@ -41,13 +42,17 @@ export const create_enrollment = async (req, res, next) => {
         // Buscar formación
         const formation = await Formation.findById(formation_id);
         if (!formation) {
-            throw new Error('Formación no encontrada');
+            const error = new Error('Formación no encontrada');
+            error.status = 404;
+            throw error;
         }
 
         // Verificar que el usuario no esté ya inscrito
         const existing_enrollment = await Enrollment.findOne({ user_id, formation_id });
         if (existing_enrollment) {
-            throw new Error('Ya estás inscrito en esta formación');
+            const error = new Error('Ya estás inscrito en esta formación');
+            error.status = 400;
+            throw error;
         }
 
         let final_payment_method = payment_method;
@@ -64,7 +69,9 @@ export const create_enrollment = async (req, res, next) => {
         } else {
             // Bizum o Efectivo - Validar clave de acceso
             if (!access_key) {
-                throw new Error('Se requiere clave de acceso para este método de pago');
+                const error = new Error('Se requiere clave de acceso para este método de pago');
+                error.status = 400;
+                throw error;
             }
 
             const key = await Access_key.findOne({
@@ -74,11 +81,15 @@ export const create_enrollment = async (req, res, next) => {
             });
 
             if (!key) {
-                throw new Error('Clave inválida o ya utilizada');
+                const error = new Error('Clave inválida o ya utilizada');
+                error.status = 400;
+                throw error;
             }
 
             if (new Date() > key.expires_at) {
-                throw new Error('Clave expirada');
+                const error = new Error('Clave expirada');
+                error.status = 400;
+                throw error;
             }
 
             // Marcar clave como usada
@@ -104,7 +115,23 @@ export const create_enrollment = async (req, res, next) => {
         formation.users_enrolled.push(user_id);
         await formation.save();
 
-        return client_response(res, 201, 'Inscripción completada con éxito', { enrollment_id: enrollment._id });
+        const progress = new Progress({
+            enrollment_id: enrollment._id,
+            user_id,
+            formation_id,
+            access_log: [
+                {
+                    accessed_at: new Date()
+                }
+            ],
+            lessons_progress: [], // Se llena cuando el usuario empieza a ver contenido
+            overall_progress_percentage: 0,
+            last_accessed: new Date()
+        });
+
+        await progress.save();
+
+        return client_response(res, 201, 'Inscripción completada con éxito');
     } catch (error) {
         next(error);
     }
@@ -115,10 +142,14 @@ export const add_payment_proof = async (req, res, next) => {
         const { enrollment_id } = req.params;
         const enrollment = await Enrollment.findById(enrollment_id);
         if (!enrollment) {
-            throw new Error('Enrollment not found');
+            const error = new Error('Enrollment not found');
+            error.status = 404;
+            throw error;
         }
         if (enrollment.payment_proof) {
-            throw new Error('Payment proof already added');
+            const error = new Error('Payment proof already added');
+            error.status = 400;
+            throw error;
         }
         const result = await upload_offline_payment(req.file.payment_proof);
         enrollment.payment_proof = {
@@ -138,7 +169,9 @@ export const approve_payment = async (req, res, next) => {
         const { enrollment_id } = req.params;
         const enrollment = await Enrollment.findById(enrollment_id);
         if (!enrollment) {
-            throw new Error('Enrollment not found');
+            const error = new Error('Enrollment not found');
+            error.status = 404;
+            throw error;
         }
         enrollment.payment_status = 'completed';
         await enrollment.save();
@@ -165,7 +198,9 @@ export const get_enrollment_by_id = async (req, res, next) => {
         const { enrollment_id } = req.params;
         const enrollment = await Enrollment.findById(enrollment_id).lean();
         if (!enrollment) {
-            throw new Error('Enrollment not found');
+            const error = new Error('Enrollment not found');
+            error.status = 404;
+            throw error;
         }
         return client_response(res, 200, 'OK', enrollment);
     } catch (error) {

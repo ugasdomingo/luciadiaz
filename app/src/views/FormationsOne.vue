@@ -86,13 +86,13 @@ onBeforeMount(async () => {
         }
 
         // 2. Validar si el usuario está inscrito
-        const is_enrolled = auth_store.user_data.enrollments.some(enrollment => enrollment.formation_id === formation.value._id)
+        const is_enrolled = auth_store.user_data?.progress?.some(progress => progress.formation_id === formation.value._id)
 
         if (is_enrolled) {
             router.push(`/formaciones/${route.params.formation_slug}/dashboard`)
             return
         }
-        // 2. Cargar el componente de landing dinámicamente
+        // 3. Cargar el componente de landing dinámicamente
         await load_landing_component(formation.value.slug)
 
     } catch (error) {

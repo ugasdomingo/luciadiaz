@@ -19,6 +19,8 @@ import video_router from './src/routes/video-router.js';
 import post_router from './src/routes/post-router.js';
 import util_router from './src/routes/util-router.js';
 import common_router from './src/routes/common-router.js';
+import curriculum_router from './src/routes/curriculum-router.js';
+import progress_router from './src/routes/progress-router.js';
 
 //App config
 const app = express();
@@ -60,6 +62,8 @@ app.use('/api/v3/video', video_router);
 app.use('/api/v3/post', post_router);
 app.use('/api/v3/util', util_router);
 app.use('/api/v3/common', common_router);
+app.use('/api/v3/curriculum', curriculum_router);
+app.use('/api/v3/progress', progress_router);
 
 //Error handler
 app.use((error, req, res, next) => {

@@ -6,7 +6,7 @@ import { Therapy_note } from "../models/Therapy-note-model.js";
 import { Therapy_task } from "../models/Therapy-task-model.js";
 import { Patient_history } from "../models/Patient-history-model.js";
 import { Test_result } from "../models/Test-result-model.js";
-import { Enrollment } from "../models/Enrollment-model.js";
+import { Progress } from "../models/Formation-progress.js";
 import { Like } from "../models/Like-model.js";
 
 //Helpers
@@ -19,10 +19,10 @@ export const admin_get_user_data = async (user_id) => {
             Therapy_note.find({ user_id: user_id.toString() }).select('-user_id').lean(),
             Therapy_task.find({ user_id: user_id.toString() }).select('-user_id').lean(),
             Test_result.find({ user_id: user_id.toString() }).select('-user_id').lean(),
-            Enrollment.find({ user_id: user_id.toString() }).select('-user_id').lean(),
+            Progress.find({ user_id: user_id.toString() }).select('-user_id').populate('formation_id', 'title slug type formation_cover start_date').lean(),
             Like.find({ user_id: user_id.toString() }).select('-user_id').lean(),
         ]
-        const [user, patient_histories, therapy_notes, therapy_tasks, test_results, enrollments, likes] = await Promise.all(promises);
+        const [user, patient_histories, therapy_notes, therapy_tasks, test_results, progress, likes] = await Promise.all(promises);
 
         //Decrypt data
         patient_histories.forEach((history) => {
@@ -46,7 +46,7 @@ export const admin_get_user_data = async (user_id) => {
             therapy_notes: therapy_notes || [],
             therapy_tasks: therapy_tasks || [],
             test_results: test_results || [],
-            enrollments: enrollments || [],
+            progress: progress || [],
             likes: likes || [],
         }
 
@@ -63,10 +63,10 @@ export const get_login_user_data = async (user_id) => {
             Patient_history.find({ user_id: user_id.toString() }).select('-user_id').lean(),
             Therapy_task.find({ user_id: user_id.toString() }).select('-user_id').lean(),
             Test_result.find({ user_id: user_id.toString() }).select('-user_id').lean(),
-            Enrollment.find({ user_id: user_id.toString() }).select('-user_id').lean(),
+            Progress.find({ user_id: user_id.toString() }).select('-user_id').populate('formation_id', 'title slug type formation_cover start_date').lean(),
             Like.find({ user_id: user_id.toString() }).select('-user_id').lean(),
         ]
-        const [user, patient_histories, therapy_tasks, test_results, enrollments, likes] = await Promise.all(promises);
+        const [user, patient_histories, therapy_tasks, test_results, progress, likes] = await Promise.all(promises);
 
         //Decrypt data
         if (patient_histories.length > 0) {
@@ -91,7 +91,7 @@ export const get_login_user_data = async (user_id) => {
             history: patient_histories || [],
             therapy_tasks: therapy_tasks || [],
             test_results: test_results || [],
-            enrollments: enrollments || [],
+            progress: progress || [],
             likes: likes || [],
         }
 
