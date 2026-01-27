@@ -2,38 +2,35 @@
   line-height: 1.5;
   font-weight: 400;
 
-  --color-primary: #6b4c93;
-  --color-secondary: #4a4a8a;
-  --color-tertiary: #8e6ba8;
+  /* --- NUEVA PALETA DE COLORES (Manual de Marca) --- */
+  --color-primary: #2A4B7C;
+  /* Azul Profundo (Confianza) */
+  --color-secondary: #B88A36;
+  /* Dorado Mostaza (Acento/Botones) */
+  --color-tertiary: #1F3A60;
+  /* Azul más oscuro */
 
-  --color-text: #000000;
-  --color-text-light: #e9ecef;
-  --color-text-dark: #495057;
-  --color-black: #212529;
+  --color-text: #333333;
+  /* Gris Pizarra (Lectura) */
+  --color-text-light: #F8F9FA;
+  --color-text-dark: #212529;
+  --color-black: #000000;
 
   --color-soft-alert: #d1ecf1;
   --color-approve-alert: #d4edda;
   --color-reject-alert: #f8d7da;
 
-  --color-white: #f8f9fa;
+  --color-white: #FFFFFF;
   --color-disable: #dee2e6;
 
+  /* Configuraciones de renderizado */
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-@font-face {
-  font-family: 'Title';
-  src: url('../font/CormorantGaramond-Regular.ttf');
-}
-
-@font-face {
-  font-family: 'Text';
-  src: url('../font/Montserrat.ttf');
-}
-
+/* Eliminamos los @font-face locales para usar los de Google Fonts que cargan más rápido */
 
 body {
   margin: 0;
@@ -43,163 +40,151 @@ body {
   background-color: var(--color-white);
   color: var(--color-text);
   box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+  /* Fuente para cuerpo */
+}
+
+/* TÍTULOS ELEGANTES */
+h1,
+h2,
+h3,
+h4 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--color-primary);
+  margin-bottom: 1rem;
 }
 
 h1 {
   font-size: 4rem;
-  font-family: 'Title';
-  font-weight: 600;
-  line-height: 1.1;
-  color: var(--color-primary);
 }
 
 h2 {
-  font-size: 2rem;
-  font-weight: 600;
-  font-family: 'Title';
-  line-height: 1.1;
-  color: var(--color-primary);
+  font-size: 2.5rem;
 }
 
 h3 {
-  font-size: 1.5rem;
-  line-height: 1.1;
-  color: var(--color-primary);
-  font-family: 'Title';
+  font-size: 1.75rem;
 }
 
 h4 {
   font-size: 1.25rem;
-  line-height: 1.1;
-  color: var(--color-primary);
-  font-family: 'Title';
 }
 
 p {
   font-size: 1rem;
-  font-family: 'Text';
+  font-family: 'Montserrat', sans-serif;
   font-weight: 300;
+  line-height: 1.6;
 }
 
 a {
   text-decoration: none;
-  color: var(--color-secondary);
-  font-family: 'Text';
+  color: var(--color-primary);
+  /* Enlaces en azul */
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
 }
 
-input {
-  max-width: 30rem;
-  padding: 0.75rem 0.5rem;
-  border-radius: 0.5rem;
-  border: 1px solid var(--color-text);
-  outline: none;
-  transition: all 0.25s;
-
-  &:focus,
-  &:focus-visible {
-    outline: 0.25rem auto -webkit-focus-ring-color;
-    scale: 1.05;
-  }
-}
-
+/* INPUTS */
+input,
 textarea {
   max-width: 30rem;
   padding: 0.75rem 0.5rem;
-  border-radius: 0.5rem;
-  border: 1px solid var(--color-text);
+  border-radius: 4px;
+  /* Bordes ligeramente redondeados, más elegantes */
+  border: 1px solid #ccc;
   outline: none;
   transition: all 0.25s;
+  font-family: 'Montserrat', sans-serif;
+
+  &:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px rgba(42, 75, 124, 0.1);
+  }
 }
 
+/* BOTONES DE ACCIÓN (Dorado Mostaza) */
 .action-btn {
   width: 100%;
   max-width: 30rem;
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
-  border: 1px solid transparent;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  border: none;
   font-size: 1rem;
-  font-weight: 500;
-  font-family: 'Text';
-  background-color: var(--color-soft-alert);
+  font-weight: 600;
+  font-family: 'Montserrat', sans-serif;
+  color: var(--color-white);
+  background-color: var(--color-secondary);
+  /* Dorado */
   cursor: pointer;
-  transition: all 0.25s;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 
   &:hover {
-    border-color: var(--color-primary);
-    scale: 1.05;
-  }
-
-  &:focus,
-  &:focus-visible {
-    outline: 0.25rem auto -webkit-focus-ring-color;
+    background-color: #a67c30;
+    /* Un poco más oscuro al pasar el mouse */
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(184, 138, 54, 0.3);
   }
 }
 
+/* BOTONES SIN FONDO (Outline Azul) */
 .nobg-btn {
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
+  padding: 0.5rem 1.5rem;
+  border-radius: 4px;
   border: 1px solid var(--color-primary);
   font-size: 1rem;
   font-weight: 500;
-  font-family: inherit;
+  font-family: 'Montserrat', sans-serif;
   color: var(--color-primary);
   background-color: transparent;
   cursor: pointer;
   transition: all 0.25s;
 
   &:hover {
-    scale: 1.05;
-  }
-
-  &:focus,
-  &:focus-visible {
-    outline: 0.25rem auto -webkit-focus-ring-color;
+    background-color: var(--color-primary);
+    color: var(--color-white);
   }
 }
 
 .disable-btn {
   padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
-  border: 1px solid transparent;
-  font-size: 1rem;
-  font-weight: 500;
-  font-family: inherit;
+  border-radius: 4px;
+  border: none;
   background-color: var(--color-disable);
+  color: #888;
   cursor: not-allowed;
 }
 
+/* Layout Classes */
 .pages {
   width: 100%;
   min-height: 100vh;
   padding: 6rem 4rem 2rem;
-  margin: 0;
   display: flex;
   flex-direction: column;
-  position: relative;
   box-sizing: border-box;
 }
 
 .home__block {
   width: 100%;
-  min-height: 100vh;
-  margin: 0;
-  padding: 0 4rem;
-  display: flex;
-  flex-direction: column;
+  padding: 4rem;
   box-sizing: border-box;
 }
 
-
-
 #app {
-  max-width: 1360px;
+  max-width: 100%;
+  /* Permitimos full width para el Hero */
   margin: 0 auto;
-  padding: 0;
-  box-sizing: border-box;
 }
 
 @media screen and (max-width: 768px) {
-  .pages {
+
+  .pages,
+  .home__block {
     padding: 5rem 1rem 1rem;
   }
 }

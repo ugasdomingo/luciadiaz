@@ -1,133 +1,101 @@
 <template>
     <section class="hero">
-        <img src="/public/img/fondo-lucia-cafe.webp" alt="Imagen principal" class="hero__background__image">
-        <div class="hero__image__content">
-            <img src="https://res.cloudinary.com/minteados/image/upload/v1737180498/Lucia/Lucia_y9pfhb.png"
-                alt="foto lucia" />
-            <div class="hero__image__content__decoration"></div>
+        <div class="hero__background">
+            <img src="/public/img/fondo-lucia-cafe.webp" alt="Consulta Lucia Diaz" />
+            <div class="hero__overlay"></div>
         </div>
+
         <div class="hero__content">
-            <h2>Hola, soy Lucia Diaz</h2>
-            <p>He preparado este rincón para que te sientes cómodamente, disfrutes tu bebida favorita y dejemos volar la
-                mente juntos. Yo ya tengo mi café.
-            </p>
+            <h2>¿Por qué amar me genera tanta ansiedad?</h2>
+            <p>Descubre cómo construir relaciones seguras desde el entendimiento y la calma. He preparado este espacio
+                para ti.</p>
+
+            <button class="action-btn" style="max-width: 200px; margin-top: 2rem;">
+                Agendar Sesión
+            </button>
         </div>
     </section>
 </template>
 
 <script setup>
-
 </script>
 
 <style scoped lang="scss">
 .hero {
     width: 100%;
-    height: 100vh;
+    height: 90vh;
+    /* Altura casi completa */
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 0 4rem 0 8rem;
-    gap: 2rem;
     position: relative;
-    box-sizing: border-box;
+    overflow: hidden;
+    text-align: center;
+    color: var(--color-white);
+    /* Texto blanco sobre el fondo oscuro */
 
-    &__background__image {
+    &__background {
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        object-fit: cover;
-        object-position: top;
-        transform: scaleX(-1);
         z-index: -1;
-        opacity: 0.3;
-    }
-
-    &__image__content {
-        width: 30%;
-        padding-top: 2rem;
-        position: relative;
-        box-sizing: border-box;
 
         img {
             width: 100%;
-            height: 50vh;
-            border-radius: 0.5rem;
-            margin-bottom: 1rem;
+            height: 100%;
             object-fit: cover;
-            object-position: top;
-        }
-
-        &__decoration {
-            width: 100%;
-            height: calc(50vh + 4rem);
-            background-color: var(--color-secondary);
-            opacity: 0.2;
-            position: absolute;
-            top: 0;
-            left: -2rem;
-            border-radius: 0.5rem;
-            z-index: -1;
         }
     }
 
+    &__overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        /* Degradado azul característico de la nueva marca */
+        background: linear-gradient(180deg, rgba(42, 75, 124, 0.3) 0%, rgba(42, 75, 124, 0.85) 60%, rgba(42, 75, 124, 1) 100%);
+    }
+
     &__content {
-        width: 70%;
-        box-sizing: border-box;
+        position: relative;
+        z-index: 2;
+        max-width: 800px;
+        padding: 0 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
 
         h2 {
-            margin: 0 0 1rem 0;
-            color: var(--color-text);
+            font-size: 3.5rem;
+            color: var(--color-white);
+            /* Forzamos blanco en el hero */
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
 
         p {
-            width: 50%;
-            margin: 0;
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 600px;
+            font-weight: 400;
         }
     }
 }
 
-@media screen and (max-width: 720px) {
+@media screen and (max-width: 768px) {
     .hero {
-        width: 100%;
-        height: 100vh;
-        padding: 0 1rem;
-        margin: 0;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 2rem;
-
-        &__background__image {
-            object-position: calc(50% + 10rem);
-        }
-
-        &__image__content {
-            width: 100%;
-            object-position: left;
-
-            img {
-                height: 100%;
-            }
-
-            &__decoration {
-                height: 100%;
-                left: 1rem;
-                top: 1rem;
-            }
-
-        }
+        height: 80vh;
 
         &__content {
-            width: 100%;
-
             h2 {
-                font-size: 2rem;
+                font-size: 2.2rem;
             }
 
             p {
-                width: 100%;
+                font-size: 1rem;
             }
         }
     }
